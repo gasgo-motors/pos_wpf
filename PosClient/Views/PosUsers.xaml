@@ -1,0 +1,62 @@
+﻿<local:PosUsersController xmlns:Dialogs="clr-namespace:PosClient.Views.Dialogs" 
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             Dialog:DialogParticipation.Register="{Binding}"    
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels" x:Class="PosClient.Views.PosUsers"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Dialog:CustomDialog x:Key="UserDetail"
+                                 x:Name="UserDetail"
+                                 Title="დეტალური ინფორმაცია მომხმარებელზე">
+                <Dialogs:PosUserDetail x:Name="userDetailControl" DataContext="{Binding}"  />
+            </Dialog:CustomDialog>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <local:PosUsersController.DataContext>
+        <ViewModels:PosUsersViewModel/>
+    </local:PosUsersController.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Button Click="ButtonBase_OnClick" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10">ახალი მომხმარებლის დამატება</Button>
+        </Grid>
+        <DataGrid x:Name="CustomersGrid"
+                  Grid.Row="1"
+                  Margin="5"
+                  RowHeaderWidth="0"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Users}"
+                  Style="{DynamicResource AzureDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding UserName}" Header="username" />
+                <DataGridTextColumn Binding="{Binding Password}" Header="password" />
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="სახელი" />
+                <DataGridTextColumn Binding="{Binding LastName}" Header="გვარი" />
+                <DataGridTextColumn Binding="{Binding UserTypeName}" Header="ტიპი" />
+                <DataGridTemplateColumn Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}"  Click="ButtonDetail_OnClick">
+                                <iconPacks:PackIconFontAwesome Width="15"
+                                              Height="15"
+                                              Kind="Search" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>        
+    </Grid>
+</local:PosUsersController>

@@ -1,0 +1,150 @@
+﻿<local:CustomersController
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"    
+             xmlns:dialogs1="clr-namespace:PosClient.Views.Dialogs"
+            xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:Converters="clr-namespace:PosClient.Converters"
+             dialogs:DialogParticipation.Register="{Binding}"
+             x:Class="PosClient.Views.Customers"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="1000">
+    <local:CustomersController.Resources>
+        <ResourceDictionary>
+            <Converters:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+            <dialogs:CustomDialog x:Key="CustomerDetail"
+                                 x:Name="CustomerDetail" Padding="0"
+                                 Title="ახალი კლიენტი">
+                <dialogs1:CustomerDetail x:Name="userDetailControl" DataContext="{Binding}" Margin="0"  />
+            </dialogs:CustomDialog>
+            <dialogs:CustomDialog x:Key="PayementDetail"
+                                 x:Name="PayementDetail"
+                                 Title="დეტალური ინფორმაცია გადახდაზე">
+                <dialogs1:PaymentDetail x:Name="paymentDetailControl" DataContext="{Binding}"  />
+            </dialogs:CustomDialog>
+        </ResourceDictionary>
+    </local:CustomersController.Resources>
+    <local:CustomersController.DataContext>
+        <ViewModels:CustomersViewModel/>
+    </local:CustomersController.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="10" Grid.ColumnSpan="2">
+            <Button IsEnabled="{Binding IsBtnCurrentListEnabled}" x:Name="btnCurrentDay" Margin="0,0,10,0" Click="btnCurrentDay_Click" Content="მიმდინარე დღე"/>
+            <Button IsEnabled="{Binding IsBtnAllListEnabled}" x:Name="btnAll" Click="btnAll_Click" Margin="0,0,10,0" Content="ყველა კლიენტი"/>
+            <Button x:Name="btnNew" Click="BtnNew_OnClick" Margin="0,0,10,0" Content="ახალი კლიენტი"/>
+            <Button x:Name="btnNewOrder" Click="BtnNewOrder_OnClick"  Margin="0,0,10,0" Content="ახალი შეკვეთა" Visibility="{Binding NonDistributorVisibility, Mode=OneWay}"/>
+            <Button x:Name="btnCurrentGenJournals"   Margin="0,0,10,0"  Click="BtnCurrentGenJournals_OnClick" Content="მიმდინარე გადახდები"/>
+            <Button x:Name="btnPaymentschedules"   Margin="0,0,10,0"  Click="BtnPaymentschedules_OnClick" Content="გადახდის გრაფიკი"/>
+            <Button x:Name="btnPyment"   Margin="0,0,10,0"  Click="BtnPyment_OnClick" Content="ფულის მიღება"/>
+            <Button x:Name="btnReleasedQuetes"   Margin="0,0,10,0"  Click="BtnReleasedQuetes_OnClick" Content="მიმდინარე ქვოტები"/>
+            <Button x:Name="btnShortSync"   Margin="0,0,10,0"  Click="BtnShortSync_OnClick" Content="მარაგების მარტივი სინქრონიზაცია"/>
+        </StackPanel>
+
+        <DataGrid x:Name="CustomersGrid"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  Margin="5"
+                  RowHeaderWidth="0"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding PosCustomers}"
+                  SelectedItem="{Binding SelectedCustomer}" IsReadOnly="True">
+            <DataGrid.Style>
+                <Style BasedOn="{StaticResource MetroDataGrid}" TargetType="{x:Type DataGrid}">
+                    <Setter Property="AlternatingRowBackground" Value="{DynamicResource GrayBrush10}" />
+                </Style>
+            </DataGrid.Style>
+            <DataGrid.RowStyle>
+                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                    <EventSetter Event="MouseDoubleClick" Handler="Row_DoubleClick"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsNewCustomer, Mode=OneWay}" Value="True">
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentDatePaymentSchedule, Mode=OneWay}" Value="True">
+                            <Setter Property="Background" Value="LightGreen" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" Header="კლიენტი" />
+                <DataGridTextColumn Binding="{Binding VATRegistrationNo_}" Header="პირადი N" />
+                <DataGridTextColumn Binding="{Binding Address1}" Header="მისამართი" />
+                <DataGridTextColumn Binding="{Binding City1}" Header="ქალაქი" />
+                <DataGridTextColumn Binding="{Binding RecommendedSalesAmount, StringFormat=\{0:F2\}}" Header="რეკომენდირებული თანხა" />
+                <DataGridTextColumn Binding="{Binding SalesActualAmount, StringFormat=\{0:F2\}}" Header="შესრულება" />
+                <DataGridTextColumn Binding="{Binding SalesBudgetAmount, StringFormat=\{0:F2\}}" Header="თვის გეგმა" />
+                <DataGridTextColumn Binding="{Binding Balance, StringFormat=\{0:F2\}}" Header="ბალანსი" />
+                <DataGridTextColumn Binding="{Binding PhoneNo_}" Header="ტელეფონი" />
+                <DataGridTextColumn Binding="{Binding Contact}" Header="საკონტაქტო პირი" />
+                <DataGridTextColumn Binding="{Binding PaymentSchedule, StringFormat=\{0:F2\}}" Header="გადასახდელი თანხა" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="del_comment" Click="Del_comment_OnClick" Width="30" Height="30" BorderBrush="Transparent" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Black" Background="Transparent" Visibility="{Binding IsNewCustomer, Converter={StaticResource BooleanVisibilityConverter}}">
+                                <iconPacks:PackIconFontAwesome Width="15" Height="15" 
+                                              Kind="Search" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+            <DataGrid x:Name="RegionsGrid"
+                  Margin="5"
+                  RowHeaderWidth="0"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding RegionsList}" FontSize="10"
+                  IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding RegionName}" Header="რეგიონი" />
+                    <DataGridTextColumn Binding="{Binding BudgetAmount, StringFormat=\{0:F2\}}" Header="ბიუჯეტი" />
+                    <DataGridTextColumn Binding="{Binding ActualAmount, StringFormat=\{0:F2\}}" Header="შესრულ" />
+                    <DataGridTextColumn Binding="{Binding Percent, StringFormat={}{0}%}" Header="%" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+
+            <!--<StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                <lvc:PieChart Name="Chart" Grid.Row="1" Series="{Binding SeriesCollection}" LegendLocation="Right" InnerRadius="30" Height="99" Margin="-35,0,0,0" >
+                    <lvc:PieChart.ChartLegend>
+                        <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                    </lvc:PieChart.ChartLegend>
+                    <lvc:PieChart.DataTooltip>
+                        <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                    </lvc:PieChart.DataTooltip>
+                </lvc:PieChart>
+                <lvc:PieChart Name="Chart1"  Series="{Binding SeriesCollection1}" LegendLocation="Right" InnerRadius="30" Margin="0,24,0,0" >
+                    <lvc:PieChart.ChartLegend>
+                        <lvc:DefaultLegend BulletSize="20"></lvc:DefaultLegend>
+                    </lvc:PieChart.ChartLegend>
+                    <lvc:PieChart.DataTooltip>
+                        <lvc:DefaultTooltip BulletSize="20"></lvc:DefaultTooltip>
+                    </lvc:PieChart.DataTooltip>
+                </lvc:PieChart>                
+            </StackPanel>-->
+        </StackPanel>
+        <Grid Grid.Row="2">
+            <TextBox Margin="5" Controls:TextBoxHelper.Watermark="კლიენტის სახელი" HorizontalAlignment="Left" Width="150" Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Margin="163,5,0,5" Controls:TextBoxHelper.Watermark="პირადი N" HorizontalAlignment="Left" Width="119" Text="{Binding FilterStringSN, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBlock Margin="5" HorizontalAlignment="Right"><Run Text="რაოდენობა:"/><Run FontSize="16" FontWeight="Bold" Text="{Binding PosCustomers.Count, Mode=OneWay}"/></TextBlock>
+        </Grid>
+    </Grid>
+</local:CustomersController>

@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:tns="urn:microsoft-dynamics-schemas/codeunit/POSMng" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <schema elementFormDefault="qualified" targetNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="GetCustomerFinDetails">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="customerNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="balanceAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="salesBudgetAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="salesActualAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="recommendedSalesAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="recommendedVisitsMonth" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="dateFilter" type="date" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetCustomerFinDetails_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="balanceAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="salesBudgetAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="salesActualAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="recommendedSalesAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="recommendedVisitsMonth" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CallCustomerFinDetails">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="customerNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CallCustomerFinDetails_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="GetSalesPersFinDetails">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="salesPersNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="regionNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="salesBudgetAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="salesActualAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="regionName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="dateFilter" type="date" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetSalesPersFinDetails_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="salesBudgetAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="salesActualAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="regionName" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CallSalesPersFinDetails">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="CallSalesPersFinDetails_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="CreateSalesHeader">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="docType" type="int" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateSalesHeader_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateSalesLine">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="docType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="lineNo" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="lineType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="accNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="locationCode" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="uOM" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="unitPrice" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="qty" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="lineDisc" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="lineDiscAmt" type="decimal" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateSalesLine_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="CreatePaySchedLine">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="custNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="orderNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="dueDate" type="date" />
+            <element minOccurs="1" maxOccurs="1" name="payAmount" type="decimal" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreatePaySchedLine_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="CreatePaymentLine">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="orderType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="orderNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="pay2Amount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="jnlTemplName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="jnlBatchName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="postingDate" type="date" />
+            <element minOccurs="1" maxOccurs="1" name="accountType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="accountNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="balAccountType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="balAccountNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="respCenter" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="payMethode" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="salesPers" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreatePaymentLine_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="CreateCustVendPaymentLine">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="orderType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="orderNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="pay2Amount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="jnlTemplName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="jnlBatchName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="postingDate" type="date" />
+            <element minOccurs="1" maxOccurs="1" name="accountType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="accountNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="balAccountType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="balAccountNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="respCenter" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="payMethode" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="salesPers" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateCustVendPaymentLine_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="CreateWhsShipment">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="orderType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="orderNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateWhsShipment_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="CreateItemComment">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="itemNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="commentText" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="commentDate" type="date" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateItemComment_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="ReleaseSalesOrder">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="docType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ReleaseSalesOrder_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="ReopenSalesOrder">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="docType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="ReopenSalesOrder_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="DeleteSalesOrder">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="docType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="docNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="DeleteSalesOrder_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="CreateNewCustomer">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="name" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="vATRegNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="vATPayer" type="boolean" />
+            <element minOccurs="1" maxOccurs="1" name="contactName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="phoneNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="primaryAddress" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="ship2Address" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="city" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="country" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="salesPersonCode" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateNewCustomer_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CalcItemInventoryByLocation">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="itemNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="locationCode" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CalcItemInventoryByLocation_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="decimal" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetItemInventoryByLocations">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="itemNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetItemInventoryByLocations_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateCustItemLike">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="custNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="itemNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="custLike" type="boolean" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateCustItemLike_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
+      <element name="CreatePOSMessage">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="senderIDP" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="receiverIDP" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="messageTextP" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreatePOSMessage_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="OrderWaybillUploaded">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="orderType" type="int" />
+            <element minOccurs="1" maxOccurs="1" name="orderNo" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="OrderWaybillUploaded_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="boolean" />
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="GetCustomerFinDetails">
+    <part name="parameters" element="tns:GetCustomerFinDetails" />
+  </message>
+  <message name="GetCustomerFinDetails_Result">
+    <part name="parameters" element="tns:GetCustomerFinDetails_Result" />
+  </message>
+  <message name="CallCustomerFinDetails">
+    <part name="parameters" element="tns:CallCustomerFinDetails" />
+  </message>
+  <message name="CallCustomerFinDetails_Result">
+    <part name="parameters" element="tns:CallCustomerFinDetails_Result" />
+  </message>
+  <message name="GetSalesPersFinDetails">
+    <part name="parameters" element="tns:GetSalesPersFinDetails" />
+  </message>
+  <message name="GetSalesPersFinDetails_Result">
+    <part name="parameters" element="tns:GetSalesPersFinDetails_Result" />
+  </message>
+  <message name="CallSalesPersFinDetails">
+    <part name="parameters" element="tns:CallSalesPersFinDetails" />
+  </message>
+  <message name="CallSalesPersFinDetails_Result">
+    <part name="parameters" element="tns:CallSalesPersFinDetails_Result" />
+  </message>
+  <message name="CreateSalesHeader">
+    <part name="parameters" element="tns:CreateSalesHeader" />
+  </message>
+  <message name="CreateSalesHeader_Result">
+    <part name="parameters" element="tns:CreateSalesHeader_Result" />
+  </message>
+  <message name="CreateSalesLine">
+    <part name="parameters" element="tns:CreateSalesLine" />
+  </message>
+  <message name="CreateSalesLine_Result">
+    <part name="parameters" element="tns:CreateSalesLine_Result" />
+  </message>
+  <message name="CreatePaySchedLine">
+    <part name="parameters" element="tns:CreatePaySchedLine" />
+  </message>
+  <message name="CreatePaySchedLine_Result">
+    <part name="parameters" element="tns:CreatePaySchedLine_Result" />
+  </message>
+  <message name="CreatePaymentLine">
+    <part name="parameters" element="tns:CreatePaymentLine" />
+  </message>
+  <message name="CreatePaymentLine_Result">
+    <part name="parameters" element="tns:CreatePaymentLine_Result" />
+  </message>
+  <message name="CreateCustVendPaymentLine">
+    <part name="parameters" element="tns:CreateCustVendPaymentLine" />
+  </message>
+  <message name="CreateCustVendPaymentLine_Result">
+    <part name="parameters" element="tns:CreateCustVendPaymentLine_Result" />
+  </message>
+  <message name="CreateWhsShipment">
+    <part name="parameters" element="tns:CreateWhsShipment" />
+  </message>
+  <message name="CreateWhsShipment_Result">
+    <part name="parameters" element="tns:CreateWhsShipment_Result" />
+  </message>
+  <message name="CreateItemComment">
+    <part name="parameters" element="tns:CreateItemComment" />
+  </message>
+  <message name="CreateItemComment_Result">
+    <part name="parameters" element="tns:CreateItemComment_Result" />
+  </message>
+  <message name="ReleaseSalesOrder">
+    <part name="parameters" element="tns:ReleaseSalesOrder" />
+  </message>
+  <message name="ReleaseSalesOrder_Result">
+    <part name="parameters" element="tns:ReleaseSalesOrder_Result" />
+  </message>
+  <message name="ReopenSalesOrder">
+    <part name="parameters" element="tns:ReopenSalesOrder" />
+  </message>
+  <message name="ReopenSalesOrder_Result">
+    <part name="parameters" element="tns:ReopenSalesOrder_Result" />
+  </message>
+  <message name="DeleteSalesOrder">
+    <part name="parameters" element="tns:DeleteSalesOrder" />
+  </message>
+  <message name="DeleteSalesOrder_Result">
+    <part name="parameters" element="tns:DeleteSalesOrder_Result" />
+  </message>
+  <message name="CreateNewCustomer">
+    <part name="parameters" element="tns:CreateNewCustomer" />
+  </message>
+  <message name="CreateNewCustomer_Result">
+    <part name="parameters" element="tns:CreateNewCustomer_Result" />
+  </message>
+  <message name="CalcItemInventoryByLocation">
+    <part name="parameters" element="tns:CalcItemInventoryByLocation" />
+  </message>
+  <message name="CalcItemInventoryByLocation_Result">
+    <part name="parameters" element="tns:CalcItemInventoryByLocation_Result" />
+  </message>
+  <message name="GetItemInventoryByLocations">
+    <part name="parameters" element="tns:GetItemInventoryByLocations" />
+  </message>
+  <message name="GetItemInventoryByLocations_Result">
+    <part name="parameters" element="tns:GetItemInventoryByLocations_Result" />
+  </message>
+  <message name="CreateCustItemLike">
+    <part name="parameters" element="tns:CreateCustItemLike" />
+  </message>
+  <message name="CreateCustItemLike_Result">
+    <part name="parameters" element="tns:CreateCustItemLike_Result" />
+  </message>
+  <message name="CreatePOSMessage">
+    <part name="parameters" element="tns:CreatePOSMessage" />
+  </message>
+  <message name="CreatePOSMessage_Result">
+    <part name="parameters" element="tns:CreatePOSMessage_Result" />
+  </message>
+  <message name="OrderWaybillUploaded">
+    <part name="parameters" element="tns:OrderWaybillUploaded" />
+  </message>
+  <message name="OrderWaybillUploaded_Result">
+    <part name="parameters" element="tns:OrderWaybillUploaded_Result" />
+  </message>
+  <portType name="POSMng_Port">
+    <operation name="GetCustomerFinDetails">
+      <input name="GetCustomerFinDetails" message="tns:GetCustomerFinDetails" />
+      <output name="GetCustomerFinDetails_Result" message="tns:GetCustomerFinDetails_Result" />
+    </operation>
+    <operation name="CallCustomerFinDetails">
+      <input name="CallCustomerFinDetails" message="tns:CallCustomerFinDetails" />
+      <output name="CallCustomerFinDetails_Result" message="tns:CallCustomerFinDetails_Result" />
+    </operation>
+    <operation name="GetSalesPersFinDetails">
+      <input name="GetSalesPersFinDetails" message="tns:GetSalesPersFinDetails" />
+      <output name="GetSalesPersFinDetails_Result" message="tns:GetSalesPersFinDetails_Result" />
+    </operation>
+    <operation name="CallSalesPersFinDetails">
+      <input name="CallSalesPersFinDetails" message="tns:CallSalesPersFinDetails" />
+      <output name="CallSalesPersFinDetails_Result" message="tns:CallSalesPersFinDetails_Result" />
+    </operation>
+    <operation name="CreateSalesHeader">
+      <input name="CreateSalesHeader" message="tns:CreateSalesHeader" />
+      <output name="CreateSalesHeader_Result" message="tns:CreateSalesHeader_Result" />
+    </operation>
+    <operation name="CreateSalesLine">
+      <input name="CreateSalesLine" message="tns:CreateSalesLine" />
+      <output name="CreateSalesLine_Result" message="tns:CreateSalesLine_Result" />
+    </operation>
+    <operation name="CreatePaySchedLine">
+      <input name="CreatePaySchedLine" message="tns:CreatePaySchedLine" />
+      <output name="CreatePaySchedLine_Result" message="tns:CreatePaySchedLine_Result" />
+    </operation>
+    <operation name="CreatePaymentLine">
+      <input name="CreatePaymentLine" message="tns:CreatePaymentLine" />
+      <output name="CreatePaymentLine_Result" message="tns:CreatePaymentLine_Result" />
+    </operation>
+    <operation name="CreateCustVendPaymentLine">
+      <input name="CreateCustVendPaymentLine" message="tns:CreateCustVendPaymentLine" />
+      <output name="CreateCustVendPaymentLine_Result" message="tns:CreateCustVendPaymentLine_Result" />
+    </operation>
+    <operation name="CreateWhsShipment">
+      <input name="CreateWhsShipment" message="tns:CreateWhsShipment" />
+      <output name="CreateWhsShipment_Result" message="tns:CreateWhsShipment_Result" />
+    </operation>
+    <operation name="CreateItemComment">
+      <input name="CreateItemComment" message="tns:CreateItemComment" />
+      <output name="CreateItemComment_Result" message="tns:CreateItemComment_Result" />
+    </operation>
+    <operation name="ReleaseSalesOrder">
+      <input name="ReleaseSalesOrder" message="tns:ReleaseSalesOrder" />
+      <output name="ReleaseSalesOrder_Result" message="tns:ReleaseSalesOrder_Result" />
+    </operation>
+    <operation name="ReopenSalesOrder">
+      <input name="ReopenSalesOrder" message="tns:ReopenSalesOrder" />
+      <output name="ReopenSalesOrder_Result" message="tns:ReopenSalesOrder_Result" />
+    </operation>
+    <operation name="DeleteSalesOrder">
+      <input name="DeleteSalesOrder" message="tns:DeleteSalesOrder" />
+      <output name="DeleteSalesOrder_Result" message="tns:DeleteSalesOrder_Result" />
+    </operation>
+    <operation name="CreateNewCustomer">
+      <input name="CreateNewCustomer" message="tns:CreateNewCustomer" />
+      <output name="CreateNewCustomer_Result" message="tns:CreateNewCustomer_Result" />
+    </operation>
+    <operation name="CalcItemInventoryByLocation">
+      <input name="CalcItemInventoryByLocation" message="tns:CalcItemInventoryByLocation" />
+      <output name="CalcItemInventoryByLocation_Result" message="tns:CalcItemInventoryByLocation_Result" />
+    </operation>
+    <operation name="GetItemInventoryByLocations">
+      <input name="GetItemInventoryByLocations" message="tns:GetItemInventoryByLocations" />
+      <output name="GetItemInventoryByLocations_Result" message="tns:GetItemInventoryByLocations_Result" />
+    </operation>
+    <operation name="CreateCustItemLike">
+      <input name="CreateCustItemLike" message="tns:CreateCustItemLike" />
+      <output name="CreateCustItemLike_Result" message="tns:CreateCustItemLike_Result" />
+    </operation>
+    <operation name="CreatePOSMessage">
+      <input name="CreatePOSMessage" message="tns:CreatePOSMessage" />
+      <output name="CreatePOSMessage_Result" message="tns:CreatePOSMessage_Result" />
+    </operation>
+    <operation name="OrderWaybillUploaded">
+      <input name="OrderWaybillUploaded" message="tns:OrderWaybillUploaded" />
+      <output name="OrderWaybillUploaded_Result" message="tns:OrderWaybillUploaded_Result" />
+    </operation>
+  </portType>
+  <binding name="POSMng_Binding" type="tns:POSMng_Port">
+    <binding transport="http://schemas.xmlsoap.org/soap/http" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    <operation name="GetCustomerFinDetails">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:GetCustomerFinDetails" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetCustomerFinDetails">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetCustomerFinDetails_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CallCustomerFinDetails">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CallCustomerFinDetails" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CallCustomerFinDetails">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CallCustomerFinDetails_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GetSalesPersFinDetails">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:GetSalesPersFinDetails" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetSalesPersFinDetails">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetSalesPersFinDetails_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CallSalesPersFinDetails">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CallSalesPersFinDetails" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CallSalesPersFinDetails">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CallSalesPersFinDetails_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CreateSalesHeader">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateSalesHeader" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreateSalesHeader">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreateSalesHeader_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CreateSalesLine">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateSalesLine" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreateSalesLine">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreateSalesLine_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CreatePaySchedLine">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreatePaySchedLine" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreatePaySchedLine">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreatePaySchedLine_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CreatePaymentLine">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreatePaymentLine" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreatePaymentLine">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreatePaymentLine_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CreateCustVendPaymentLine">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateCustVendPaymentLine" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreateCustVendPaymentLine">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreateCustVendPaymentLine_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CreateWhsShipment">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateWhsShipment" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreateWhsShipment">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreateWhsShipment_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CreateItemComment">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateItemComment" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreateItemComment">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreateItemComment_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="ReleaseSalesOrder">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:ReleaseSalesOrder" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ReleaseSalesOrder">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="ReleaseSalesOrder_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="ReopenSalesOrder">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:ReopenSalesOrder" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="ReopenSalesOrder">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="ReopenSalesOrder_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="DeleteSalesOrder">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:DeleteSalesOrder" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="DeleteSalesOrder">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="DeleteSalesOrder_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CreateNewCustomer">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateNewCustomer" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreateNewCustomer">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreateNewCustomer_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CalcItemInventoryByLocation">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CalcItemInventoryByLocation" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CalcItemInventoryByLocation">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CalcItemInventoryByLocation_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GetItemInventoryByLocations">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:GetItemInventoryByLocations" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetItemInventoryByLocations">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetItemInventoryByLocations_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CreateCustItemLike">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateCustItemLike" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreateCustItemLike">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreateCustItemLike_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="CreatePOSMessage">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreatePOSMessage" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreatePOSMessage">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreatePOSMessage_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="OrderWaybillUploaded">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:OrderWaybillUploaded" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="OrderWaybillUploaded">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="OrderWaybillUploaded_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="POSMng">
+    <port name="POSMng_Port" binding="tns:POSMng_Binding">
+      <address location="http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Codeunit/POSMng" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+    </port>
+  </service>
+</definitions>

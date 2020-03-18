@@ -1,0 +1,100 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PosClient.Views.Dialogs"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             x:Class="PosClient.Views.Dialogs.CustomerDetail"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="1000">
+    <UserControl.DataContext>
+        <ViewModels:CustomerDetailViewModel/>
+    </UserControl.DataContext>
+    <Grid Background="White" Margin="0,20,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="130"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="130"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">კლიენტის სახელი:</TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrentCustomer.Name, Mode=TwoWay}" Margin="10"></TextBox>
+        <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">იურიდიული მისამართი:</TextBlock>
+        <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding CurrentCustomer.Address, Mode=TwoWay}" Margin="10"></TextBox>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">საიდენტიფიკაციო კოდი:</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CurrentCustomer.VATRegistrationNo_}" Margin="10"></TextBox>
+        <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">მიწოდების მისამართი:</TextBlock>
+        <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding CurrentCustomer.ShipToAddress, Mode=TwoWay}" Margin="10"></TextBox>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">დღგ-ს გადამხდელი:</TextBlock>
+        <controls:ToggleSwitch x:Name="isdgg" Grid.Row="2" Grid.Column="1"  Margin="10"
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                   OffLabel="არა"
+                                   OnLabel="კი" IsChecked="{Binding CurrentCustomer.NeedsVATInvoice}" />
+        <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">ქალაქი:</TextBlock>
+        <ComboBox Width="100"  Grid.Row="2" Grid.Column="3" 
+                            HorizontalAlignment="Left"
+                          Margin="10"
+                          DisplayMemberPath="PostCodeAndCity"
+                          IsEditable="True"
+                          ItemsSource="{Binding Cities}"
+                          SelectedValue="{Binding CurrentCustomer.City, Mode=TwoWay}" 
+                          SelectedValuePath="City"
+                           >
+            <!--<ComboBox.ItemTemplate>
+                <DataTemplate >
+                    
+                    <StackPanel Orientation="Horizontal" >
+                        <TextBlock Text="{Binding Cities}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>-->
+            
+        </ComboBox>
+
+
+        <TextBlock Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">საკონტაქტო პირი:</TextBlock>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding CurrentCustomer.Contact}" Margin="10"></TextBox>
+        <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">ქვეყანა:</TextBlock>
+        <ComboBox Width="100"  Grid.Row="3" Grid.Column="3" 
+                            HorizontalAlignment="Left"
+                          Margin="10"
+                          DisplayMemberPath="Name"
+                          IsEditable="True"
+                          ItemsSource="{Binding Countries}"
+                          SelectedValue="{Binding CurrentCustomer.Country_RegionCode, Mode=TwoWay}" 
+                          SelectedValuePath="Code"
+                           />
+
+        <TextBox Grid.Row="3" Visibility="Collapsed" Grid.Column="3" Text="{Binding CurrentCustomer.Country_RegionCode}" Margin="10"></TextBox>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">ტელეფონი:</TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding CurrentCustomer.PhoneNo_}" Margin="10"></TextBox>
+
+        <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">რეზიდენტი:</TextBlock>
+        <controls:ToggleSwitch x:Name="isResident" Grid.Row="4" Grid.Column="3"  Margin="10"
+                               Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                               OffLabel="არა"
+                               OnLabel="კი" IsChecked="True" />
+
+
+        <Grid Grid.Row="5" Grid.ColumnSpan="4">
+            <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Red" FontWeight="Bold" x:Name="lbl_error" Text="{Binding Error, Mode=OneWay}"></TextBlock>
+            <Button VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="Btn_save" Click="Btn_save_OnClick">შენახვა</Button>
+            <Button VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,12,64,12" x:Name="Btn_cancel" Click="Btn_cancel_OnClick">გაუქმება</Button>
+            <Button VerticalAlignment="Center" Visibility="{Binding BtnCloseVisibility}" HorizontalAlignment="Right" Margin="0,12,150,12" x:Name="Btn_close" Click="Btn_close_OnClick">გამოსვლა</Button>
+        </Grid>
+    </Grid>
+</UserControl>

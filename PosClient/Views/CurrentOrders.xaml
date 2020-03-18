@@ -1,0 +1,114 @@
+﻿<local:CurrentOrdersController
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"     
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:local="clr-namespace:PosClient.Views"
+             dialogs:DialogParticipation.Register="{Binding}"    
+             xmlns:dialogs1="clr-namespace:PosClient.Views.Dialogs"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             x:Class="PosClient.Views.CurrentOrders"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="{x:Type DatePickerTextBox}">
+                <Setter Property="Text" Value="თარიღი.." />
+            </Style>
+            <dialogs:CustomDialog x:Key="SendDetail"
+                                 x:Name="SendDetail"
+                                 Title="">
+                <dialogs1:SendtoNavResult x:Name="sendResultDetailControl" DataContext="{Binding}"  />
+            </dialogs:CustomDialog>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <local:CurrentOrdersController.DataContext>
+        <ViewModels:CurrentOrdersViewModel/>
+    </local:CurrentOrdersController.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBox Margin="5" FontSize="16" Width="100" x:Name="tbx_no" Text="{Binding No, Mode=TwoWay}"
+                     Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                     Controls:TextBoxHelper.Watermark="ნომერი..."
+                     ></TextBox>
+            <TextBox Margin="5" FontSize="16" Width="160"  x:Name="tbx_client_code" Text="{Binding Code, Mode=TwoWay}"
+                     Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                     Controls:TextBoxHelper.Watermark="კლიენტის კოდი..."
+                     ></TextBox>
+            <TextBox Margin="5" FontSize="16" Width="210"  x:Name="tbx_client_name" Text="{Binding Name, Mode=TwoWay}"
+                     Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                     Controls:TextBoxHelper.Watermark="კლიენტის დასახელება..."
+                     ></TextBox>
+            <DatePicker Margin="5" FontSize="16" Width="120" SelectedDate="{Binding From,Mode=TwoWay}"   x:Name="dtp_from"></DatePicker>
+            <DatePicker Margin="5" FontSize="16" Width="120"  SelectedDate="{Binding To,Mode=TwoWay}" x:Name="dtp_to"></DatePicker>
+            <Button Margin="5" x:Name="btn_search" Click="Btn_search_OnClick">
+                <iconPacks:PackIconFontAwesome Width="10" Height="10" 
+                                              Kind="Search" />
+            </Button>
+            <Button Margin="5" x:Name="btn_clear" Click="Btn_clear_OnClick">
+                <iconPacks:PackIconFontAwesome Width="10" Height="10" 
+                                              Kind="Times" />
+            </Button>            
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Button VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" x:Name="btn_send_orders" Click="btn_send_orders_Click" Visibility="{Binding SendButtonVisibility, Mode=OneWay}">მონიშნული ორდერების გადაგზავნა</Button>
+            <Button VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" x:Name="btn_synchronize" Click="Btn_synchronize_OnClick" Visibility="{Binding SyncVisibility, Mode=OneWay}">სინქრონიზაცია</Button>
+        </Grid>
+        <DataGrid x:Name="CustomersGrid"
+                  Grid.Row="2"
+                  Margin="5"
+                  RowHeaderWidth="0" FontSize="16"
+                  GridLinesVisibility="Horizontal"
+                  SelectionMode="Single"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding OrdersList, Mode=TwoWay}"
+                  Style="{DynamicResource MetroDataGrid}" SelectedItem="{Binding SelectedCustomer}" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn CanUserReorder="False" CanUserResize="False">
+                    <DataGridTemplateColumn.HeaderTemplate>
+                        <DataTemplate>
+                            <Controls:ToggleSwitch
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                   OffLabel="" OnLabel="" Checked="ToggleSwitch_Checked" Unchecked="ToggleSwitch_Unchecked" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.HeaderTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Controls:ToggleSwitch Margin="5"
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                   OffLabel="" OnLabel="" IsChecked="{Binding IsChecked, Mode=TwoWay}" Checked="ToggleSwitch_OnChecked" Unchecked="ToggleSwitch_OnUnchecked" />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding PostingDate, StringFormat=dd.MM.yyyy HH:mm}" Header="გატარების თარიღი" SortDirection="Descending" />
+                <DataGridTemplateColumn Header="ნომერი">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Button Style="{StaticResource LinkButton}" Content="{Binding No_}" x:Name="btn_order_no" Click="Btn_order_no_OnClick"></Button>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding Sell_toCustomerNo}" Header="კლიენტის კოდი" />
+                <DataGridTextColumn Binding="{Binding Sell_toCustomerName}" Header="კლიენტის დასახელება" />
+                <DataGridTextColumn Binding="{Binding AmountIncludingVat, StringFormat=\{0:F2\}}" Header="თანხა" />
+            </DataGrid.Columns>
+        </DataGrid>        
+        <Grid Grid.Row="3">
+            <TextBlock HorizontalAlignment="Left" Margin="5"><Run>რაოდენობა:</Run><Run FontSize="16" FontWeight="Bold" Text="{Binding OrdersList.Count, Mode=OneWay}"></Run></TextBlock>
+            <TextBlock HorizontalAlignment="Right" Margin="5"><Run>ჯამი:</Run><Run FontSize="16" FontWeight="Bold" Text="{Binding Summary, Mode=OneWay, StringFormat=F2}"></Run></TextBlock>
+        </Grid>
+     </Grid>
+</local:CurrentOrdersController>

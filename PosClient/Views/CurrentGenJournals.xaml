@@ -1,0 +1,115 @@
+﻿<local:CurrentGenJournalsController
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             x:Class="PosClient.Views.CurrentGenJournals"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="700">
+    <local:CurrentGenJournalsController.DataContext>
+        <ViewModels:CurrentGenJournalsViewModel/>
+    </local:CurrentGenJournalsController.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+        </Grid>
+        <DataGrid x:Name="PaymentsGrid" Grid.Row="1"  Visibility="{Binding NonEditVisibility, Mode=OneWay}"
+                  Margin="5"
+                  SelectionMode="Single"
+                  FontSize="15"
+                  RowHeaderWidth="0"
+                  IsReadOnly="True"
+                  GridLinesVisibility="Horizontal"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Journals}"
+                  Style="{DynamicResource MetroDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn  Binding="{Binding AccountTypeName}" Header="მიმღების ტიპი" />
+                <DataGridTextColumn  Binding="{Binding AccountNo_}" Header="მიმღები" />
+                <DataGridTextColumn  Binding="{Binding BalAccountTypeName}" Header="გადამხდელის ტიპი" />
+                <DataGridTextColumn  Binding="{Binding Bal_AccountNo_}" Header="გადამხდელის კოდი" />
+                <DataGridTextColumn  Binding="{Binding Bal_AccountName}" Header="გადამხდელი სახელი" />
+                <DataGridTextColumn  Binding="{Binding PaymentMethodCode}" Header="გადახდის მეთოდი" />
+                <DataGridTextColumn  Binding="{Binding DocumentNo}" Header="Order.No" />
+                <DataGridTextColumn  Binding="{Binding PostingDate, StringFormat=dd.MM.yyyy HH:mm}" Header="თარიღი" SortDirection="Ascending" />
+                <DataGridTextColumn  Binding="{Binding Amount, StringFormat=F2 }" Header="თანხა" >
+                    <DataGridTextColumn.CellStyle>
+                        <Style>
+                            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right"/>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>                    
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="PaymentsGridManager" Grid.Row="1" Visibility="{Binding SaveCancelVisibility, Mode=OneWay}"
+                  Margin="5"
+                  SelectionMode="Single"
+                  FontSize="15"
+                  RowHeaderWidth="0"
+                  IsReadOnly="True"
+                  GridLinesVisibility="Horizontal"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Journals}"
+                  Style="{DynamicResource MetroDataGrid}">
+            <DataGrid.Columns>
+                <DataGridTextColumn  Binding="{Binding AccountTypeName}" Header="მიმღების ტიპი" />
+                <DataGridTextColumn  Binding="{Binding AccountNo_}" Header="მიმღები" />
+                <DataGridTextColumn  Binding="{Binding BalAccountTypeName}" Header="გადამხდელის ტიპი" />
+                <DataGridTextColumn  Binding="{Binding Bal_AccountNo_}" Header="გადამხდელის კოდი" />
+                <DataGridTextColumn  Binding="{Binding Bal_AccountName}" Header="გადამხდელი სახელი" />
+                <DataGridTextColumn  Binding="{Binding PaymentMethodCode}" Header="გადახდის მეთოდი" />
+                <DataGridTextColumn  Binding="{Binding DocumentNo}" Header="Order.No" />
+                <DataGridTemplateColumn Header="თარიღი" Width="140" SortMemberPath="PostingDate">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <DatePicker SelectedDate="{Binding PostingDate, Mode=TwoWay,UpdateSourceTrigger=LostFocus, StringFormat='dd/MM/yyyy HH:mm'}"   FontSize="15">
+                                    </DatePicker>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn  Binding="{Binding Amount, StringFormat=F2 }" Header="თანხა" >
+                    <DataGridTextColumn.CellStyle>
+                        <Style>
+                            <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right"/>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button  x:Name="del_payment" Click="Del_payment_OnClick" Width="30" Height="20" BorderBrush="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" Background="Transparent">
+                                <iconPacks:PackIconFontAwesome Width="10" Height="10" 
+                                              Kind="Times" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>                
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <Grid Grid.Row="2">
+            <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="DarkBlue"  >
+                <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">ჯამი:</TextBlock>
+                <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding Summary, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+            </StackPanel>
+            <Button HorizontalAlignment="Right" x:Name="btn_edit" VerticalAlignment="Center" Margin="0,8,152,8" Visibility="{Binding EditBtnVisibility}" Click="Btn_edit_OnClick">რედაქტირება</Button>
+            <Button HorizontalAlignment="Right" x:Name="btn_save" VerticalAlignment="Center" Margin="0,8,78,8" Visibility="{Binding SaveCancelVisibility}" Click="Btn_save_OnClick">შენახვა</Button>
+            <Button HorizontalAlignment="Right" x:Name="btn_cancel" VerticalAlignment="Center" Margin="0,8,7,8" Visibility="{Binding SaveCancelVisibility}" Click="Btn_cancel_OnClick">გაუქმება</Button>
+        </Grid>
+    </Grid>
+
+
+
+</local:CurrentGenJournalsController>

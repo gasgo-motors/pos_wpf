@@ -1,0 +1,116 @@
+﻿<local:PaymentController
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:Dialogs="clr-namespace:PosClient.Views.Dialogs" 
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             Dialog:DialogParticipation.Register="{Binding}"    
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels" x:Class="PosClient.Views.Payment"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="700">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Dialog:CustomDialog x:Key="PayementDetail"
+                                 x:Name="PayementDetail"
+                                 Title="დეტალური ინფორმაცია გადახდაზე">
+                <Dialogs:PaymentDetail x:Name="paymentDetailControl" DataContext="{Binding}"  />
+            </Dialog:CustomDialog>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <local:PaymentController.DataContext>
+        <ViewModels:PaymentViewModel/>
+    </local:PaymentController.DataContext>
+    <Grid x:Name="gridcontainer">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Height="50">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding ParentModel.Order.Sell_toCustomerName}" FontWeight="Bold" FontSize="16" Margin="10"/>
+        </Grid>
+        <StackPanel Orientation="Vertical" Grid.Row="1">
+            <DataGrid x:Name="PaymentsGrid"
+                  Margin="5"
+                  SelectionMode="Single"
+                  FontSize="16"
+                  RowHeaderWidth="0"
+                  IsReadOnly="True"
+                  GridLinesVisibility="Horizontal"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding GeJournals}"
+                  IsSynchronizedWithCurrentItem="True"
+                  CanUserSortColumns="False"
+                  SelectedItem="{Binding SelectedGeJournal, Mode=TwoWay}"
+                  Style="{DynamicResource MetroDataGrid}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn  Binding="{Binding AccountTypeName}" Header="მიმღების ტიპი" />
+                    <DataGridTextColumn  Binding="{Binding AccountNo_}" Header="მიმღები" />
+                    <DataGridTextColumn  Binding="{Binding BalAccountTypeName}" Header="გადამხდელის ტიპი" />
+                    <DataGridTextColumn  Binding="{Binding Bal_AccountNo_}" Header="გადამხდელი" />
+                    <DataGridTextColumn  Binding="{Binding PaymentMethodCode}" Header="გადახდის მეთოდი" />
+                    <DataGridTextColumn  Binding="{Binding Amount, StringFormat=F2 }" Header="თანხა" />
+                    <DataGridTemplateColumn Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Visibility="{Binding DataContext.ParentModel.SaveAndCancelButtonsVisibility, Mode=OneWay, ElementName=gridcontainer }" Width="30" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}" x:Name="Btn_detail" Click="Btn_detail_OnClick">
+                                    <iconPacks:PackIconFontAwesome Width="15"
+                                              Height="15"
+                                              Kind="Search" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Visibility="{Binding DataContext.ParentModel.SaveAndCancelButtonsVisibility, ElementName=gridcontainer, Mode=OneWay}" x:Name="del_comment" Click="Del_comment_OnClick" Width="30" Height="20" BorderBrush="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" Background="Transparent">
+                                    <iconPacks:PackIconFontAwesome Width="10" Height="10" 
+                                              Kind="Times" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>                    
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid>
+                <Button Visibility="{Binding ParentModel.SaveAndCancelButtonsVisibility, Mode=OneWay}" FontSize="18" VerticalAlignment="Center" x:Name="BtnAddNewRow" HorizontalAlignment="Right" Margin="0,10,10,10" Click="BtnAddNewRow_OnClick">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconFontAwesome Width="13" Height="13" VerticalAlignment="Center" Margin="5"
+                                              Kind="Plus" />
+                        <TextBlock>დამატება</TextBlock>
+                    </StackPanel>
+                </Button>
+            </Grid>
+        </StackPanel>
+
+        <Grid Grid.Row="2" Height="50">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="DarkBlue" Visibility="Collapsed"  >
+                    <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">ჯამი:</TextBlock>
+                    <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding ParentModel.Order.AmountIncludingVat, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="{Binding MustPayColor}" Visibility="{Binding ParentModel.MustPayVisibility}" Margin="10,0,0,0">
+                    <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">გადასახდელი:</TextBlock>
+                    <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding MustPayeAmount, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="Blue" Margin="10,0,0,0" >
+                    <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">გადახდა:</TextBlock>
+                    <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding AmountPayed, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                <Button VerticalAlignment="Center" x:Name="BtnEdit" FontSize="15" Click="BtnEdit_OnClick" Content="რედაქტირება" Visibility="{Binding ParentModel.EditButttonVisibility, Mode=OneWay}"/>
+                <Button VerticalAlignment="Center" x:Name="BtnSave" FontSize="15" Click="BtnSave_OnClick" Margin="20,0,0,0" Content="შენახვა" Visibility="{Binding ParentModel.SaveAndCancelButtonsVisibility, Mode=OneWay}"/>
+                <Button VerticalAlignment="Center" x:Name="BtnGoBack" Margin="20,0,20,0" FontSize="15" Click="BtnGoBack_OnClick" Content="გამოსვლა"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</local:PaymentController>

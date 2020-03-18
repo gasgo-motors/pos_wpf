@@ -1,0 +1,134 @@
+﻿<Controls:MetroWindow xmlns:Views="clr-namespace:PosClient.Views" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"                          
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PosClient"
+        xmlns:ViewModels="clr-namespace:PosClient.ViewModels" xmlns:Converters="clr-namespace:PosClient.Converters"
+                      xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      xmlns:dialogs1="clr-namespace:PosClient.Views.Dialogs"
+                dialogs:DialogParticipation.Register="{Binding}"                          
+                      x:Class="PosClient.MainWindow"
+        mc:Ignorable="d"
+        Title="Pos Gasgo" 
+        Height="350" Width="525" Icon="Resources/Images/bit_32_32.ico" WindowState="Maximized" BorderThickness="1" BorderBrush="Black" Loaded="MetroWindow_Loaded" Closing="MetroWindow_Closing">
+
+    <Controls:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <Converters:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+
+            <Ellipse x:Key="AccentMenuIcon"
+                     Width="16"
+                     Height="16"
+                     Fill="{Binding ColorBrush, Mode=OneWay}"
+                     x:Shared="False" />
+            <iconPacks:PackIconFontAwesome x:Key="parametersIcon" Kind="Cog"  />
+            <iconPacks:PackIconFontAwesome x:Key="signOutIcon" Kind="SignOut"  />
+
+            <Style x:Key="AccentColorMenuItemStyle"
+                   BasedOn="{StaticResource MetroMenuItem}"
+                   TargetType="{x:Type MenuItem}">
+                <Setter Property="Command" Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+                <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}" />
+            </Style>
+
+            <dialogs:CustomDialog x:Key="UserDetail"
+                                 x:Name="UserDetail"
+                                 Title="დეტალური ინფორმაცია მომხმარებელზე">
+                <dialogs1:PosUserDetail x:Name="userDetailControl" DataContext="{Binding}"  />
+            </dialogs:CustomDialog>
+
+            <dialogs:CustomDialog x:Key="CutomErrorDialog"
+                                 x:Name="CutomErrorDialog"
+                                 Title="">
+                <dialogs1:CutomErrorDialog x:Name="CutomErrorDialogControl" DataContext="{Binding}"  />
+            </dialogs:CustomDialog>
+
+            <dialogs:CustomDialog x:Key="SendDetailAll"
+                                 x:Name="SendDetailAll"
+                                 Title="">
+                <dialogs1:SendtoNavResult x:Name="sendResultDetailControl" DataContext="{Binding}"  />
+            </dialogs:CustomDialog>            
+            
+            
+        </ResourceDictionary>
+    </Controls:MetroWindow.Resources>
+
+
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <Menu HorizontalAlignment="Left" VerticalAlignment="Stretch">
+                <MenuItem Header="Theme" ItemsSource="{Binding AccentColors, Mode=OneWay}"
+                          ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}"/>
+            </Menu>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
+
+    <Controls:MetroWindow.DataContext>
+        <ViewModels:MainWindowViewModel/>
+    </Controls:MetroWindow.DataContext>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush Stretch="Fill"  x:Name="Imagebackground" ImageSource="{Binding MotivationImage}" Opacity="0.2" />
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" x:Name="gridHeader" BorderThickness="0,0,0,7">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0.5,0.5" EndPoint="0.5,1" >
+                    <GradientStop Color="Black"/>
+                    <GradientStop Color="Transparent" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Grid Margin="5">
+                <Button Width="{Binding HomeBtnSize, Mode=OneWay}" Height="{Binding HomeBtnSize, Mode=OneWay}" VerticalAlignment="Top" HorizontalAlignment="Left" x:Name="BtnHome"
+                        Style="{DynamicResource MahApps.Metro.Styles.MetroCircleButtonStyle}" Visibility="{Binding ShowHomeBtn, Converter={StaticResource BooleanVisibilityConverter}, Mode=OneWay}" Click="BtnHome_Click">
+                    <iconPacks:PackIconFontAwesome Width="{Binding HomeIconSize, Mode=OneWay}"
+                                              Height="{Binding HomeIconSize, Mode=OneWay}"
+                                              Kind="Home" />
+                </Button>
+                <StackPanel Orientation="Horizontal" Margin="80,0,0,0">
+                    <ItemsControl Name="path" Visibility="Visible"  ItemsSource="{Binding PrevHeaders}" HorizontalAlignment="Left">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" x:Name="patarastacki">
+                                    <TextBlock Text="{Binding}"  VerticalAlignment="Center" FontSize="16"></TextBlock>
+                                    <Path Data="M 0,0  L 10,15 0,30" Margin="0,0,10,0" Stretch="Fill" StrokeThickness="1"  Stroke="#C6C6C6"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel x:Name="mtavari_stacki" Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <TextBlock Text="{Binding HeaderText, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"></TextBlock>
+                </StackPanel>
+                <Controls:DropDownButton x:Name="DownButton1"
+                                         Content="{Binding UserName, Mode=OneWay}" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                         Orientation="Horizontal">
+                    <Controls:DropDownButton.Items>
+                        <MenuItem Header="პარამეტრები" Icon="{StaticResource parametersIcon}" x:Name="MenuParameters" Click="MenuParameters_Click"/>
+                        <MenuItem Header="გამოსვლა" Icon="{StaticResource signOutIcon}" x:Name="MenuSignOut" Click="MenuSignOut_Click" />
+                    </Controls:DropDownButton.Items>
+                </Controls:DropDownButton>
+            </Grid>
+        </Border>
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" x:Name="mainScroll">
+            <Grid  x:Name="GridContainer"/>
+        </ScrollViewer>
+        <StatusBar Grid.Row="2"/>
+    </Grid>
+</Controls:MetroWindow>

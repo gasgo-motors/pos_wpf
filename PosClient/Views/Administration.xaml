@@ -1,0 +1,89 @@
+﻿<local:AdministrationController
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"             
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"                                
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels" x:Class="PosClient.Views.Administration"
+             Dialog:DialogParticipation.Register="{Binding}"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="800">
+    <local:AdministrationController.Resources>
+        <ResourceDictionary>
+            <Style x:Key="LargeTileStyle" TargetType="{x:Type Controls:Tile}">
+                <Setter Property="Height" Value="125" />
+                <Setter Property="TitleFontSize" Value="16" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="Width" Value="300" />
+            </Style>
+            <Dialog:CustomDialog x:Key="CustomDialogTest"
+                                 x:Name="CustomTestDialog"
+                                 Title="აირჩიეთ სინქრონიზაციის ტიპი">
+                <StackPanel Orientation="Vertical">
+                    <CheckBox IsChecked="True" x:Name="chkGeneral" Margin="10" FontSize="16" Content="ზოგადი"/>
+                    <CheckBox x:Name="chkProducts" Margin="10" FontSize="16" Content="პროდუქტები"/>
+                    <CheckBox x:Name="chkReserves" Margin="10" FontSize="16" Content="მანქანის მოდელები"/>
+                   <!-- <CheckBox x:Name="chkPictures" Margin="10" FontSize="16" Content="სურათების წამოღება"/> -->
+                    <CheckBox IsChecked="True" x:Name="chkReservesShort" Margin="10" FontSize="16" Content="მარაგების მარტივი სინქრონიზაცია"/>
+                    <CheckBox x:Name="chkSalesPrices" Margin="10" FontSize="16" Content="ფასები"/>
+                    <CheckBox IsChecked="True" x:Name="chkCustomers" Margin="10" FontSize="16" Content="კლიენტები"/>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <Button Margin="10" x:Name="btnChooseSyncType" Click="btnChooseSyncType_Click" Content="არჩევა"/>
+                        <Button Margin="10" x:Name="btnCancelSycnType" Click="btnCancelSycnType_Click" Content="გამოსვლა"/>
+                    </StackPanel>
+                </StackPanel>
+            </Dialog:CustomDialog>
+
+        </ResourceDictionary>
+    </local:AdministrationController.Resources>
+
+    <local:AdministrationController.DataContext>
+        <ViewModels:AdministrationViewModel/>
+    </local:AdministrationController.DataContext>
+
+    <Grid>
+        <WrapPanel 
+                       Width="940"
+                       Height="382"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
+            <Controls:Tile Title="სინქრონიზაცია" x:Name="BtnSync"
+                               Margin="3"
+                               Style="{StaticResource LargeTileStyle}"
+                               Background="Green" Click="BtnSync_Click">
+                <iconPacks:PackIconModern Width="40"
+                                             Height="40"
+                                             Kind="Refresh" />
+            </Controls:Tile>
+            <Controls:Tile Title="მონაცემების გადაგზავნა NAV-ში" x:Name="BtnSendOrders"  
+                               Margin="3"
+                               Style="{StaticResource LargeTileStyle}"
+                               Background="Blue" Click="BtnSendOrders_Click">
+                <iconPacks:PackIconModern Width="40"
+                                             Height="40"
+                                             Kind="Refresh" />
+            </Controls:Tile>            
+            <Controls:Tile Title="პარამეტრები"
+                               Margin="3"
+                               Background="Gray"
+                               x:Name="tileParameters"
+                               Style="{StaticResource LargeTileStyle}" Click="tileParameters_Click" Visibility="{Binding AdministrationVisible, Mode=OneWay}">
+                <iconPacks:PackIconModern Width="40"
+                                                  Height="40"
+                                                  Kind="ListGear" />
+            </Controls:Tile>
+            <Controls:Tile Title="მომხმარებლების მართვა"
+                               x:Name="tileUsersManagement"
+                               Style="{StaticResource LargeTileStyle}"
+                               Background="Orange" Click="tileUsersManagement_Click" Visibility="{Binding AdministrationVisible, Mode=OneWay}">
+                <iconPacks:PackIconModern Width="40"
+                                             Height="40"
+                                              Kind="PeopleMultiple" />
+            </Controls:Tile>
+        </WrapPanel>
+    </Grid>
+</local:AdministrationController>

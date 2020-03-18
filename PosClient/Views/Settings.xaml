@@ -1,0 +1,279 @@
+﻿<local:SettingsController 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"             
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"                          
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels" x:Class="PosClient.Views.Settings"
+             mc:Ignorable="d" 
+             d:DesignHeight="950" d:DesignWidth="950">
+
+    <local:SettingsController.Resources>
+        <ResourceDictionary>
+            <Style x:Key="GridSetting" TargetType="{x:Type Grid}">
+                <Setter Property="Height" Value="40" />
+                <Setter Property="Margin" Value="5,0,0,0" />
+                <Setter Property="Width" Value="474" />
+            </Style>
+        </ResourceDictionary>
+    </local:SettingsController.Resources>
+
+
+    <local:SettingsController.DataContext>
+        <ViewModels:SettingsViewModel/>
+    </local:SettingsController.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <WrapPanel>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_SalesPersonCode">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_SalesPersonCode" />
+                    <TextBox  HorizontalAlignment="Right" Width="227" Text="{Binding CurrentSettings.Settings_SalesPersonCode, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_SalesPersonName">
+                    <Label  HorizontalAlignment="Left"  Content="Settings_SalesPersonName" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White" Padding="5" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_SalesPersonName, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ResponsibilityCenter">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ResponsibilityCenter" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_ResponsibilityCenter, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_Location">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_Location" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_Location, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_TransitLocation">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_TransitLocation" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_TransitLocation, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_SalesHeaderPrefix">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_SalesHeaderPrefix" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_SalesHeaderPrefix, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ReturnHeaderPrefix">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ReturnHeaderPrefix" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ReturnHeaderPrefix, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_GenCustomerCode">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_GenCustomerCode" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_GenCustomerCode, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_DiplomaticCustomerCode">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_DiplomaticCustomerCode" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_DiplomaticCustomerCode, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_NavSQLServer">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_NavSQLServer" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_NavSQLServer, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_NavSQLDatabase">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_NavSQLDatabase" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_NavSQLDatabase, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_NavSQLUser">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_NavSQLUser" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_NavSQLUser, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_NavSQLPass">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_NavSQLPass" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_NavSQLPass, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_NavCompanyName">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_NavCompanyName" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_NavCompanyName, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_DBVersion">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_DBVersion" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_DBVersion, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ManagerCode">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ManagerCode" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ManagerCode, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ManagerName">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ManagerName" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ManagerName, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ShopName">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ShopName" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ShopName, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ShopAddress">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ShopAddress" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ShopAddress, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ShopTel">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ShopTel" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ShopTel, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ShopWebAddress">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ShopWebAddress" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ShopWebAddress, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ShopReturnTerms">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ShopReturnTerms" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ShopReturnTerms, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ShopThanks">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ShopThanks" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ShopThanks, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ShopPrintReceipt">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ShopPrintReceipt" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ShopPrintReceipt, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_PosServiceUrl">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_PosServiceUrl" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_PosServiceUrl, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_PosServiceUrl1">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_PosServiceUrl1" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_PosServiceUrl1, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_PosServiceUrl2">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_PosServiceUrl2" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_PosServiceUrl2, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_PosServiceUrl3">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_PosServiceUrl3" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_PosServiceUrl3, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_PosServiceUrl4">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_PosServiceUrl4" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_PosServiceUrl4, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_PosServiceUrl5">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_PosServiceUrl5" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_PosServiceUrl5, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_PosServiceUrl6">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White" Content="Settings_PosServiceUrl6" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_PosServiceUrl6, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_PosServiceUrl7">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_PosServiceUrl7" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_PosServiceUrl7, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ResponsibilityCenterName">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ResponsibilityCenterName" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_ResponsibilityCenterName, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_QoutePrefix">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_QoutePrefix" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_QoutePrefix, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_SpecOrderPrefix">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_SpecOrderPrefix" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_SpecOrderPrefix, Mode=TwoWay}"  />
+                </Grid>
+
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_JnlTemplateName">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_JnlTemplateName" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_JnlTemplateName, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_JnlBatchName">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_JnlBatchName" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_JnlBatchName, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_RespEmployee">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_RespEmployee" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_RespEmployee, Mode=TwoWay}"  />
+                </Grid>
+                <!--<Grid Style="{StaticResource GridSetting}" x:Name="Settings_PaymentOrderPrefix">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_PaymentOrderPrefix" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_PaymentOrderPrefix, Mode=TwoWay}"  />
+                </Grid>-->
+
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_DomainName">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_DomainName" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_DomainName, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_DomainUserName">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_DomainUserName" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_DomainUserName, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_DomainPassword">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_DomainPassword" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_DomainPassword, Mode=TwoWay}"  />
+                </Grid>
+
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_GeneralJournalPrefix">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_GeneralJournalPrefix" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_JnlGeneralBatchName, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ChangeSuggestionsInSeconds">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ChangeSuggestionsInSeconds" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_ChangeSuggestionsInMinutes, Mode=TwoWay}"  />
+                </Grid>
+
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_SalesHeaderNumberCount">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_SalesHeaderNumberCount" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_SalesHeaderNumberCount, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ConcurrentQoutePrefix">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ConcurrentQoutePrefix" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_ConcurrentQoutePrefix, Mode=TwoWay}"  />
+                </Grid>                
+            </WrapPanel>
+        </ScrollViewer>
+
+        <StackPanel Orientation="Vertical" Grid.Row="1">
+            <Grid>
+                <TextBox HorizontalAlignment="Left" Margin="5" FontSize="16" Width="300"
+                         Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                         Text="{Binding FilterString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Controls:TextBoxHelper.Watermark="მოძებნეთ პარამეტრი..."
+                         ></TextBox>
+            </Grid>
+            <StackPanel Height="Auto" Orientation="Horizontal">
+                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" x:Name="BtnSave" Click="BtnSave_Click">
+                    <Button.Content>
+                        <Grid>
+                            <iconPacks:PackIconFontAwesome Kind="FloppyOutline" HorizontalAlignment="Left" />
+                            <TextBlock HorizontalAlignment="Left" Margin="20,0,0,0">შენახვა</TextBlock>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" x:Name="BtnCancel" Click="BtnCancel_Click">
+                    <Button.Content>
+                        <Grid>
+                            <iconPacks:PackIconFontAwesome Kind="Times" HorizontalAlignment="Left" Width="10" />
+                            <TextBlock HorizontalAlignment="Left" Margin="20,0,0,0">გაუქმება</TextBlock>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+
+                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" x:Name="BtnExport" Click="BtnExport_Click">
+                    <Button.Content>
+                        <Grid>
+                            <iconPacks:PackIconFontAwesome Kind="Upload" HorizontalAlignment="Left" />
+                            <TextBlock HorizontalAlignment="Left" Margin="20,0,0,0">ექსპორტი</TextBlock>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" x:Name="BtnImport" Click="BtnImport_Click">
+                    <Button.Content>
+                        <Grid>
+                            <iconPacks:PackIconFontAwesome Kind="Download" HorizontalAlignment="Left"  />
+                            <TextBlock HorizontalAlignment="Left" Margin="20,0,0,0">იმპორტი</TextBlock>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+
+            </StackPanel>
+        </StackPanel>
+
+
+    </Grid>
+
+    
+    
+
+</local:SettingsController>

@@ -1,0 +1,27 @@
+﻿<local:LoginController
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels" x:Class="PosClient.Views.Login"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400">
+    <local:LoginController.DataContext>
+        <ViewModels:LoginViewModel/>
+    </local:LoginController.DataContext>
+    <Grid Background="White" Height="190" Width="350">
+        <TextBox x:Name="textBox" HorizontalAlignment="Center" Height="Auto" Margin="10,10,10,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="300" FontSize="20"
+                Controls:TextBoxHelper.Watermark="მომხმარებელი"
+                 Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}" KeyDown="textBox_KeyDown"
+                 />
+        <PasswordBox x:Name="password_box" HorizontalAlignment="Center" Height="Auto" Margin="10,51,10,0" VerticalAlignment="Top" Width="300"  FontSize="20"
+                     Style="{StaticResource MetroButtonRevealedPasswordBox}"
+                     Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                     Controls:TextBoxHelper.Watermark="პაროლი" KeyDown="password_box_KeyDown"
+                     />
+        <Button x:Name="button" Content="შესვლა" HorizontalAlignment="Right" Margin="0,98,25,0" VerticalAlignment="Top" Width="108" FontSize="18" Click="button_Click"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0,152,0,0" TextWrapping="Wrap" Text="{Binding ErrorMessage, Mode=OneWay}" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" Foreground="Red"/>
+    </Grid>
+</local:LoginController>

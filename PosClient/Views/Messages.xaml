@@ -1,0 +1,114 @@
+﻿<local:MessagesController
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+            xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"                                 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels" xmlns:Converters="clr-namespace:PosClient.Converters" x:Class="PosClient.Views.Messages"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <local:MessagesController.Resources>
+        <ResourceDictionary>
+            <Converters:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+            <Style x:Key="BorderStyle" TargetType="{x:Type Border}">
+                <Setter  Property="CornerRadius" Value="7"></Setter>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsMyLetter}" Value="true">
+                        <Setter Property="Background" Value="#FFCCF1FF" />
+                        <Setter Property="Margin" Value="25,10,10,10"></Setter>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsMyLetter}" Value="false">
+                        <Setter Property="Background" Value="#FFF0F4F8" />
+                        <Setter Property="Margin" Value="10,10,25,10"></Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </local:MessagesController.Resources>
+    <local:MessagesController.DataContext>
+        <ViewModels:MessagesViewModel/>
+    </local:MessagesController.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.RowSpan="3" BorderThickness="0,0,1,0" BorderBrush="LightGray"></Border>
+
+        <ComboBox Margin="5" Grid.Row="0" Grid.Column="0" Controls:TextBoxHelper.Watermark="მომხმარებელი" IsEditable="True"  ItemsSource="{Binding UserSetupUserIds}" IsSynchronizedWithCurrentItem="True" SelectedItem="{Binding FiltereddUser, Mode=TwoWay}"/>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl  ItemsSource="{Binding MessageUsers, Mode=TwoWay}" x:Name="list_users" Margin="5">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#FFE2E2E2" BorderThickness="0,0,0,1" Height="50" Visibility="{Binding UserFilterVisibility}">
+                            <Grid  Background="{Binding BackGroundColor}" x:Name="grid_user" MouseDown="Grid_user_OnMouseDown">
+                                <TextBlock Text="{Binding UserId}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="16"/>
+                                <Border  Background="Red" CornerRadius="9" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5" Width="20" Height="20" Visibility="{Binding NewMessageCountVisibility}">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Text="{Binding NewMessagesCount}" Margin="1" FontSize="14"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <Border Grid.Row="1" Grid.Column="1" Margin="5" BorderBrush="#FFE2E2E2" BorderThickness="0,1,0,1">
+            <ScrollViewer>
+                <ItemsControl x:Name="grid_messages"  ItemsSource="{Binding MessageList, Mode=TwoWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Border Style="{StaticResource BorderStyle}" Grid.Column="0">
+                                    <Grid>
+                                        <TextBlock Margin="20,10,20,10" FontSize="14"  TextWrapping="Wrap" FontWeight="{Binding IsNewMessageFontWeight}"><Run Text="{Binding Text}"/></TextBlock>
+                                        <Button Width="20" Height="15" Margin="0,-3,-3,0" VerticalAlignment="Top" HorizontalAlignment="Right" Foreground="White" Background="#FF5F5F5F"
+                                                x:Name="btn_del_message" Click="Btn_del_message_OnClick" Visibility="{Binding OnlyLocal, Converter={StaticResource BooleanVisibilityConverter}, Mode=OneWay}">
+                                            <iconPacks:PackIconFontAwesome Width="8"
+                                              Height="8" Margin="0"
+                                              Kind="Times" />
+                                        </Button>
+
+                                    </Grid>
+                                </Border>
+                                <TextBlock Text="{Binding SendDateTime, StringFormat=dd.MM.yyyy HH:mm}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="Gray" FontSize="11" Margin="0,0,5,0" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+        </Border>
+        <Grid Grid.Row="2" Grid.Column="1" Height="100">
+            <TextBox VerticalAlignment="Top" Margin="5,5,5,0" FontSize="14" Text="{Binding MessageText}" TextWrapping="Wrap" AcceptsReturn="True" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Height="58"/>
+            <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="5" Content="გაგზავნა" x:Name="btn_send_new_message" Click="Btn_send_new_message_OnClick"/>
+        </Grid>
+
+        <Grid Grid.Row="0" Grid.Column="1">
+            <TextBlock Text="{Binding SelectedUser}" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" FontSize="18"/>
+        </Grid>
+
+    </Grid>
+</local:MessagesController>

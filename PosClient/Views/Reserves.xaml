@@ -1,0 +1,496 @@
+﻿<local:ReservesController x:Class="PosClient.Views.Reserves"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"     
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"                                 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"     
+            
+             xmlns:dialogs1="clr-namespace:PosClient.Views.Dialogs"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+             mc:Ignorable="d" 
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
+             xmlns:Pos_Behaviors="clr-namespace:PosClient.Helpers"
+             xmlns:editors="clr-namespace:WpfControls.Editors;assembly=WpfControls"
+             d:DesignHeight="600" d:DesignWidth="1000">
+    <local:ReservesController.DataContext>
+        <ViewModels:ReservesViewModel/>
+    </local:ReservesController.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ViewModels:OeNumbersSuggestionProvider x:Key="fsp" />
+            <Style x:Key="CalculatorDigitsStyle" TargetType="Button">
+                <Setter Property="Background" Value="DarkTurquoise" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="FontSize" Value="17" />
+            </Style>
+            <Style x:Key="CalculatorButtonsStyle" TargetType="Button">
+                <Setter Property="Background" Value="DarkBlue" />
+                <Setter Property="FontWeight" Value="Bold" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="17" />
+            </Style>
+            <dialogs:CustomDialog x:Key="itemCommentsDetail"
+                                 x:Name="itemCommentsDetail" Padding="0"
+                                 Title="კომენტარები">
+                <dialogs1:ItemCommentsDetail x:Name="itemCommentsDetailControl" DataContext="{Binding}" Margin="0"  />
+            </dialogs:CustomDialog>
+            <dialogs:CustomDialog x:Key="itemInventoriesDetail"
+                                 x:Name="itemInventoriesDetail" Padding="0"
+                                 Title="ნაშთები საწყობების მიხედვით">
+                <Grid DataContext="{Binding}">
+                    <TextBlock TextWrapping="Wrap" Height="100" Text="{Binding}" FontSize="20" VerticalAlignment="Top" Margin="10"></TextBlock>
+                    <Button VerticalAlignment="Bottom" HorizontalAlignment="Right" x:Name="btn_close_inventory" Click="ButtonBase_OnClick">გამოსვლა</Button>
+                </Grid>
+            </dialogs:CustomDialog>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="205"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="700" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <WrapPanel Orientation="Horizontal" Margin="0,5,0,5">
+            <!--<TextBox Margin="5" Controls:TextBoxHelper.Watermark="ნაშთი" Width="100"></TextBox>-->
+            <Controls:ToggleSwitch x:Name="isdgg" Margin="3" ToolTip="ნაშთიანი" 
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                   OffLabel=""
+                                   OnLabel="" IsChecked="{Binding WithBalance, Mode=TwoWay}" />
+            <ComboBox  Controls:TextBoxHelper.Watermark="BRAND"  Margin="2" FontSize="13"  IsEditable="True" ItemsSource="{Binding BrandsList}" IsSynchronizedWithCurrentItem="True" SelectedItem="{Binding SelectedBrand, Mode=TwoWay}"/>
+            <ComboBox Width="100"  Controls:TextBoxHelper.Watermark="მწარმოებელი" FontSize="13"  Margin="2" IsEditable="True" ItemsSource="{Binding ManufactureList}" DisplayMemberPath="Name" SelectedValuePath="Code" IsSynchronizedWithCurrentItem="True" SelectedValue="{Binding SelectedManufacture, Mode=TwoWay}"/>
+            <ComboBox Width="90"  Controls:TextBoxHelper.Watermark="მოდელი" FontSize="13"  Margin="2" IsEditable="True" ItemsSource="{Binding ModelNosList}" IsSynchronizedWithCurrentItem="True" DisplayMemberPath="Item2" SelectedValuePath="Item1" SelectedValue="{Binding SelectedModelNo, Mode=TwoWay}"/>
+            <ComboBox Width="70"  Controls:TextBoxHelper.Watermark="FROM" FontSize="13"  Margin="2" IsEditable="True" ItemsSource="{Binding YearsFrom}" IsSynchronizedWithCurrentItem="True" SelectedItem="{Binding SelectedYearFrom, Mode=TwoWay}"/>
+            <ComboBox Width="70"  Controls:TextBoxHelper.Watermark="TO" FontSize="13"  Margin="2" IsEditable="True" ItemsSource="{Binding YearsTo}" IsSynchronizedWithCurrentItem="True" SelectedItem="{Binding SelectedYearTo, Mode=TwoWay}"/>
+            <ComboBox MaxDropDownHeight="440"  Controls:TextBoxHelper.Watermark="ჯგუფი" FontSize="13"  Margin="2" IsEditable="True" ItemsSource="{Binding VehicleGroupList}" DisplayMemberPath="Description" IsSynchronizedWithCurrentItem="True" SelectedItem="{Binding SelectedVehicleGroup, Mode=TwoWay}">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ComboBoxItem}">
+                        <Setter Property="FontSize" Value="20"/>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
+            <editors:AutoCompleteTextBox VerticalAlignment="Top" Margin="3" BorderBrush="LightGray"
+                                  Width="90" Height="28"
+                                 Watermark="OE number"
+                                 Provider="{StaticResource ResourceKey=fsp}"
+                                 x:Name="Actb">
+                <editors:AutoCompleteTextBox.SelectedItem>
+                    <Binding Path="SelectedOeNumber" Mode="TwoWay">
+                    </Binding>
+                </editors:AutoCompleteTextBox.SelectedItem>
+                <editors:AutoCompleteTextBox.LoadingContent>
+                    <TextBlock Text="Loading..."
+                           Margin="5"
+                           FontSize="14" />
+                </editors:AutoCompleteTextBox.LoadingContent>
+            </editors:AutoCompleteTextBox>
+        </WrapPanel>
+
+        <DataGrid x:Name="ReservesGrid" Visibility="{Binding OrderVisibility, Mode=OneWay}"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  FontSize="17"
+                  Margin="5"
+                  RowHeaderWidth="0"
+                  SelectionMode="Single"
+                  IsReadOnly="True"
+                  GridLinesVisibility="Horizontal"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Itemsview, Mode=TwoWay}"
+                  IsSynchronizedWithCurrentItem="True"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  Style="{DynamicResource MetroDataGrid}" KeyUp="ReservesGrid1_KeyUp" KeyDown="ReservesGrid1_OnKeyDown">
+            <DataGrid.RowStyle>
+                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                    <EventSetter Event="KeyDown" Handler="ReservesGrid_OnKeyDown"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="WhiteSmoke" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="Blue" />
+                            <Setter Property="Foreground" Value="White" />
+                        </Trigger>                        
+                    </Style.Triggers>                    
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="დასახელება" Width="420">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="2">
+                                <TextBlock><Run Text="{Binding DescriptionFirst, Mode=OneWay}"></Run><Run  FontWeight="Bold" Text="{Binding DescriptionHighLight, Mode=OneWay}"></Run><Run Text="{Binding DescriptionSecond, Mode=OneWay}"></Run></TextBlock>
+                                <TextBlock Visibility="{Binding CommentsVisibility, Mode=OneWay}" FontSize="14" >
+                                    <Run Text="{Binding CommentAsFirst, Mode=OneWay}"></Run><Run FontWeight="Bold" Text="{Binding CommentAsHighLight, Mode=OneWay}"></Run><Run Text="{Binding CommentAsSecond, Mode=OneWay}"></Run>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <!--<DataGridTextColumn Width="350" Binding="{Binding Description}" Header="დასახელება"   />-->
+                <DataGridTextColumn Width="75" Binding="{Binding UnitPrice, StringFormat=\{0:F2\}}" Header="ფასი"  />
+                <DataGridTextColumn Width="75" Binding="{Binding QuantityF2}" Header="ნაშთი"   />
+                <DataGridTemplateColumn Header="რაოდ." Width="70" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBox FontSize="15" FontWeight="Bold" Text="{Binding SelectedQuantity, Mode=TwoWay, TargetNullValue='', UpdateSourceTrigger=LostFocus, StringFormat=\{0:N0\} }" Width="68" KeyUp="TextBox_KeyUp" KeyDown="UIElement_OnKeyDown" GotFocus="TextBox_GotFocus">
+                                    <i:Interaction.Behaviors>
+                                        <Pos_Behaviors:FocusBehavior></Pos_Behaviors:FocusBehavior>
+                                    </i:Interaction.Behaviors>
+                                </TextBox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Width="30" Binding="{Binding OrderTypeString}" Header="" />
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="ReservesGrid1" Visibility="{Binding ReservesVisibility, Mode=OneWay}"
+                  Grid.Row="1"
+                  Grid.Column="0"
+                  FontSize="17"
+                  Margin="5"
+                  RowHeaderWidth="0"
+                  SelectionMode="Single"
+                  IsReadOnly="True"
+                  GridLinesVisibility="Horizontal"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Itemsview, Mode=TwoWay}"
+                  IsSynchronizedWithCurrentItem="True"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                  Style="{DynamicResource MetroDataGrid}" KeyUp="ReservesGrid1_KeyUp" KeyDown="ReservesGrid1_OnKeyDown">
+            <DataGrid.RowStyle>
+                <Style BasedOn="{StaticResource MetroDataGridRow}" TargetType="{x:Type DataGridRow}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="WhiteSmoke" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="დასახელება" Width="350">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="2">
+                                <TextBlock><Run Text="{Binding DescriptionFirst, Mode=OneWay}"></Run><Run  FontWeight="Bold" Text="{Binding DescriptionHighLight, Mode=OneWay}"></Run><Run Text="{Binding DescriptionSecond, Mode=OneWay}"></Run></TextBlock>
+                                <TextBlock Visibility="{Binding CommentsVisibility, Mode=OneWay}" FontSize="14" >
+                                    <Run Text="{Binding CommentAsFirst, Mode=OneWay}"></Run><Run FontWeight="Bold" Text="{Binding CommentAsHighLight, Mode=OneWay}"></Run><Run Text="{Binding CommentAsSecond, Mode=OneWay}"></Run>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Width="90" Binding="{Binding UnitPrice, StringFormat=\{0:F2\}}" Header="ფასი"  />
+                <DataGridTextColumn Width="75" Binding="{Binding QuantityF2}" Header="ნაშთი"   />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Column="0" Grid.Row="1"   Background="Gray" Opacity="0.7" Visibility="{Binding datagridLoadingVisibility, Mode=OneWay}"  >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <iconPacks:PackIconFontAwesome Width="30" Foreground="White" 
+                                              Height="30" Margin="5"
+                                              Kind="Spinner" />
+                <TextBlock Foreground="White" FontSize="20" Margin="0,5,0,0" FontWeight="Bold">მიმდინარეობს განახლება..</TextBlock>
+            </StackPanel>
+        </Grid>        
+        
+        
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <ToggleButton Content="F" Margin="5" FontSize="17" Width="25"  IsChecked="{Binding FirstMatchFiltering, Mode=TwoWay}"></ToggleButton>
+            <TextBox Margin="5" Height="35" FontSize="20" x:Name="tbx_filter"
+                     Controls:TextBoxHelper.ClearTextButton="{Binding (Controls:TextBoxHelper.HasText), Mode=OneWay, RelativeSource={RelativeSource Self}}"
+                     Controls:TextBoxHelper.Watermark="ძებნა" Width="315"  KeyUp="TextBox_KeyUp_1" GotFocus="Tbx_filter_OnGotFocus" TextChanged="tbx_filter_TextChanged"></TextBox>
+            <Button Margin="5" Visibility="{Binding FilterNavigationVisibility}" x:Name="btn_next" Click="Btn_next_OnClick">
+                <iconPacks:PackIconFontAwesome Kind="ArrowDown"/>
+            </Button>
+            <Button Margin="5" Visibility="{Binding FilterNavigationVisibility}" x:Name="btn_prev" Click="Btn_prev_OnClick">
+                <iconPacks:PackIconFontAwesome Kind="ArrowUp"/>
+            </Button>
+
+            <Button Margin="10,5,5,5"  x:Name="btn_like" Click="Btn_like_OnClick" BorderBrush="Transparent" Background="Transparent" Foreground="{Binding LikeColor, Mode=OneWay}" Visibility="{Binding OrderVisibility, Mode=OneWay}">
+                <iconPacks:PackIconFontAwesome Kind="ThumbsUp" Width="22" Height="22"/>
+            </Button>
+            <Button Margin="5"  x:Name="btn_unlike" Click="Btn_unlike_OnClick" BorderBrush="Transparent" Background="Transparent" Foreground="{Binding UnLikeColor, Mode=OneWay}" Visibility="{Binding OrderVisibility, Mode=OneWay}">
+                <iconPacks:PackIconFontAwesome Kind="ThumbsDown" Width="22" Height="22"/>
+            </Button>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Background="DarkBlue" MinWidth="100" Margin="0,0,5,5" Visibility="{Binding OrderVisibility, Mode=OneWay}">
+            <CheckBox FontSize="20" Margin="10,0,0,0" IsChecked="{Binding SumVisible, Mode=TwoWay}"></CheckBox>
+            <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10" Visibility="{Binding SumVisibility}">ჯამი:</TextBlock>
+            <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center"  Visibility="{Binding SumVisibility}" Margin="10" Text="{Binding Summary, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+        </StackPanel>
+
+        <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Source="{Binding SelectedItemImage, Mode=OneWay}" Margin="5" x:Name="imageMain" MouseDown="ImageMain_OnMouseDown"/>
+            <ItemsControl Grid.Column="1"   ItemsSource="{Binding SelectedItemImages}" Margin="3">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}" Width="60" Margin="10" MouseDown="Image_MouseDown" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel></StackPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Button  x:Name="btn_prev_grid" Click="Btn_prev_grid_OnClick" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <iconPacks:PackIconFontAwesome Kind="ArrowLeft" Height="40" Width="20" />
+            </Button>
+
+            <Button  x:Name="btn_next_grid" Click="Btn_next_grid_OnClick" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <iconPacks:PackIconFontAwesome Kind="ArrowRight" Height="40" Width="20" />
+            </Button>
+        </Grid>
+
+        <Grid x:Name="loadingImages" Grid.Column="1" Grid.Row="0"  Grid.RowSpan="3" Background="Gray" Opacity="0.7"  Visibility="{Binding LoadingVisibility}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <iconPacks:PackIconFontAwesome Width="30" Foreground="White" 
+                                              Height="30" Margin="5"
+                                              Kind="Spinner" />
+                <TextBlock Foreground="White" FontSize="20" Margin="0,5,0,0" FontWeight="Bold">მიმდინარეობს ინფორმაციის წამოღება..</TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <Grid VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="1" Margin="10" Width="300" Height="250" HorizontalAlignment="Right" Visibility="{Binding CalcVisibility}">
+            <Grid Margin="0,10,10,0" Background="DarkCyan">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Button Style="{StaticResource CalculatorDigitsStyle}" Click="BtnC_OnClick" CommandParameter="1">1</Button>
+                <Button Grid.Column="1" Grid.Row="0"  Style="{StaticResource CalculatorDigitsStyle}" Click="BtnC_OnClick" CommandParameter="2">2</Button>
+                <Button Grid.Column="2" Grid.Row="0"  Style="{StaticResource CalculatorDigitsStyle}" Click="BtnC_OnClick" CommandParameter="3">3</Button>
+                <Button Grid.Column="0" Grid.Row="1"  Style="{StaticResource CalculatorDigitsStyle}" Click="BtnC_OnClick" CommandParameter="4">4</Button>
+                <Button Grid.Column="1" Grid.Row="1"  Style="{StaticResource CalculatorDigitsStyle}" Click="BtnC_OnClick" CommandParameter="5">5</Button>
+                <Button Grid.Column="2" Grid.Row="1"  Style="{StaticResource CalculatorDigitsStyle}" Click="BtnC_OnClick" CommandParameter="6">6</Button>
+                <Button Grid.Column="0" Grid.Row="2" Style="{StaticResource CalculatorDigitsStyle}" Click="BtnC_OnClick" CommandParameter="7">7</Button>
+                <Button Grid.Column="1" Grid.Row="2" Style="{StaticResource CalculatorDigitsStyle}" Click="BtnC_OnClick" CommandParameter="8">8</Button>
+                <Button Grid.Column="2" Grid.Row="2" Style="{StaticResource CalculatorDigitsStyle}" Click="BtnC_OnClick" CommandParameter="9">9</Button>
+                <Button Grid.Column="1" Grid.Row="3" Style="{StaticResource CalculatorDigitsStyle}" Click="BtnC_OnClick" CommandParameter="0">0</Button>
+                <Button Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" Style="{StaticResource CalculatorButtonsStyle}" x:Name="BtnOk" Click="BtnOk_OnClick">Ok</Button>
+                <Button Grid.Column="2" Grid.Row="3"    Style="{StaticResource CalculatorButtonsStyle}" x:Name="BtnQ" Click="BtnQ_OnClick">Q</Button>
+                <Button Grid.Column="1" Grid.Row="4" Style="{StaticResource CalculatorButtonsStyle}" x:Name="BtnSP" Click="BtnSP_OnClick">SP</Button>
+                <Button Grid.Column="2" Grid.Row="4" Style="{StaticResource CalculatorButtonsStyle}" x:Name="BtnCQ" Click="BtnCQ_OnClick">CQ</Button>
+                <DockPanel  Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="5" Visibility="Collapsed" x:Name="grid_cq">
+                    <TextBox Width="200" x:Name="tbx_cq" FontSize="16" Margin="2" KeyUp="Tbx_cq_OnKeyUp"></TextBox>
+                    <Grid DockPanel.Dock="Right">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Style="{StaticResource CalculatorDigitsStyle}"  Height="35" Click="BtnC_OnClick" CommandParameter=".">.</Button>
+                        <Button Grid.Column="1" Style="{StaticResource CalculatorButtonsStyle}"  Height="35" x:Name="BtnOk_cq" Click="BtnOk_cq_OnClick">Ok</Button>
+                    </Grid>
+                </DockPanel>
+            </Grid>
+            <Button Width="40" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" x:Name="BtnCloseCalculator" Foreground="White" Background="Black" Click="BtnCloseCalculator_OnClick">
+                <iconPacks:PackIconFontAwesome Width="20"
+                                              Height="20" Margin="0"
+                                              Kind="Times" />
+            </Button>
+        </Grid>
+
+        <Grid Grid.Column="0" Grid.Row="3" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Image Source="{Binding RelatedPicturesImages[0]}" Margin="5" MouseLeftButtonDown="Image_MouseLeftButtonDown1"></Image>
+            <Image Grid.Column="1" Source="{Binding RelatedPicturesImages[1]}" Margin="5" MouseLeftButtonDown="Image_MouseLeftButtonDown2"></Image>
+            <Image Grid.Column="2" Source="{Binding RelatedPicturesImages[2]}" Margin="5" MouseLeftButtonDown="Image_MouseLeftButtonDown3"></Image>
+        </Grid>
+
+        <Grid x:Name="loading3Images" Grid.Column="0" Grid.Row="3" Background="Gray" Opacity="0.7" Visibility="{Binding LoadingVisibility}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <iconPacks:PackIconFontAwesome Width="30" Foreground="White" 
+                                              Height="30" Margin="5"
+                                              Kind="Spinner" />
+                <TextBlock Foreground="White" FontSize="20" Margin="0,5,0,0" FontWeight="Bold">მიმდინარეობს ინფორმაციის წამოღება..</TextBlock>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1" Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1.5*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding IsSelectedVisibility}">
+                <!--<TextBlock Margin="5" FontSize="17" x:Name="tbx_reserves_inother_wh"><Hyperlink Click="Hyperlink_OnClick">მარაგები სხვა საწყობებში</Hyperlink></TextBlock>
+                <TextBlock Margin="5" FontSize="17"><Hyperlink x:Name="hp_comments" Click="Hp_comments_OnClick">კომენტარი</Hyperlink></TextBlock>-->
+                <Button Margin="5"  x:Name="tbx_reserves_inother_wh" Click="Hyperlink_OnClick" BorderBrush="Transparent" Background="Transparent" Foreground="Black" >
+                    <iconPacks:PackIconFontAwesome Kind="Database" Width="22" Height="22"/>
+                </Button>
+                <Button Margin="5"  x:Name="hp_comments" Click="Hp_comments_OnClick" BorderBrush="Transparent" Background="Transparent" Foreground="Black" >
+                    <iconPacks:PackIconFontAwesome Kind="Comments" Width="22" Height="22"/>
+                </Button>
+            </StackPanel>
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1.5*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="Auto" MinWidth="50"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <DataGrid x:Name="ProjectedItems" BorderBrush="#CCA8A8A8"  BorderThickness="0,0,1,0"
+                  Margin="2"
+                  RowHeaderWidth="0"
+                  SelectionMode="Single"
+                  IsReadOnly="True" FontWeight="Bold" FontSize="15"
+                  Style="{DynamicResource MetroDataGrid}"
+                  AutoGenerateColumns="False"
+                  GridLinesVisibility="All"
+                  ItemsSource="{Binding ProjectedItemsList}"
+                  HeadersVisibility="None"
+                  Background="Transparent" RowBackground="Transparent">
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="DeepSkyBlue" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn  Binding="{Binding ReceiptDate, StringFormat=dd.MM.yyyy  }"    />
+                        <DataGridTextColumn  Binding="{Binding Quantity, StringFormat=\{0:F2\}}" Header=""  />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TextBlock Grid.Column="1" Grid.Row="0" FontSize="20" Margin="7,2,7,2" FontWeight="Bold" Text="{Binding SelectedItemBox}"></TextBlock>
+                <DataGrid x:Name="AdditeionalParameters" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"   BorderThickness="0,1,0,0"
+                  Margin="2"
+                  RowHeaderWidth="0"
+                  SelectionMode="Single"
+                  IsReadOnly="True" FontSize="13"
+                  GridLinesVisibility="All"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding AdditionalParametersList}"
+                  Style="{DynamicResource MetroDataGrid}"
+                  HeadersVisibility="None"
+                  Background="Transparent" RowBackground="Transparent" BorderBrush="#CCA8A8A8">
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="DeepSkyBlue" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn  Binding="{Binding ParameterDescription  }"    />
+                        <DataGridTextColumn  Binding="{Binding ParameterValueText  }"    />
+                        <DataGridTextColumn  Binding="{Binding RelatedParameterNo_  }"   />
+                        <DataGridTextColumn  Binding="{Binding RelatedParameterValueText  }"    />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+            <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+                </Grid.RowDefinitions>
+                <DataGrid x:Name="VehicleModels1"  BorderBrush="#CCA8A8A8"  BorderThickness="1,0,0,0"
+                  Margin="5,5,5,10"
+                  Style="{DynamicResource MetroDataGrid}"
+                  RowHeaderWidth="0" FontSize="12"
+                          ColumnHeaderHeight="10"
+                  SelectionMode="Single"
+                  GridLinesVisibility="Horizontal"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding VehicleModelsList}"
+                  HeadersVisibility="All"
+                  Background="Transparent" RowBackground="Transparent">
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Style.Triggers>
+                                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                                    <Setter Property="Background" Value="DeepSkyBlue" />
+                                    <Setter Property="Foreground" Value="White" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn  Binding="{Binding ManufacturerName}" Header="Man.Name"    />
+                        <DataGridTextColumn  Binding="{Binding ModelDescription}" Header="ModelDesc."    />
+                        <DataGridTextColumn  Binding="{Binding ManufacturingStartDate, StringFormat=dd.MM.yyyy}" Header="StartDate"    />
+                        <DataGridTextColumn  Binding="{Binding ManufacturingEndDate, StringFormat=dd.MM.yyyy}" Header="EndDate"    />
+                        <DataGridTextColumn  Binding="{Binding Engine}" Header="Engine"    />
+                        <DataGridTextColumn  Binding="{Binding DriveTypeString}" Header="DriveType"    />
+                        <DataGridTextColumn  Binding="{Binding EngineTypeString}" Header="EngineType"    />
+                        <DataGridTextColumn  Binding="{Binding TransmissionString}" Header="Transmission"    />
+                        <DataGridTextColumn  Binding="{Binding BrakeTypeString}" Header="BrakeType"    />
+                        <DataGridTextColumn  Binding="{Binding CabType}" Header="CabType"    />
+                        <DataGridTextColumn  Binding="{Binding Output_PH_}" Header="Output.PH"    />
+                        <DataGridTextColumn  Binding="{Binding Output_KW_}" Header="Output.KW"    />
+                        <DataGridTextColumn  Binding="{Binding Tech_EngineCapacity_CC_}" Header="Tech.Engine.Cap.CC"    />
+                        <DataGridTextColumn  Binding="{Binding Cylinder}" Header="Cylinder"    />
+                        <DataGridTextColumn  Binding="{Binding FuelMixtureFormationString}" Header="FuelMixtureFormation"    />
+                        <DataGridTextColumn  Binding="{Binding CatalyticConverterTypeString}" Header="CatalyticConverterType"    />
+                        <DataGridTextColumn  Binding="{Binding Wheelbase}" Header="Wheelbase"    />
+                        <DataGridTextColumn  Binding="{Binding Voltage, StringFormat=F2}" Header="Voltage"    />
+                        <DataGridTextColumn  Binding="{Binding BrakeSystemString}" Header="BrakeSystem"    />
+                        <DataGridTextColumn  Binding="{Binding AirConditionString}" Header="AirCondition"    />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
+
+        <Grid x:Name="loadingAdditionalInfos" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Background="Gray" Opacity="0.7"  Visibility="{Binding LoadingVisibility}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <iconPacks:PackIconFontAwesome Width="30" Foreground="White" 
+                                              Height="30" Margin="5"
+                                              Kind="Spinner" />
+                <TextBlock Foreground="White" FontSize="20" Margin="0,5,0,0" FontWeight="Bold">მიმდინარეობს ინფორმაციის წამოღება..</TextBlock>
+            </StackPanel>
+        </Grid>
+
+
+        <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,0,0,3" HorizontalAlignment="Right" Visibility="{Binding OrderVisibility, Mode=OneWay}">
+            <Button VerticalAlignment="Center" x:Name="BtnSave" FontSize="13"  Click="BtnSave_OnClick">შენახვა</Button>
+            <Button VerticalAlignment="Center" x:Name="BtnCancel" Margin="20,0,20,0" Click="BtnCancel_OnClick" FontSize="13">გაუქმება</Button>
+        </StackPanel>
+    </Grid>
+</local:ReservesController>

@@ -1,0 +1,109 @@
+﻿<local:MainController
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"                    
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels" x:Class="PosClient.Views.Main"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="900">
+
+    <local:MainController.Resources>
+        <ResourceDictionary>
+            <Style x:Key="LargeTileStyle" TargetType="{x:Type Controls:Tile}">
+                <Setter Property="Height" Value="125" />
+                <Setter Property="TitleFontSize" Value="16" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Display" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="Width" Value="300" />
+            </Style>
+
+            <Style x:Key="SmallTileStyle" TargetType="{x:Type Controls:Tile}">
+                <Setter Property="Height" Value="125" />
+                <Setter Property="TitleFontSize" Value="10" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="ClearType" />
+                <Setter Property="Width" Value="147" />
+            </Style>
+        </ResourceDictionary>
+    </local:MainController.Resources>
+
+    <local:MainController.DataContext>
+        <ViewModels:MainViewModel/>
+    </local:MainController.DataContext>
+
+    <Grid>
+        <WrapPanel 
+                       Width="940"
+                       Height="382"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center">
+            <Controls:Tile Title="დღის განრიგი"
+                               Margin="3"
+                               Style="{StaticResource LargeTileStyle}"
+                               x:Name="tileCustomers"
+                               Background="Green"
+                               Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Click="tileCustomers_Click">
+                <iconPacks:PackIconModern Width="40"
+                                             Height="40"
+                                             Kind="CalendarDay" />
+            </Controls:Tile>
+            <Controls:Tile Title="მიმდინარე ორდერები" Visibility="{Binding NonDistributorVisibility, Mode=OneWay}"
+                               Margin="3"
+                               x:Name="tileCurrentOrders"
+                               Background="Gray"
+                               Style="{StaticResource LargeTileStyle}"
+                               Controls:ControlsHelper.MouseOverBorderBrush="{DynamicResource BlackBrush}" Click="TileCurrentOrders_OnClick" >
+                <iconPacks:PackIconModern Width="40"
+                                                  Height="40"
+                                                  Kind="ClipboardVariantText" />
+            </Controls:Tile>
+            <Controls:Tile Title="შეკვეთილი ორდერები" Visibility="{Binding NonDistributorVisibility, Mode=OneWay}"
+                               x:Name="tileReleasedOrders"
+                               Style="{StaticResource LargeTileStyle}" Click="TileReleasedOrders_OnClick"
+                               Background="Orange">
+                <iconPacks:PackIconModern Width="40"
+                                             Height="40"
+                                              Kind="ListAddBelow" />
+            </Controls:Tile>
+            <Controls:Tile Title="გადაგზავნილი ორდერები" Visibility="{Binding NonDistributorVisibility, Mode=OneWay}"
+                               x:Name="tilePostedOrders"
+                               Style="{StaticResource LargeTileStyle}" Click="TilePostedOrders_OnClick"
+                               Background="Blue">
+                <iconPacks:PackIconModern Width="40"
+                                             Height="40"
+                                             Kind="ControlGuide" />
+            </Controls:Tile>
+            <Controls:Tile Title="მარაგები" x:Name="tileReserves" Visibility="Collapsed"
+                               Style="{StaticResource LargeTileStyle}"
+                               Background="Red" Click="tileReserves_Click" >
+                <iconPacks:PackIconModern Width="40"
+                                             Height="40"
+                                             Kind="ForkliftLoad" />
+            </Controls:Tile>
+            <Controls:Tile Title="საცალო გაყიდვა" x:Name="tileRetailer" Visibility="{Binding ShopVisibility, Mode=OneWay}"
+                               Style="{StaticResource LargeTileStyle}"
+                               Background="Red" Click="TileRetailer_OnClick" >
+                <iconPacks:PackIconModern Width="40"
+                                             Height="40"
+                                             Kind="ForkliftLoad" />
+            </Controls:Tile>
+            <Controls:Tile Title="შეტყობინებები" x:Name="tileMessages"
+                               Style="{StaticResource SmallTileStyle}" Click="TileMessages_OnClick"
+                               Background="Gold">
+                <iconPacks:PackIconModern Width="40"
+                                               Height="40"
+                                               Kind="Email" />
+            </Controls:Tile>
+            <Controls:Tile Title="ადმინისტრირება" x:Name="tileAdministration"
+                               Style="{StaticResource SmallTileStyle}"
+                               Background="Green" Click="tileAdministration_Click">
+                <iconPacks:PackIconModern Width="40"
+                                             Height="40"
+                                             Kind="Cogs" />
+            </Controls:Tile>
+        </WrapPanel>
+    </Grid>
+</local:MainController>

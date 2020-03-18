@@ -1,0 +1,107 @@
+﻿<local:PaymentScheduleController
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             x:Class="PosClient.Views.PaymentSchedule"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="400">
+    <local:PaymentScheduleController.DataContext>
+        <ViewModels:PaymentScheduleViewModel/>
+    </local:PaymentScheduleController.DataContext>
+    <Grid x:Name="SchedulessGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid Height="40">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding ParentModel.Order.Sell_toCustomerName}" FontWeight="Bold" FontSize="16" Margin="10"/>
+        </Grid>
+        <StackPanel Orientation="Vertical" Grid.Row="1">
+            <DataGrid x:Name="SchedulesGrid"
+                  Margin="5"
+                  SelectionMode="Single"
+                  RowHeaderWidth="0"
+                  FontSize="16" GridLinesVisibility="Horizontal"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Schedules}"
+                  IsSynchronizedWithCurrentItem="True"
+                  CanUserSortColumns="False"
+                  SelectedItem="{Binding SelectedSchedule, Mode=TwoWay}"
+                  Style="{DynamicResource MetroDataGrid}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="350" Binding="{Binding CustomerNo}" Header="კლიენტის კოდი" />
+                    <DataGridTextColumn Width="350" Binding="{Binding DocumentNo}" Header="შეკვეთის ნომერი" />
+                    <DataGridTemplateColumn Header="თარიღი" Width="140">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <DatePicker SelectedDate="{Binding Date, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" FontSize="15"></DatePicker>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="გადასახდელი თანხა">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBox FontSize="15" FontWeight="Bold" x:Name="payamount"  Text="{Binding Amount, Mode=TwoWay, StringFormat=N2, TargetNullValue='', UpdateSourceTrigger=LostFocus}" Width="85" LostFocus="UIElement_OnLostFocus"></TextBox>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Visibility="{Binding DataContext.ParentModel.SaveAndCancelButtonsVisibility, ElementName=SchedulessGrid, Mode=OneWay}" x:Name="del_comment" Click="Del_comment_OnClick" Width="30" Height="20" BorderBrush="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" Background="Transparent">
+                                    <iconPacks:PackIconFontAwesome Width="10" Height="10" 
+                                              Kind="Times" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid>
+                <Button Visibility="{Binding ParentModel.SaveAndCancelButtonsVisibility, Mode=OneWay}" FontSize="18" VerticalAlignment="Center" x:Name="BtnAddNewRow" HorizontalAlignment="Right" Margin="0,10,10,10" Click="BtnAddNewRow_OnClick">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconFontAwesome Width="13" Height="13" VerticalAlignment="Center" Margin="5"
+                                              Kind="Plus" />
+                        <TextBlock>დამატება</TextBlock>
+                    </StackPanel>
+                </Button>                
+
+            </Grid>
+        </StackPanel>
+        
+        <Grid Grid.Row="2" Height="50">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="DarkBlue" Visibility="Collapsed"  >
+                    <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">ჯამი:</TextBlock>
+                    <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding ParentModel.Order.AmountIncludingVat, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="{Binding MustPayColor}" Visibility="{Binding ParentModel.MustPayVisibility}" Margin="10,0,0,0">
+                    <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">გადასახდელი:</TextBlock>
+                    <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding MustPayeAmount, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+                </StackPanel>
+
+                <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="Blue" Margin="10,0,0,0" >
+                    <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">გადახდის გრაფიკი:</TextBlock>
+                    <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding AmountPayed, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+                </StackPanel>
+
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                <Button VerticalAlignment="Center" x:Name="BtnEdit" FontSize="15" Click="BtnEdit_OnClick" Content="რედაქტირება" Visibility="{Binding ParentModel.EditButttonVisibility, Mode=OneWay}"/>
+                <Button VerticalAlignment="Center" x:Name="BtnSave" FontSize="15" Click="BtnSave_OnClick" Margin="20,0,0,0" Content="შენახვა" Visibility="{Binding ParentModel.SaveAndCancelButtonsVisibility, Mode=OneWay}"/>
+                <Button VerticalAlignment="Center" x:Name="BtnGoBack" Margin="20,0,20,0" FontSize="15" Click="BtnCancel_OnClick" Content="გამოსვლა"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</local:PaymentScheduleController>

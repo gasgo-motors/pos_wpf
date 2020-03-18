@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BusinessLayer.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="BusinessLayer_POSMng_POSMng" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Codeunit/POSMng</Value>
+    </Setting>
+    <Setting Name="BusinessLayer_salesorderservice_SalesOrder_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesOrder</Value>
+    </Setting>
+    <Setting Name="BusinessLayer_salesordersubform_SalesOrderLine_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesOrderLine</Value>
+    </Setting>
+    <Setting Name="BusinessLayer_salesquoteservice_SalesQuote_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesQuote</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

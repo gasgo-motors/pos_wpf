@@ -1,0 +1,178 @@
+﻿<local:OrderController
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PosClient.Views"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             x:Class="PosClient.Views.Order"
+             xmlns:editors="clr-namespace:WpfControls.Editors;assembly=WpfControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="800" Loaded="OrderController_Loaded">
+    <local:OrderController.DataContext>
+        <ViewModels:OrderViewModel/>
+    </local:OrderController.DataContext>
+    <Grid x:Name="OrdersGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <TextBlock HorizontalAlignment="Left" Margin="68,18,0,0" TextWrapping="Wrap" Text="კლიენტი: " VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="135,10,0,0" TextWrapping="Wrap" Text="{Binding Order.Sell_toCustomerName, Mode=OneWay}" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+            <TextBlock HorizontalAlignment="Left" Margin="360,13,0,0" TextWrapping="Wrap" Text="შეკვეთის თარიღი: " VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="486,10,0,0" TextWrapping="Wrap" Text="{Binding Order.PostingDate, Mode=OneWay}" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+            <TextBlock HorizontalAlignment="Left" Margin="13,44,0,0" TextWrapping="Wrap" Text="მიწოდ მისამართი: " VerticalAlignment="Top"/>
+            <ComboBox HorizontalAlignment="Left"  Margin="135,41,0,0" VerticalAlignment="Top" Width="209" Height="33" ItemsSource="{Binding ShipToAddresses}" DisplayMemberPath="Address" SelectedItem="{Binding SelectedAddress}" IsEnabled="{Binding IsEditable}" />
+            <TextBlock HorizontalAlignment="Left" Margin="360,45,0,0" TextWrapping="Wrap" Text="შეკვეთის ნომერი: " VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="486,42,0,0" TextWrapping="Wrap" Text="{Binding Order.No_, Mode=OneWay}" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+            <Button x:Name="btn_payment_schedule" Content="გადახდის გრაფიკი" HorizontalAlignment="Left" Margin="14,104,0,0" VerticalAlignment="Top" Width="130" Click="Btn_payment_schedule_OnClick"/>
+            <Button x:Name="btn_payment"  Visibility="{Binding PaymentButtonVisibility}" Content="გადახდა" HorizontalAlignment="Left" Margin="155,104,0,0" VerticalAlignment="Top" Width="130" Click="Btn_payment_OnClick" />
+            <Button x:Name="btn_products" Content="პროდუქტები" HorizontalAlignment="Left" Margin="299,104,0,0" VerticalAlignment="Top" Width="130" Click="Btn_products_OnClick" Visibility="{Binding SaveAndCancelButtonsVisibility, Mode=OneWay}"/>
+
+            <TextBlock Visibility="{Binding ClientBalancVisibility}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10"><Run FontSize="13">ბალანსი:</Run><Run Text="{Binding ClientBalance, Mode=OneWay}" FontSize="19" FontWeight="Bold"></Run></TextBlock>
+        </Grid>
+        <DataGrid Grid.Row="1" ItemsSource="{Binding SalesLinesEntries}" x:Name="gridsalesLInes"
+                  RowHeaderWidth="0"
+                  FontSize="18"
+                  RowHeight="35"
+                  GridLinesVisibility="Horizontal"
+                  SelectionMode="Extended"
+                  CanUserSortColumns="False"
+                  IsReadOnly="True"
+                  AutoGenerateColumns="False"  Style="{DynamicResource MetroDataGrid}">
+            <DataGrid.Columns>
+                <!--<DataGridTextColumn  Binding="{Binding No_}" Header="item კოდი" />-->
+                <DataGridTextColumn  Binding="{Binding Description}" Header="დასახელება" />
+                <!--<DataGridTextColumn Header="რაოდენობა"  Binding="{Binding Quantity, StringFormat=\{0:F0\}}" />-->
+                <DataGridTemplateColumn Header="რაოდენობა">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBox IsReadOnly="{Binding DataContext.IsReadOnlyRow, ElementName=OrdersGrid, Mode=OneWay}" FontSize="18" Background="Transparent" BorderBrush="Transparent" BorderThickness="0"  Text="{Binding Quantity, Mode=TwoWay, TargetNullValue='', UpdateSourceTrigger=LostFocus, StringFormat=\{0:N0\} }" Width="85">
+                                </TextBox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn  Binding="{Binding UnitPrice, StringFormat=\{0:F2\}}" Header="ერთეულის ფასი" />
+                <DataGridTextColumn  Binding="{Binding AmountIncludingVAT, StringFormat=\{0:F2\}, Mode=OneWay}" Header="თანხა" />
+                <DataGridTextColumn  Binding="{Binding OrderTypeString}" Header="" />
+
+                <DataGridTemplateColumn Header="vendor" Width="140">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <ComboBox Width="130"   
+                                          HorizontalAlignment="Left"
+                                          DisplayMemberPath="Name"
+                                          SelectedValuePath="No_" 
+                                          IsEditable="True"
+                                          SelectedValue="{Binding Service_Provider, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                          ItemsSource="{Binding DataContext.Vendors, ElementName=gridsalesLInes}"
+                                />
+                                <editors:AutoCompleteTextBox VerticalAlignment="Top" Margin="3" 
+                                                             BorderBrush="LightGray"
+                                                             Width="90" Height="28"
+                                                             Watermark="OE number"
+                                                             Provider="{Binding DataContext.Vendors, ElementName=gridsalesLInes}"
+                                                             x:Name="Actb">
+                                    <editors:AutoCompleteTextBox.SelectedItem>
+                                        <Binding Path="SelectedOeNumber" Mode="TwoWay">
+                                        </Binding>
+                                    </editors:AutoCompleteTextBox.SelectedItem>
+                                    <editors:AutoCompleteTextBox.LoadingContent>
+                                        <TextBlock Text="Loading..."
+                                                   Margin="5"
+                                                   FontSize="14" />
+                                    </editors:AutoCompleteTextBox.LoadingContent>
+                                </editors:AutoCompleteTextBox>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="vehicle" Width="140">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <ComboBox Width="130"   
+                                          HorizontalAlignment="Left"
+                                          IsEditable="True"
+                                          DisplayMemberPath="Vehicle_No_"
+                                          SelectedValuePath="Vehicle_No_" 
+                                          SelectedValue="{Binding Customer_Vehicle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                          ItemsSource="{Binding DataContext.Vehicles, ElementName=gridsalesLInes}"
+                                />
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Visibility="{Binding DeleteButtonVisibility,  Mode=OneWay}" x:Name="del_comment" Click="Del_comment_OnClick" Width="30" Height="20" BorderBrush="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" Background="Transparent">
+                                <iconPacks:PackIconFontAwesome Width="10" Height="10" 
+                                                               Kind="Times" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <TextBox Visibility="{Binding BarCodeVisibility}"  Margin="10" FontSize="17" controls:TextBoxHelper.Watermark="ბარ კოდი" HorizontalAlignment="Left" Width="150" x:Name="tbx_bar_code" KeyDown="Tbx_bar_code_OnKeyDown" />
+                </Grid>
+                <Grid Grid.Row="1" Height="50">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="DarkBlue"  >
+                            <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">ჯამი:</TextBlock>
+                            <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding Order.AmountIncludingVat, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+                        </StackPanel>
+
+                        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="{Binding MustPayColor}" Visibility="{Binding MustPayVisibility}" Margin="10,0,0,0">
+                            <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">გადასახდელი:</TextBlock>
+                            <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding MustPayeAmount, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+                        </StackPanel>
+
+                        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="Blue" Margin="10,0,0,0" >
+                            <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">გადახდის გრაფიკი:</TextBlock>
+                            <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding AmountSummaryPaymentSchedule, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+                        </StackPanel>
+
+                        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Left" Background="Blue" Margin="10,0,0,0" >
+                            <TextBlock Foreground="White" FontWeight="Bold"  VerticalAlignment="Center" Margin="10">გადახდა:</TextBlock>
+                            <TextBlock Foreground="White"  FontWeight="Bold" FontSize="17" VerticalAlignment="Center" Margin="10" Text="{Binding AmountSummaryPayment, StringFormat=\{0:F2\}, Mode=OneWay}"></TextBlock>
+                        </StackPanel>
+
+                        <StackPanel Width="300" Orientation="Horizontal" Visibility="{Binding BarCodeVisibility}">
+                            <TextBox Margin="10,5,10,5" FontSize="17" controls:TextBoxHelper.Watermark="მიღებული თანხა" Text="{Binding RecievedAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBlock VerticalAlignment="Center">ხურდა:</TextBlock>
+                            <TextBlock VerticalAlignment="Center" Margin="7,0,0,0" FontWeight="Bold" FontSize="17"  Foreground="Maroon" Text="{Binding RemainingAmount, Mode=OneWay, StringFormat=F2}"></TextBlock>
+                        </StackPanel>
+
+                    </StackPanel>
+
+
+
+                    <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
+                        <Button VerticalAlignment="Center" x:Name="BtnEdit" FontSize="15" Click="BtnEdit_OnClick" Content="რედაქტირება" Visibility="{Binding EditButttonVisibility, Mode=OneWay}"/>
+                        <Button VerticalAlignment="Center" x:Name="BtnSave" FontSize="15" Click="BtnSave_OnClick" Margin="20,0,0,0" Content="შენახვა" Visibility="{Binding SaveAndCancelButtonsVisibility, Mode=OneWay}"/>
+                        <Button VerticalAlignment="Center" x:Name="BtnSaveAndSend" FontSize="15" Click="BtnSaveAndSend_OnClick" Margin="20,0,0,0" Content="შენახვა-გადაგზავნა" Visibility="{Binding SaveAndSendButtonsVisibility, Mode=OneWay}"/>
+                        <Button VerticalAlignment="Center" x:Name="BtnCancel" Margin="20,0,0,0" FontSize="15" Click="BtnCancel_OnClick" Content="გაუქმება" Visibility="{Binding CancelButtonsVisibility, Mode=OneWay}"/>
+                        <Button VerticalAlignment="Center" x:Name="BtnQuete" Margin="20,0,0,0" FontSize="15" Click="BtnQuete_OnClick"  Content="ქვოტირება" Visibility="{Binding QueteButtonsVisibility, Mode=OneWay}"/>
+                        <Button VerticalAlignment="Center" x:Name="BtnGoBack" Margin="20,0,20,0" FontSize="15" Click="BtnGoBack_OnClick" Content="გამოსვლა" Visibility="{Binding BogBackButtonVisibility, Mode=OneWay}"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</local:OrderController>

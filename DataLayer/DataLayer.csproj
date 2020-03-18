@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7341E1F9-269F-4237-843B-3A9174C111C6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DataLayer</RootNamespace>
+    <AssemblyName>DataLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Z.EntityFramework.Extensions, Version=3.14.0.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Extensions.3.14.0\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActiveSession.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdditionalParameter.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AutoNumber.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BankAccount.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CampaignBasket.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Comment_Line.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Country.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Customer.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DaoController.cs" />
+    <Compile Include="DeletedSalesHeader.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DeletedSalesLine.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\CustomerExtension.cs" />
+    <Compile Include="Extensions\GenJournalLineExtension.cs" />
+    <Compile Include="Extensions\GenJouranlView.cs" />
+    <Compile Include="Extensions\ItemVehicleModelExtension.cs" />
+    <Compile Include="Extensions\PaymentScheduleExtension.cs" />
+    <Compile Include="Extensions\POSMessageEntryExtension.cs" />
+    <Compile Include="Extensions\PostCodeCity.cs" />
+    <Compile Include="Extensions\RegionBudgetActualExtension.cs" />
+    <Compile Include="Extensions\SalesHeaderExtension.cs" />
+    <Compile Include="Extensions\SalesLineExtension.cs" />
+    <Compile Include="GenJournalLine.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GenJournalLineArchive.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Item.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemCatalogue.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemCategory.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemCrossReference.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemCustomer.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemItem.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemLedgerEntry.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemPicture.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemSuggestion.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemsView.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemsViewProcedure_Result.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemUnitOfMeasure.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemVehicleGroup.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemVehicleModel.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LoyaltyCard.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Manufacturer.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IGenJournalLine.cs" />
+    <Compile Include="Models\IPaymentSchedule.cs" />
+    <Compile Include="Models\ISalesHeader.cs" />
+    <Compile Include="Models\ISalesLine.cs" />
+    <Compile Include="Models\OrderModels.cs" />
+    <Compile Include="NavDbController.cs" />
+    <Compile Include="PaymentMethod.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaymentSchedule.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PosDB.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PosDB.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PosDB.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PosDB.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PosDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="POSMessageEntry.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PostCodeCity.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PostedGenJournalLine.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PostedPaymentSchedule.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PostedSalesHeader.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PostedSalesLine.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="POSUser.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PosUserType.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductGroup.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductSubGroup.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectedItemReceipt.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionBudgetActual.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleasedGenJournalLine.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleasedPaymentSchedule.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleasedSalesHeader.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ReleasedSalesLine.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ResponsibilityCenter.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesHeader.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesLine.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Salesperson_Purchaser.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SalesPrice.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Setting.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShippingAgent.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Ship_to_Address.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UnitOfMeasure.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserSetup.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vehicle.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VehicleGroup.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VehicleModel.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Vendor.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <EntityDeploy Include="PosDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PosDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="packages.config" />
+    <None Include="PosDB.edmx.diagram">
+      <DependentUpon>PosDB.edmx</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="PosDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PosDB.edmx</DependentUpon>
+      <LastGenOutput>PosDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="PosDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>PosDB.edmx</DependentUpon>
+      <LastGenOutput>PosDB.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoreTypes\CoreTypes.csproj">
+      <Project>{474de8c1-6aff-46f3-9d27-9255c3d2688a}</Project>
+      <Name>CoreTypes</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

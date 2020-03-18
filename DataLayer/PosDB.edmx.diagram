@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a141e5d8ef03400daa31f8c6cf9f706f" Name="Diagram1" ZoomLevel="75">
+        <EntityTypeShape EntityType="POSModel.ActiveSession" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.AutoNumber" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.BankAccount" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.CampaignBasket" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.DeletedSalesHeader" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.DeletedSalesLine" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.GenJournalLineArchive" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.ItemCatalogue" Width="1.5" PointX="2.625" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.ItemLedgerEntry" Width="1.5" PointX="12.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.ItemPicture" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.ItemUnitOfMeasure" Width="1.5" PointX="10.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.LoyaltyCard" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.Manufacturer" Width="1.5" PointX="14.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.PaymentMethod" Width="1.5" PointX="6.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.POSUser" Width="1.5" PointX="16.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.PosUserType" Width="1.5" PointX="8.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.ProductSubGroup" Width="1.5" PointX="16.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.ProjectedItemReceipt" Width="1.5" PointX="16.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.ReleasedSalesLine" Width="1.5" PointX="18.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.ResponsibilityCenter" Width="1.5" PointX="0.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.SalesLine" Width="1.5" PointX="12.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.Salesperson_Purchaser" Width="1.5" PointX="14.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.SalesPrice" Width="1.5" PointX="16.75" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.ShippingAgent" Width="1.5" PointX="6.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.UnitOfMeasure" Width="1.5" PointX="8.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="POSModel.ItemCrossReference" Width="1.5" PointX="21.375" PointY="9.75" />
+        <EntityTypeShape EntityType="POSModel.Ship_to_Address" Width="1.5" PointX="21.375" PointY="13.75" />
+        <EntityTypeShape EntityType="POSModel.Customer" Width="1.5" PointX="21.375" PointY="17.75" />
+        <EntityTypeShape EntityType="POSModel.ItemCategory" Width="1.5" PointX="4.5" PointY="4.875" />
+        <EntityTypeShape EntityType="POSModel.ProductGroup" Width="1.5" PointX="0.75" PointY="22.75" />
+        <EntityTypeShape EntityType="POSModel.Item" Width="1.5" PointX="9.375" PointY="22.75" />
+        <EntityTypeShape EntityType="POSModel.RegionBudgetActual" Width="1.5" PointX="8.875" PointY="7.125" />
+        <EntityTypeShape EntityType="POSModel.ItemItem" Width="1.5" PointX="9.25" PointY="10" />
+        <EntityTypeShape EntityType="POSModel.PaymentSchedule" Width="1.5" PointX="7" PointY="9.875" />
+        <EntityTypeShape EntityType="POSModel.SalesHeader" Width="1.5" PointX="5.375" PointY="23.75" />
+        <EntityTypeShape EntityType="POSModel.Country" Width="1.5" PointX="23.375" PointY="9.75" />
+        <EntityTypeShape EntityType="POSModel.PostCodeCity" Width="1.5" PointX="23.375" PointY="12.75" />
+        <EntityTypeShape EntityType="POSModel.PostedPaymentSchedule" Width="1.5" PointX="23.375" PointY="0.75" />
+        <EntityTypeShape EntityType="POSModel.ReleasedPaymentSchedule" Width="1.5" PointX="23.375" PointY="4.75" />
+        <EntityTypeShape EntityType="POSModel.PostedSalesHeader" Width="1.5" PointX="23.375" PointY="23.75" />
+        <EntityTypeShape EntityType="POSModel.ReleasedSalesHeader" Width="1.5" PointX="25.375" PointY="0.75" />
+        <EntityTypeShape EntityType="POSModel.PostedSalesLine" Width="1.5" PointX="0.75" PointY="25.75" />
+        <EntityTypeShape EntityType="POSModel.PostedGenJournalLine" Width="1.5" PointX="25.375" PointY="10.75" />
+        <EntityTypeShape EntityType="POSModel.Location" Width="1.5" PointX="3.375" PointY="16.75" />
+        <EntityTypeShape EntityType="POSModel.ReleasedGenJournalLine" Width="1.5" PointX="25.375" PointY="17.75" />
+        <EntityTypeShape EntityType="POSModel.Comment_Line" Width="1.5" PointX="19.375" PointY="25.75" />
+        <EntityTypeShape EntityType="POSModel.ItemVehicleModel" Width="1.5" PointX="13.375" PointY="12.75" />
+        <EntityTypeShape EntityType="POSModel.AdditionalParameter" Width="1.5" PointX="25.375" PointY="24.75" />
+        <EntityTypeShape EntityType="POSModel.ItemCustomer" Width="1.5" PointX="11.375" PointY="26.75" />
+        <EntityTypeShape EntityType="POSModel.ItemSuggestion" Width="1.5" PointX="11.375" PointY="0.75" />
+        <EntityTypeShape EntityType="POSModel.POSMessageEntry" Width="1.5" PointX="27.375" PointY="0.75" />
+        <EntityTypeShape EntityType="POSModel.UserSetup" Width="1.5" PointX="27.375" PointY="4.75" />
+        <EntityTypeShape EntityType="POSModel.ItemVehicleGroup" Width="1.5" PointX="3.375" PointY="20.75" />
+        <EntityTypeShape EntityType="POSModel.VehicleGroup" Width="1.5" PointX="27.375" PointY="16.75" />
+        <EntityTypeShape EntityType="POSModel.ItemsView" Width="1.5" PointX="27.375" PointY="19.75" />
+        <EntityTypeShape EntityType="POSModel.GenJournalLine" Width="1.5" PointX="15.375" PointY="23.75" />
+        <EntityTypeShape EntityType="POSModel.Setting" Width="1.5" PointX="25.375" PointY="28.75" />
+        <EntityTypeShape EntityType="POSModel.VehicleModel" Width="1.5" PointX="18.875" PointY="8.25" />
+        <EntityTypeShape EntityType="POSModel.Vehicle" Width="1.5" PointX="27.375" PointY="8.75" />
+        <EntityTypeShape EntityType="POSModel.Vendor" Width="1.5" PointX="27.375" PointY="13.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

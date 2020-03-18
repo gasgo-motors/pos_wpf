@@ -1,0 +1,62 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PosClient.Views.Dialogs"
+             xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             x:Class="PosClient.Views.Dialogs.PosUserDetail"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.DataContext>
+        <ViewModels:PosUserDetailViewModel/>
+    </UserControl.DataContext>
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock HorizontalAlignment="Right" VerticalAlignment="Center"><Run Text="username"/></TextBlock>
+        <TextBox Grid.Column="1" Text="{Binding CurrentPosUser.UserName, Mode=TwoWay}" Margin="10" IsEnabled="{Binding IsEnabled, Mode=OneWay}"/>
+
+        <TextBlock Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center"><Run Text="password"/></TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding CurrentPosUser.Password, Mode=TwoWay}" Margin="10"/>
+
+        <TextBlock Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center"><Run Text="სახელი"/></TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding CurrentPosUser.FirstName, Mode=TwoWay}" Margin="10"/>
+
+        <TextBlock Grid.Row="3" HorizontalAlignment="Right" VerticalAlignment="Center"><Run Text="გვარი"/></TextBlock>
+        <TextBox Grid.Column="1" Grid.Row="3" Text="{Binding CurrentPosUser.LastName, Mode=TwoWay}" Margin="10"/>
+
+        <TextBlock Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center"><Run Text="ტიპი"/></TextBlock>
+        <ComboBox  Grid.Row="4"  IsEnabled="{Binding IsEnabled, Mode=OneWay}"  Margin="10" Grid.Column="1" ItemsSource="{Binding UserTypes}" DisplayMemberPath="TypeName" SelectedValuePath="Id" SelectedValue="{Binding CurrentPosUser.UserTypeId}" />
+
+        <TextBlock Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Center"><Run Text="სტატუსი"/></TextBlock>
+        <controls:ToggleSwitch x:Name="enabledSwitch" Grid.Row="5" Grid.Column="1"  Margin="10"   IsEnabled="{Binding IsEnabled, Mode=OneWay}"
+                                   Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                                   IsChecked="{Binding CurrentPosUser.IsGood, Mode=TwoWay}"
+                                   OffLabel="Disabled"
+                                   OnLabel="Enabled" />
+
+        <TextBlock Grid.Row="6" HorizontalAlignment="Right" VerticalAlignment="Center"><Run Text="salesperson"/></TextBlock>
+        <ComboBox  IsEnabled="{Binding IsEnabled, Mode=OneWay}" Grid.Row="6" Grid.Column="1"  Margin="10"  ItemsSource="{Binding SalesPersons}" DisplayMemberPath="Name" SelectedValuePath="Code" SelectedValue="{Binding CurrentPosUser.SalesPersonCode}" />
+
+        <Grid Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0">
+            <Label Foreground="Red" x:Name="lbl_error"></Label>
+            <Button VerticalAlignment="Top" HorizontalAlignment="Right" x:Name="btn_save" Click="Btn_save_OnClick">შენახვა</Button>
+            <Button VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,64,0" x:Name="btn_cancel" Click="Btn_cancel_OnClick">გამოსვლა</Button>
+        </Grid>
+    </Grid>
+</UserControl>
