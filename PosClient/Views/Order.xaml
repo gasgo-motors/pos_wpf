@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:PosClient.Views"
              xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:Converters="clr-namespace:PosClient.Converters"
              x:Class="PosClient.Views.Order"
              xmlns:editors="clr-namespace:WpfControls.Editors;assembly=WpfControls"
              mc:Ignorable="d" 
@@ -14,6 +15,16 @@
     <local:OrderController.DataContext>
         <ViewModels:OrderViewModel/>
     </local:OrderController.DataContext>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ViewModels:VendorsSuggestionProvider x:Key="fsp" />
+            <ViewModels:VehiclesSuggestionProvider x:Key="ficle" />
+            <ViewModels:CustomersProvider x:Key="fclients" />
+            <Converters:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+            <Converters:VehicleNumberConverter x:Key="VehicleNumberConverter" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
     <Grid x:Name="OrdersGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
@@ -22,7 +33,37 @@
         </Grid.RowDefinitions>
         <Grid>
             <TextBlock HorizontalAlignment="Left" Margin="68,18,0,0" TextWrapping="Wrap" Text="კლიენტი: " VerticalAlignment="Top"/>
-            <TextBlock HorizontalAlignment="Left" Margin="135,10,0,0" TextWrapping="Wrap" Text="{Binding Order.Sell_toCustomerName, Mode=OneWay}" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+            <TextBlock HorizontalAlignment="Left" Margin="135,10,0,0" TextWrapping="Wrap" 
+                       Visibility="{Binding IsReadOnly,  Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter} }"
+                       Text="{Binding Order.Sell_toCustomerName, Mode=OneWay}" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
+            <editors:AutoCompleteTextBox VerticalAlignment="Top" 
+                                                             HorizontalAlignment="Left" Margin="135,10,0,0"
+                                                             Visibility="{Binding IsEditable,  Mode=OneWay, Converter={StaticResource BooleanVisibilityConverter} }"
+                                                             BorderBrush="LightGray"
+                                                             Height="28"
+                                                             Width="200"
+                                                             Watermark="აირჩიეთ კლიენტი"
+                                                             Provider="{StaticResource ResourceKey=fclients}"
+                                                             SelectedItem="{Binding CurrentCustomer,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                             DisplayMember="Name"
+                                                             x:Name="Actb">
+                <!--<editors:AutoCompleteTextBox.SelectedItem>
+                    <Binding Path="Service_ProviderObject" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                    </Binding>
+                </editors:AutoCompleteTextBox.SelectedItem>-->
+                <editors:AutoCompleteTextBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </editors:AutoCompleteTextBox.ItemTemplate>
+                <editors:AutoCompleteTextBox.LoadingContent>
+                    <TextBlock Text="Loading..."
+                                                   Margin="5"
+                                                   FontSize="14" />
+                </editors:AutoCompleteTextBox.LoadingContent>
+            </editors:AutoCompleteTextBox>
             <TextBlock HorizontalAlignment="Left" Margin="360,13,0,0" TextWrapping="Wrap" Text="შეკვეთის თარიღი: " VerticalAlignment="Top"/>
             <TextBlock HorizontalAlignment="Left" Margin="486,10,0,0" TextWrapping="Wrap" Text="{Binding Order.PostingDate, Mode=OneWay}" VerticalAlignment="Top" FontWeight="Bold" FontSize="16"/>
             <TextBlock HorizontalAlignment="Left" Margin="13,44,0,0" TextWrapping="Wrap" Text="მიწოდ მისამართი: " VerticalAlignment="Top"/>
@@ -66,30 +107,30 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
-                                <ComboBox Width="130"   
-                                          HorizontalAlignment="Left"
-                                          DisplayMemberPath="Name"
-                                          SelectedValuePath="No_" 
-                                          IsEditable="True"
-                                          SelectedValue="{Binding Service_Provider, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                          ItemsSource="{Binding DataContext.Vendors, ElementName=gridsalesLInes}"
-                                />
                                 <editors:AutoCompleteTextBox VerticalAlignment="Top" Margin="3" 
+                                                             Visibility="{Binding DeleteButtonVisibility,  Mode=OneWay}"
                                                              BorderBrush="LightGray"
-                                                             Width="90" Height="28"
-                                                             Watermark="OE number"
-                                                             Provider="{Binding DataContext.Vendors, ElementName=gridsalesLInes}"
+                                                             Height="28"
+                                                             Watermark="Vendor"
+                                                             Provider="{StaticResource ResourceKey=fsp}"
+                                                             DisplayMember="Name"
                                                              x:Name="Actb">
                                     <editors:AutoCompleteTextBox.SelectedItem>
-                                        <Binding Path="SelectedOeNumber" Mode="TwoWay">
+                                        <Binding Path="Service_ProviderObject" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                         </Binding>
                                     </editors:AutoCompleteTextBox.SelectedItem>
+                                    <editors:AutoCompleteTextBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}"></TextBlock>
+                                        </DataTemplate>
+                                    </editors:AutoCompleteTextBox.ItemTemplate>
                                     <editors:AutoCompleteTextBox.LoadingContent>
                                         <TextBlock Text="Loading..."
                                                    Margin="5"
                                                    FontSize="14" />
                                     </editors:AutoCompleteTextBox.LoadingContent>
                                 </editors:AutoCompleteTextBox>
+                                <TextBlock Text="{Binding Service_Provider_No, Mode=OneWay}" Visibility="{Binding ReadOnlyVisibility, Mode=OneWay}"/>
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -98,14 +139,21 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
-                                <ComboBox Width="130"   
-                                          HorizontalAlignment="Left"
-                                          IsEditable="True"
-                                          DisplayMemberPath="Vehicle_No_"
-                                          SelectedValuePath="Vehicle_No_" 
-                                          SelectedValue="{Binding Customer_Vehicle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                          ItemsSource="{Binding DataContext.Vehicles, ElementName=gridsalesLInes}"
-                                />
+                                <editors:AutoCompleteTextBox VerticalAlignment="Top" Margin="3" 
+                                                             BorderBrush="LightGray"
+                                                             Visibility="{Binding DeleteButtonVisibility,  Mode=OneWay}"
+                                                             Height="28"
+                                                             Watermark="Vehicle no"
+                                                             Provider="{StaticResource ResourceKey=ficle}"
+                                                             Text="{Binding Customer_Vehicle_Text, Mode=OneWayToSource,  UpdateSourceTrigger=PropertyChanged}"
+                                                             IsVehicleNumber="True"
+                                                             x:Name="Atvechile">
+                                    <editors:AutoCompleteTextBox.SelectedItem>
+                                        <Binding Path="Customer_Vehicle" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                        </Binding>
+                                    </editors:AutoCompleteTextBox.SelectedItem>
+                                </editors:AutoCompleteTextBox>
+                                <TextBlock Text="{Binding Customer_Vehicle, Mode=OneWay}" Visibility="{Binding ReadOnlyVisibility, Mode=OneWay}"/>
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

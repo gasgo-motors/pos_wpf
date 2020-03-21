@@ -8,6 +8,7 @@
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Data;
+    using System.Linq;
     using System.Windows.Input;
     using System.Windows.Threading;
 
@@ -39,6 +40,8 @@
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(AutoCompleteTextBox), new FrameworkPropertyMetadata(string.Empty));
 
         public static readonly DependencyProperty WatermarkProperty = DependencyProperty.Register("Watermark", typeof(string), typeof(AutoCompleteTextBox), new FrameworkPropertyMetadata(string.Empty));
+
+        public static readonly DependencyProperty IsVehicleNumberProperty = DependencyProperty.Register("IsVehicleNumber", typeof(bool), typeof(AutoCompleteTextBox), new FrameworkPropertyMetadata(false));
         private BindingEvaluator _bindingEvaluator;
 
         private TextBox _editor;
@@ -58,6 +61,8 @@
         private bool _selectionCancelled;
 
         private SuggestionsAdapter _suggestionsAdapter;
+
+
 
         
         #endregion
@@ -219,6 +224,13 @@
             set { SetValue(WatermarkProperty, value); }
         }
 
+        public bool IsVehicleNumber
+        {
+            get { return (bool)GetValue(IsVehicleNumberProperty); }
+
+            set { SetValue(IsVehicleNumberProperty, value); }
+        }
+
         #endregion
 
         #region "Methods"
@@ -316,10 +328,29 @@
             }
         }
 
+        private string GetVehicleString(string s)
+        {
+            s = s.ToUpper();
+            s = string.Join("", s.Where(c => c >= 'A' && c <= 'Z' || c >= '0' && c <= '9'));
+            return s;
+        }
+
         private void OnEditorTextChanged(object sender, TextChangedEventArgs e)
         {
             if (_isUpdatingText)
                 return;
+
+            if (IsVehicleNumber)
+            {
+                var s1 =  GetVehicleString(Editor.Text);
+                if( s1 != Editor.Text)
+                {
+                    var caretIndex = Editor.CaretIndex;
+                    Editor.Text = s1;
+                    Editor.CaretIndex = Math.Min(Editor.Text.Length, caretIndex); 
+                }
+            }
+
             if (FetchTimer == null)
             {
                 FetchTimer = new DispatcherTimer();

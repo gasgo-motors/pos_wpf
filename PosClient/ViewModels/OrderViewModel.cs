@@ -19,6 +19,33 @@ namespace PosClient.ViewModels
 {
     public class OrderViewModel : PosViewModel
     {
+
+        public static string Sell_toCustomerNo;
+
+        public Customer CurrentCustomer
+        {
+            get
+            {
+                return Order?.CurrentCustomer;
+            }
+            set
+            {
+                if(value != null &&  value.No_ != Order.CurrentCustomer.No_)
+                {
+                    Order.CurrentCustomer = value;
+                    Order.Sell_toCustomerNo = value.No_;
+                    Order.Sell_toCustomerName = value.Name;
+                    Order.CustomerPriceGroup = value.CustomerPriceGroup;
+                    RaisePropertyChanged(() => CurrentCustomer);
+                    OrderViewModel.Sell_toCustomerNo = Order.Sell_toCustomerNo;
+                    ShipToAddresses = DaoController.Current.GetShipToAddresses(Order.Sell_toCustomerNo);
+                    if (ShipToAddresses.Count == 1)
+                        SelectedAddress = ShipToAddresses[0];
+                }
+            }
+        }
+
+
         private bool _isNew;
         public bool IsNew
         {
@@ -29,7 +56,7 @@ namespace PosClient.ViewModels
                 {
                     _isNew = value;
                     RaisePropertyChanged(() => BogBackButtonVisibility);
-                }  
+                }
             }
         }
 
@@ -94,7 +121,7 @@ namespace PosClient.ViewModels
 
         public Visibility SaveAndCancelButtonsVisibility
         {
-            get { return IsEditable  ? Visibility.Visible : Visibility.Collapsed; }
+            get { return IsEditable ? Visibility.Visible : Visibility.Collapsed; }
         }
 
         public Visibility SaveAndSendButtonsVisibility
@@ -372,7 +399,7 @@ namespace PosClient.ViewModels
             get
             {
                 if (_salesLines == null) return null;
-                return _salesLines.Select(i => new SalesLineShortEntry(i, this)).ToList();
+                return _salesLines.Select(i => new SalesLineShortEntry(i, this, Vendors)).ToList();
             }
         }
 
@@ -421,6 +448,7 @@ namespace PosClient.ViewModels
 
         public void Refresh()
         {
+            OrderViewModel.Sell_toCustomerNo = Order.Sell_toCustomerNo;
             Vendors = DaoController.Current.GetVendors();
             Vehicles = DaoController.Current.GetCustomerVehicles(Order.Sell_toCustomerNo);
             ShipToAddresses = DaoController.Current.GetShipToAddresses(Order.Sell_toCustomerNo);
@@ -586,10 +614,13 @@ namespace PosClient.ViewModels
         private ISalesLine _salesLine;
         private OrderViewModel _parentModel;
 
-        public SalesLineShortEntry(ISalesLine salesLine, OrderViewModel parentModel)
+        public List<Vendor> Vendors { get; set; }
+
+        public SalesLineShortEntry(ISalesLine salesLine, OrderViewModel parentModel, List<Vendor> vendors)
         {
             _salesLine = salesLine;
             _parentModel = parentModel;
+            Vendors = vendors;
         }
 
         public string Description
@@ -651,6 +682,14 @@ namespace PosClient.ViewModels
             }
         }
 
+        public Visibility ReadOnlyVisibility
+        {
+            get
+            {
+                return DeleteButtonVisibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
 
         public string Service_Provider
         {
@@ -661,6 +700,33 @@ namespace PosClient.ViewModels
                 {
                     _salesLine.Service_Provider = value;
                     PropertyChanged(this, new PropertyChangedEventArgs("Service_Provider"));
+                }
+            }
+        }
+
+        public string Service_Provider_No
+        {
+            get
+            {
+                var vendor = Vendors.FirstOrDefault(i => i.No_ == _salesLine.Service_Provider);
+                return vendor != null ? vendor.Name : Service_Provider;
+            }
+        }
+
+        public Vendor Service_ProviderObject
+        {
+            get
+            {
+                var vendor = Vendors.FirstOrDefault(i => i.No_ == _salesLine.Service_Provider);
+                return vendor;
+            }
+            set
+            {
+                if (value != null && _salesLine.Service_Provider != value.No_)
+                {
+                    _salesLine.Service_Provider = value.No_;
+                    PropertyChanged(this, new PropertyChangedEventArgs("Service_Provider"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Service_ProviderObject"));
                 }
             }
         }
@@ -677,6 +743,23 @@ namespace PosClient.ViewModels
                 }
             }
         }
+
+        private string _customer_Vehicle_Text;
+        public string Customer_Vehicle_Text
+        {
+            get { return _customer_Vehicle_Text; }
+            set
+            {
+                if (_customer_Vehicle_Text != value)
+                {
+                    _customer_Vehicle_Text = value;
+                    if (_salesLine.Customer_Vehicle == null) _salesLine.Customer_Vehicle = _customer_Vehicle_Text;
+                    // PropertyChanged(this, new PropertyChangedEventArgs("Customer_Vehicle"));
+                }
+            }
+        }
+
+
     }
 
     public class OeNumbersSuggestionProvider : ISuggestionProvider
@@ -692,4 +775,57 @@ namespace PosClient.ViewModels
         }
 
     }
+
+    public class VendorsSuggestionProvider : ISuggestionProvider
+    {
+        public List<Vendor> Vendors { get; set; }
+
+
+        public System.Collections.IEnumerable GetSuggestions(string filter)
+        {
+            if (Vendors == null)
+                Vendors = DaoController.Current.GetVendors();
+            if (filter == null) filter = string.Empty;
+            return Vendors.Where(i => i.Name.Contains(filter)).ToList();
+        }
+
+    }
+
+    public class VehiclesSuggestionProvider : ISuggestionProvider
+    {
+        public List<Vehicle> Vehicles { get; set; }
+
+
+        public System.Collections.IEnumerable GetSuggestions(string filter)
+        {
+            Vehicles = DaoController.Current.GetCustomerVehicles(OrderViewModel.Sell_toCustomerNo);
+            if (filter == null) filter = string.Empty;
+            return Vehicles.Where(i => i.Vehicle_No_.Contains(filter)).Select(i => i.Vehicle_No_).ToList();
+        }
+
+    }
+
+
+    public class CustomersProvider : ISuggestionProvider
+    {
+        public List<Customer> Customers { get; set; }
+
+
+        public System.Collections.IEnumerable GetSuggestions(string filter)
+        {
+            if (Customers == null)
+                Customers = DaoController.Current.GetCustomers();
+            if (filter == null) filter = string.Empty;
+
+            return Customers.Where(
+                    i => i.Name.ToLower().Contains(filter.ToLower()) || i.VATRegistrationNo_.Contains(filter)).ToList();
+        }
+
+    }
+
+
+
+
+
+
 }

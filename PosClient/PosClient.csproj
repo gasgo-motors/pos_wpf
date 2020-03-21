@@ -61,7 +61,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>49D266F42BB5406927979268BB22370E3A93BDCD</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>65A97EAF93248CD8AE2633489743E0619AF987EC</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>PosClient_TemporaryKey.pfx</ManifestKeyFile>
@@ -172,6 +172,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BooleanVisibilityConverter.cs" />
     <Compile Include="Converters\ByteToImageConverter.cs" />
+    <Compile Include="Converters\VehicleNumberConverter.cs" />
     <Compile Include="Helpers\FocusBehavior.cs" />
     <Compile Include="Helpers\PosTools.cs" />
     <Compile Include="Helpers\PosViewModel.cs" />
@@ -453,12 +454,12 @@
   <ItemGroup>
     <PublishFile Include="Microsoft.SqlServer.Management.SqlParser">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>

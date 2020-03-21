@@ -2109,7 +2109,7 @@ namespace DataLayer
         {
             using (var e = new POSWR1Entities())
             {
-                return e.Vendors.ToList();
+                return e.Vendors.Where(i => i.No_.StartsWith("PV")).ToList();
             }
         }
 
