@@ -1009,9 +1009,9 @@
           <Property Name="ModifiedUser" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="Shelf" Type="nvarchar" MaxLength="50" />
-          <Property Name="Service Provider" Type="nvarchar" MaxLength="10" />
           <Property Name="Service Provider Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Customer Vehicle" Type="nvarchar" MaxLength="10" />
+          <Property Name="Service Provider" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Salesperson/Purchaser">
           <Key>
@@ -1110,6 +1110,10 @@
           <Property Name="Settings_ConcurrentQoutePrefix" Type="nvarchar" MaxLength="50" />
           <Property Name="Settings_Show_Shelf" Type="int" />
           <Property Name="Settings_LocationAll" Type="nvarchar" MaxLength="150" />
+          <Property Name="Settings_RsUsername" Type="nvarchar" MaxLength="50" />
+          <Property Name="Settings_RsPassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="Settings_RsServiceUsername" Type="nvarchar" MaxLength="50" />
+          <Property Name="Settings_RsServicePassword" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ShippingAgent">
           <Key>
@@ -2709,6 +2713,10 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="Settings_ConcurrentQoutePrefix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Settings_Show_Shelf" Type="Int32" />
           <Property Name="Settings_LocationAll" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_RsUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_RsPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_RsServiceUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_RsServicePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="VehicleModel">
           <Key>
@@ -3982,6 +3990,10 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySetMapping Name="Settings">
             <EntityTypeMapping TypeName="POSModel.Setting">
               <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="Settings_RsServicePassword" ColumnName="Settings_RsServicePassword" />
+                <ScalarProperty Name="Settings_RsServiceUsername" ColumnName="Settings_RsServiceUsername" />
+                <ScalarProperty Name="Settings_RsPassword" ColumnName="Settings_RsPassword" />
+                <ScalarProperty Name="Settings_RsUsername" ColumnName="Settings_RsUsername" />
                 <ScalarProperty Name="Settings_LocationAll" ColumnName="Settings_LocationAll" />
                 <ScalarProperty Name="Settings_Show_Shelf" ColumnName="Settings_Show_Shelf" />
                 <ScalarProperty Name="Settings_ConcurrentQoutePrefix" ColumnName="Settings_ConcurrentQoutePrefix" />

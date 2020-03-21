@@ -220,7 +220,28 @@
                 <Grid Style="{StaticResource GridSetting}" x:Name="Settings_ConcurrentQoutePrefix">
                     <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ConcurrentQoutePrefix" />
                     <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_ConcurrentQoutePrefix, Mode=TwoWay}"  />
-                </Grid>                
+                </Grid>
+
+
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_RsUsername">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_RsUsername" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_RsUsername, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_RsPassword">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_RsPassword" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_RsPassword, Mode=TwoWay}"  />
+                </Grid>
+
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_RsServiceUsername">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_RsServiceUsername" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_RsServiceUsername, Mode=TwoWay}"  />
+                </Grid>
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_RsServicePassword">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_RsServicePassword" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_RsServicePassword, Mode=TwoWay}"  />
+                </Grid>
+
+
             </WrapPanel>
         </ScrollViewer>
 

@@ -58,6 +58,11 @@ namespace PosClient.ViewModels
             }
         }
 
+        public void SetName(string name)
+        {
+            _currentCustomer.Name = name;
+        }
+
         private string _error;
         public string Error
         {

@@ -141,8 +141,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.5.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -265,6 +267,11 @@
     </Compile>
     <Compile Include="Views\UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\ge.mof.revenue.www\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -397,6 +404,11 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Web References\ge.mof.revenue.www\ntosservice.wsdl" />
+    <None Include="Web References\ge.mof.revenue.www\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -443,6 +455,7 @@
     <Resource Include="Resources\Images\bit_32_32.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Web References\ge.mof.revenue.www\ntosservice.disco" />
     <Resource Include="Resources\VersionScript.sql" />
     <Resource Include="pos_bit_icon.ico" />
     <Resource Include="pos_q2W_icon.ico" />
@@ -454,14 +467,30 @@
   <ItemGroup>
     <PublishFile Include="Microsoft.SqlServer.Management.SqlParser">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="https://www.revenue.mof.ge/ntosservice/ntosservice.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ge.mof.revenue.www\</RelPath>
+      <UpdateFromURL>https://www.revenue.mof.ge/ntosservice/ntosservice.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>PosClient_ge_mof_revenue_www_NtosService</CachedSettingsPropName>
+    </WebReferenceUrl>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\PCshop\Desktop\pos_kakha_docs\POS Gasgo Source Code 1.0.1.9\DataLayer\PosDB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\avto\source\repos\pos_wpf\DataLayer\PosDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

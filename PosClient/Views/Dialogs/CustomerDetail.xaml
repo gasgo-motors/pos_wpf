@@ -29,12 +29,12 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">კლიენტის სახელი:</TextBlock>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding CurrentCustomer.Name, Mode=TwoWay}" Margin="10"></TextBox>
+        <TextBox Grid.Row="0" Grid.Column="1" x:Name="Tbx_customer_name" Text="{Binding CurrentCustomer.Name, Mode=TwoWay}" Margin="10"></TextBox>
         <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">იურიდიული მისამართი:</TextBlock>
         <TextBox Grid.Row="0" Grid.Column="3" Text="{Binding CurrentCustomer.Address, Mode=TwoWay}" Margin="10"></TextBox>
 
         <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">საიდენტიფიკაციო კოდი:</TextBlock>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding CurrentCustomer.VATRegistrationNo_}" Margin="10"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" x:Name="Tbx_vat" Text="{Binding CurrentCustomer.VATRegistrationNo_}" TextChanged="TextBox_TextChanged" Margin="10"></TextBox>
         <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">მიწოდების მისამართი:</TextBlock>
         <TextBox Grid.Row="1" Grid.Column="3" Text="{Binding CurrentCustomer.ShipToAddress, Mode=TwoWay}" Margin="10"></TextBox>
 

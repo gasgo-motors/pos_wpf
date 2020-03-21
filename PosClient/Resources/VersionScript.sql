@@ -7,6 +7,14 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+ALTER TABLE dbo.Settings add	[Settings_RsUsername] [nvarchar](50) NULL
+ALTER TABLE dbo.Settings add	[Settings_RsPassword] [nvarchar](50) NULL
+ALTER TABLE dbo.Settings add	[Settings_RsServiceUsername] [nvarchar](50) NULL
+ALTER TABLE dbo.Settings add	[Settings_RsServicePassword] [nvarchar](50) NULL
+go
+
+
+
 ALTER TABLE dbo.SalesLine add	[Service Provider] [nvarchar](10)  NULL
 ALTER TABLE dbo.SalesLine add	[Service Provider Name] [nvarchar](50)  NULL
 ALTER TABLE dbo.SalesLine add	[Customer Vehicle] [nvarchar](10)  NULL

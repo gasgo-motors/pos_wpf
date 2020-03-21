@@ -63,5 +63,9 @@ namespace DataLayer
         public string Settings_ConcurrentQoutePrefix { get; set; }
         public Nullable<int> Settings_Show_Shelf { get; set; }
         public string Settings_LocationAll { get; set; }
+        public string Settings_RsUsername { get; set; }
+        public string Settings_RsPassword { get; set; }
+        public string Settings_RsServiceUsername { get; set; }
+        public string Settings_RsServicePassword { get; set; }
     }
 }
