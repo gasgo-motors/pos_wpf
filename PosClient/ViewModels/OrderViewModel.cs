@@ -496,7 +496,36 @@ namespace PosClient.ViewModels
                         (GenJournalLines as List<GenJournalLine>).Add(gn);
                     }
                 }
-                DaoController.Current.CreateOrder((SalesHeader)Order, (List<SalesLine>)SalesLines,
+                var sLines = (List<SalesLine>)SalesLines;
+                if( sLines.Any(s => s.PostingDate.HasValue && s.PostingDate.Value.Date > Order.PostingDate.Value.Date ))
+                {
+                    var dates = sLines.Where(s => s.PostingDate.HasValue && s.PostingDate.Value.Date > Order.PostingDate.Value.Date).Select(s => s.PostingDate.Value.Date).Distinct();
+                    foreach(var dt in dates)
+                    {
+                            var newHeader = new SalesHeader
+                            {
+                                No_ = DaoController.Current.GenerateNewKey(App.Current.PosSetting.Settings_SalesHeaderNumberCount),
+                                DocumentType = 1,
+                                PostingDate = dt,
+                                Sell_toCustomerNo = Order.Sell_toCustomerNo,
+                                Sell_toCustomerName = Order.Sell_toCustomerName,
+                                CustomerPriceGroup = Order.CustomerPriceGroup,
+                                SalespersonCode = App.Current.PosSetting.Settings_SalesPersonCode,
+                                SalesLines = new List<SalesLine>(),
+                                JournalLines = new List<GenJournalLine>(),
+                                PaymentSchedules = new List<PaymentSchedule>(),
+                                CurrentCustomer = Order.CurrentCustomer
+                            };
+                        var newSalesLines = sLines.Where(s => s.PostingDate.HasValue && s.PostingDate.Value.Date == dt).ToList();
+                        newSalesLines.ForEach(n => { n.DocumentNo_ = newHeader.No_; });
+                        newHeader.AmountIncludingVat = newSalesLines.Sum(i => i.AmountIncludingVAT);
+                        DaoController.Current.CreateOrder(newHeader, newSalesLines,
+                            new List<PaymentSchedule>(), new List<GenJournalLine>() );
+                    }
+                }
+                sLines = sLines.Where(s => !s.PostingDate.HasValue || s.PostingDate.Value.Date == Order.PostingDate.Value.Date).ToList();
+                Order.AmountIncludingVat = sLines.Sum(i => i.AmountIncludingVAT);
+                DaoController.Current.CreateOrder((SalesHeader)Order, sLines,
                     (List<PaymentSchedule>)PaymentSchedules, (List<GenJournalLine>)GenJournalLines);
             }
             else
@@ -663,6 +692,20 @@ namespace PosClient.ViewModels
         public string OrderTypeString
         {
             get { return _salesLine.OrderTypeString; }
+        }
+
+
+        public DateTime? PostingDate
+        {
+            get { return _salesLine.PostingDate.HasValue ? _salesLine.PostingDate : _parentModel.Order.PostingDate;  }
+            set
+            {
+                if (_salesLine.PostingDate != value)
+                {
+                    _salesLine.PostingDate = value;
+                    PropertyChanged(this, new PropertyChangedEventArgs("PostingDate"));
+                }
+            }
         }
 
         public int LineNo

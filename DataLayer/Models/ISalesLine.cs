@@ -44,5 +44,7 @@ namespace DataLayer.Models
          string Service_Provider { get; set; }
          string Service_Provider_Name { get; set; }
          string Customer_Vehicle { get; set; }
+
+        DateTime? PostingDate { get; set; }
     }
 }

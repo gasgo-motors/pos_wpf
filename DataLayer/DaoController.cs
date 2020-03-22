@@ -2113,6 +2113,8 @@ namespace DataLayer
             }
         }
 
+
+
         public List<Vehicle> GetCustomerVehicles(string customerNo)
         {
             using (var e = new POSWR1Entities())

@@ -53,6 +53,7 @@
             <Button x:Name="btnPyment"   Margin="0,0,10,0"  Click="BtnPyment_OnClick" Content="ფულის მიღება"/>
             <Button x:Name="btnReleasedQuetes"   Margin="0,0,10,0"  Click="BtnReleasedQuetes_OnClick" Content="მიმდინარე ქვოტები"/>
             <Button x:Name="btnShortSync"   Margin="0,0,10,0"  Click="BtnShortSync_OnClick" Content="მარაგების მარტივი სინქრონიზაცია"/>
+            <ComboBox Margin="0,0,10,0"  SelectedItem="{Binding CurrentLocation, Mode=TwoWay}" ItemsSource="{Binding Locations}"  />
         </StackPanel>
 
         <DataGrid x:Name="CustomersGrid"

@@ -45,10 +45,18 @@
                     <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ResponsibilityCenter" />
                     <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_ResponsibilityCenter, Mode=TwoWay}"  />
                 </Grid>
+                
                 <Grid Style="{StaticResource GridSetting}" x:Name="Settings_Location">
                     <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_Location" />
                     <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_Location, Mode=TwoWay}"  />
                 </Grid>
+
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_LocationAll">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_LocationAll" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_LocationAll, Mode=TwoWay}"  />
+                </Grid>
+
+
                 <Grid Style="{StaticResource GridSetting}" x:Name="Settings_TransitLocation">
                     <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_TransitLocation" />
                     <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_TransitLocation, Mode=TwoWay}"  />
@@ -221,7 +229,8 @@
                     <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ConcurrentQoutePrefix" />
                     <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_ConcurrentQoutePrefix, Mode=TwoWay}"  />
                 </Grid>
-
+                
+                
 
                 <Grid Style="{StaticResource GridSetting}" x:Name="Settings_RsUsername">
                     <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_RsUsername" />

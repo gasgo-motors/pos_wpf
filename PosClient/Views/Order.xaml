@@ -8,6 +8,7 @@
              xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Converters="clr-namespace:PosClient.Converters"
+            xmlns:sys="clr-namespace:System;assembly=mscorlib"
              x:Class="PosClient.Views.Order"
              xmlns:editors="clr-namespace:WpfControls.Editors;assembly=WpfControls"
              mc:Ignorable="d" 
@@ -154,6 +155,15 @@
                                     </editors:AutoCompleteTextBox.SelectedItem>
                                 </editors:AutoCompleteTextBox>
                                 <TextBlock Text="{Binding Customer_Vehicle, Mode=OneWay}" Visibility="{Binding ReadOnlyVisibility, Mode=OneWay}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Shipment Date" Width="140">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <DatePicker IsEnabled="{Binding DataContext.IsEditable, ElementName=OrdersGrid, Mode=OneWay}" SelectedDate="{Binding PostingDate, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" DisplayDateStart="{x:Static sys:DateTime.Today}"   FontSize="15"></DatePicker>
                             </Grid>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

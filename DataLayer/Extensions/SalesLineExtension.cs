@@ -19,6 +19,8 @@ namespace DataLayer
                 return "";
             }
         }
+
+        public DateTime? PostingDate { get; set; }
     }
 
     public partial class PostedSalesLine : ISalesLine
@@ -33,6 +35,7 @@ namespace DataLayer
                 return "";
             }
         }
+        public DateTime? PostingDate { get; set; }
     }
 
     public partial class ReleasedSalesLine : ISalesLine
@@ -64,7 +67,7 @@ namespace DataLayer
             get { return AmountIncludingVAT.HasValue ? (decimal?)Math.Round(AmountIncludingVAT.Value, 2) : null; }
         }
 
+        public DateTime? PostingDate { get; set; }
 
-        
     }
 }
