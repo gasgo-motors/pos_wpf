@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
+
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -18,6 +18,15 @@ using DataLayer.Models;
 using MahApps.Metro.Controls.Dialogs;
 using PosClient.ViewModels;
 using PosClient.Helpers;
+using System.IO;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Kernel.Geom;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using iText.Kernel.Font;
+using iText.IO.Font.Constants;
+using iText.IO.Font;
 
 namespace PosClient.Views
 {
@@ -272,6 +281,45 @@ namespace PosClient.Views
                     NavigateToControl(PrevUserControl);
 
             }
+        }
+
+        private void BtnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            var order = (this.DataContext as OrderViewModel).Order;
+
+
+            byte[] result;
+
+            using (var memoryStream = new MemoryStream())
+            {
+                var pdfWriter = new PdfWriter(memoryStream);
+                var pdfDocument = new PdfDocument(pdfWriter);
+                var document = new Document(pdfDocument); //  , PageSize.A4, true);
+                PdfFont sylfaenfont = PdfFontFactory.CreateFont(@"c:\\windows\fonts\Sylfaen.ttf", PdfEncodings.IDENTITY_H);
+                document.SetFont(sylfaenfont);
+                document.Add(new Paragraph("შპს გასგო მოტორსი"));
+                document.Add(new Paragraph(order.Ship_toAddress));
+                document.Add(new Paragraph(order.PostingDate.HasValue ? order.PostingDate.Value.ToString("dd/MM/yyyy HH:mm") : ""));
+                document.Add(new Paragraph(order.No_));
+                Table table = new Table(UnitValue.CreatePercentArray(new float[] { 1, 7,5 }))
+                .UseAllAvailableWidth();
+                var count = 0;
+                foreach(var l in order.SalesLines)
+                {
+                    count++;
+                    table.AddCell(new Cell().Add(new Paragraph(count.ToString()) ) );
+                    table.AddCell(new Cell().Add(new Paragraph( string.IsNullOrEmpty(l.LargeDescription) ? "" : l.LargeDescription)));
+                    table.AddCell(new Cell().Add(new Paragraph( $"{l.Quantity}*{l.UnitPrice:F2}={l.AmountIncludingVAT:F2}"  )));
+                }
+                document.Add(table);
+                document.Add(new Paragraph($"ჯამი    {order.AmountIncludingVat:F2}"));
+
+                document.Close();
+
+                result = memoryStream.ToArray();
+            }
+
+            File.WriteAllBytes(@"C:\ddddd\iTextQuoteM.pdf", result);
         }
     }
 }
