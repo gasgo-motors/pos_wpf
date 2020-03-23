@@ -223,6 +223,26 @@
           <Property Name="Service Provider Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Customer Vehicle" Type="nvarchar" MaxLength="10" />
         </EntityType>
+        <EntityType Name="Dimension Value">
+          <Key>
+            <PropertyRef Name="Dimension Code" />
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Dimension Code" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Dimension Value Type" Type="int" Nullable="false" />
+          <Property Name="Totaling" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Blocked" Type="tinyint" Nullable="false" />
+          <Property Name="Consolidation Code" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Indentation" Type="int" Nullable="false" />
+          <Property Name="Global Dimension No_" Type="int" Nullable="false" />
+          <Property Name="Map-to IC Dimension Code" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Map-to IC Dimension Value Code" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Dimension Value ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name 2" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DimensionName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="GenJournalLine">
           <Key>
             <PropertyRef Name="TemplateName" />
@@ -1310,6 +1330,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeletedSalesHeader" EntityType="Self.DeletedSalesHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeletedSalesLine" EntityType="Self.DeletedSalesLine" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dimension Value" EntityType="Self.Dimension Value" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GenJournalLine" EntityType="Self.GenJournalLine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GenJournalLineArchive" EntityType="Self.GenJournalLineArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
@@ -1958,6 +1979,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="VehicleModels" EntityType="POSModel.VehicleModel" />
           <EntitySet Name="Vehicles" EntityType="POSModel.Vehicle" />
           <EntitySet Name="Vendors" EntityType="POSModel.Vendor" />
+          <EntitySet Name="Dimension_Values" EntityType="POSModel.Dimension_Value" />
         </EntityContainer>
         <EntityType Name="ItemCrossReference">
           <Key>
@@ -2790,6 +2812,26 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Country_Region_Code" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="VAT_Registration_No_" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Dimension_Value">
+          <Key>
+            <PropertyRef Name="Dimension_Code" />
+            <PropertyRef Name="Code" />
+          </Key>
+          <Property Name="Dimension_Code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dimension_Value_Type" Type="Int32" Nullable="false" />
+          <Property Name="Totaling" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Blocked" Type="Byte" Nullable="false" />
+          <Property Name="Consolidation_Code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Indentation" Type="Int32" Nullable="false" />
+          <Property Name="Global_Dimension_No_" Type="Int32" Nullable="false" />
+          <Property Name="Map_to_IC_Dimension_Code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Map_to_IC_Dimension_Value_Code" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Dimension_Value_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name_2" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="DimensionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4113,6 +4155,26 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
                 <ScalarProperty Name="Country_Region_Code" ColumnName="Country_Region Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="No_" ColumnName="No_" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dimension_Values">
+            <EntityTypeMapping TypeName="POSModel.Dimension_Value">
+              <MappingFragment StoreEntitySet="Dimension Value">
+                <ScalarProperty Name="DimensionName" ColumnName="DimensionName" />
+                <ScalarProperty Name="Name_2" ColumnName="Name 2" />
+                <ScalarProperty Name="Dimension_Value_ID" ColumnName="Dimension Value ID" />
+                <ScalarProperty Name="Map_to_IC_Dimension_Value_Code" ColumnName="Map-to IC Dimension Value Code" />
+                <ScalarProperty Name="Map_to_IC_Dimension_Code" ColumnName="Map-to IC Dimension Code" />
+                <ScalarProperty Name="Global_Dimension_No_" ColumnName="Global Dimension No_" />
+                <ScalarProperty Name="Indentation" ColumnName="Indentation" />
+                <ScalarProperty Name="Consolidation_Code" ColumnName="Consolidation Code" />
+                <ScalarProperty Name="Blocked" ColumnName="Blocked" />
+                <ScalarProperty Name="Totaling" ColumnName="Totaling" />
+                <ScalarProperty Name="Dimension_Value_Type" ColumnName="Dimension Value Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Dimension_Code" ColumnName="Dimension Code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

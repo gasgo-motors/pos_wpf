@@ -137,6 +137,14 @@ namespace BusinessLayer
             DaoController.Current.SyncVehicles(dt);
 
 
+            progressAction(null, "Synchronizing Dimension Value", 99);
+
+            NavDbController.Current.getDimensionValue(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncDimensionValue(dt);
+
+
+
             progressAction(null, "messages", 99);
             SendServiceManager.Current.SendNewMessages();
             foreach (var i in DaoController.Current.GetStatusChangeMessages())
@@ -145,10 +153,14 @@ namespace BusinessLayer
                 if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             }
 
+
+
             var userId = DaoController.Current.GetUserBySalesPersonCode(PosSetting.Settings_SalesPersonCode);
             NavDbController.Current.geNavMessage(userId, ref res, ref dt);
             if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             DaoController.Current.SyncMessages(dt);
+
+
 
             //switch (userType)
             //{

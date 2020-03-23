@@ -58,6 +58,21 @@ namespace PosClient.ViewModels
             }
         }
 
+
+        private List<Dimension_Value> _area;
+        public List<Dimension_Value> Area
+        {
+            get { return _area; }
+            set
+            {
+                if (_area != value)
+                {
+                    _area = value;
+                    RaisePropertyChanged(() => Area);
+                }
+            }
+        }
+
         public void SetName(string name)
         {
             _currentCustomer.Name = name;
@@ -102,6 +117,7 @@ namespace PosClient.ViewModels
         {
             Countries = DaoController.Current.GetCountries();
             Cities = DaoController.Current.GetPostCodeCities();
+            Area = DaoController.Current.GetDimensionValue();
             CurrentCustomer = customer;
             Error = "";
         }
@@ -109,6 +125,7 @@ namespace PosClient.ViewModels
         {
             Countries = DaoController.Current.GetCountries();
             Cities = DaoController.Current.GetPostCodeCities();
+            Area = DaoController.Current.GetDimensionValue();
             CurrentCustomer = new Customer
             {
                 NeedsVATInvoice = true,
@@ -159,9 +176,9 @@ namespace PosClient.ViewModels
             //{
             //    errorText = "შეიყვანეთ ქალაქი";
             //}
-            else if ( String.IsNullOrEmpty(_currentCustomer.PhoneNo_) || _currentCustomer.PhoneNo_.Length < 8)
+            else if (!String.IsNullOrEmpty(_currentCustomer.Mobile_) && _currentCustomer.Mobile_.Length < 9)
             {
-                errorText = "ტელეფონის ნომრის სიგრძე ნაკლებია 8 ზე";
+                errorText = "მობილურის ნომრის სიგრძე ნაკლებია 9 ზე";
             }
             if (errorText == string.Empty)
             {

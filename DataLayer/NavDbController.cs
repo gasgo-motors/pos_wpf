@@ -1382,6 +1382,15 @@ GROUP BY [Global Dimension 2 Code]";
             return fillDataTable(s, ref errorMessage, ref result);
         }
 
+        public bool getDimensionValue(ref string errorMessage, ref DataTable result)
+        {
+            string s = @"SELECT 
+        *
+  FROM [dbo].[{0}$Dimension Value] where [Dimension Value Type] = 0 and ISNUMERIC(Code) > 0 AND [Dimension Code] = 'AREA'";
+            s = string.Format(s, setting.Settings_NavCompanyName);
+            return fillDataTable(s, ref errorMessage, ref result);
+        }
+
 
     }
 }

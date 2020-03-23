@@ -90,6 +90,9 @@
     <Compile Include="DeletedSalesLine.cs">
       <DependentUpon>PosDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Dimension_Value.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\CustomerExtension.cs" />
     <Compile Include="Extensions\GenJournalLineExtension.cs" />
     <Compile Include="Extensions\GenJouranlView.cs" />

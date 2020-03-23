@@ -20,6 +20,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="130"></ColumnDefinition>
@@ -83,14 +84,29 @@
         <TextBlock Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">ტელეფონი:</TextBlock>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding CurrentCustomer.PhoneNo_}" Margin="10"></TextBox>
 
-        <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">რეზიდენტი:</TextBlock>
-        <controls:ToggleSwitch x:Name="isResident" Grid.Row="4" Grid.Column="3"  Margin="10"
+        <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">მობილური:</TextBlock>
+        <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding CurrentCustomer.Mobile_}" Margin="10"></TextBox>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">არეა კოდი:</TextBlock>
+        <ComboBox Width="auto"  Grid.Row="5" Grid.Column="1" 
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                          Margin="10"
+                          DisplayMemberPath="DimensionName"
+                          IsEditable="True"
+                          ItemsSource="{Binding Area}"
+                          SelectedValue="{Binding CurrentCustomer.AreaCode,  Mode=TwoWay}"  
+                          SelectedValuePath="Code"
+                           />
+        
+        <TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">რეზიდენტი:</TextBlock>
+        <controls:ToggleSwitch x:Name="isResident" Grid.Row="5" Grid.Column="3"  Margin="10"
                                Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
                                OffLabel="არა"
                                OnLabel="კი" IsChecked="True" />
 
 
-        <Grid Grid.Row="5" Grid.ColumnSpan="4">
+        <Grid Grid.Row="6" Grid.ColumnSpan="4">
             <TextBlock VerticalAlignment="Top" HorizontalAlignment="Left" Foreground="Red" FontWeight="Bold" x:Name="lbl_error" Text="{Binding Error, Mode=OneWay}"></TextBlock>
             <Button VerticalAlignment="Center" HorizontalAlignment="Right" x:Name="Btn_save" Click="Btn_save_OnClick">შენახვა</Button>
             <Button VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,12,64,12" x:Name="Btn_cancel" Click="Btn_cancel_OnClick">გაუქმება</Button>

@@ -20,7 +20,7 @@ namespace BusinessLayer
             };
             foreach (var customer in customers)
             {
-                var newCode = pc.CreateNewCustomer(customer.Name, customer.VATRegistrationNo_, customer.NeedsVATInvoice.Value, customer.Contact,
+                var newCode = pc.CreateNewCustomer (customer.Name, customer.VATRegistrationNo_, customer.NeedsVATInvoice.Value, customer.Contact,
                     customer.PhoneNo_, customer.Address, customer.ShipToAddress, customer.City, customer.Country_RegionCode, PosSetting.Settings_SalesPersonCode);
                 DaoController.Current.UpdateCustomerStatus(customer.No_, newCode);
             }

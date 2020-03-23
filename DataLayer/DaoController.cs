@@ -2071,7 +2071,15 @@ namespace DataLayer
         }
 
 
-
+        public List<Dimension_Value> GetDimensionValue()
+        {
+            List<Dimension_Value> res;
+            using (var e = new POSWR1Entities())
+            {
+                res = e.Dimension_Values.OrderBy(i => i.Code).ToList();
+            }
+            return res;
+        }
 
         public List<ItemsViewProcedure_Result> GetItems(string customerCode, string customerGroup, string locationCode)
         {
@@ -3152,6 +3160,44 @@ namespace DataLayer
             }
         }
 
+        public void SyncDimensionValue(DataTable dt)
+        {
+            using (var e = new POSWR1Entities())
+            {
+                e.Database.ExecuteSqlCommand("delete from [dbo].[Dimension Value]");
+                foreach (DataRow r in dt.Rows)
+                {
+                    Dimension_Value d = new Dimension_Value();
 
+
+
+                    d.Dimension_Code = r["Dimension Code"].ToString();
+                    d.Code = r["Code"].ToString();
+                    d.Name = r["Name"].ToString();
+                    d.Dimension_Value_Type = (int)r["Dimension Value Type"];
+                    d.Totaling = r["Totaling"].ToString();
+                    d.Blocked = (byte)r["blocked"];
+                    d.Consolidation_Code = r["Consolidation Code"].ToString();
+                    d.Indentation = (int)r["Indentation"];
+                    d.Global_Dimension_No_ = (int)r["Global Dimension No_"];
+                    d.Map_to_IC_Dimension_Code = r["Map-to IC Dimension Code"].ToString();
+                    d.Map_to_IC_Dimension_Value_Code = r["Map-to IC Dimension Value Code"].ToString();
+                    d.Dimension_Value_ID = (int)r["Dimension Value ID"];
+                    d.Name_2 = r["Name 2"].ToString();
+                    d.DimensionName = r["Code"].ToString() + " " + r["Name"].ToString();
+
+                    e.Dimension_Values.Add(d);
+                }
+                //try
+                //{
+                e.SaveChanges();
+                //}
+                //catch(DbEntityValidationException ex)
+                //{
+
+                //}
+
+            }
+        }
     }
 }
