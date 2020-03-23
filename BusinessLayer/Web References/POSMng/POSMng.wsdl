@@ -59,6 +59,24 @@
           </sequence>
         </complexType>
       </element>
+      <element name="GetSalesPersFinDetails1">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="salesPersNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="salesBudgetAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="salesActualAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="dateFilter" type="date" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetSalesPersFinDetails1_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="salesBudgetAmount" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="salesActualAmount" type="decimal" />
+          </sequence>
+        </complexType>
+      </element>
       <element name="CallSalesPersFinDetails">
         <complexType>
           <sequence />
@@ -98,6 +116,9 @@
             <element minOccurs="1" maxOccurs="1" name="qty" type="decimal" />
             <element minOccurs="1" maxOccurs="1" name="lineDisc" type="decimal" />
             <element minOccurs="1" maxOccurs="1" name="lineDiscAmt" type="decimal" />
+            <element minOccurs="1" maxOccurs="1" name="orderStartDate" type="dateTime" />
+            <element minOccurs="1" maxOccurs="1" name="orderClosedDate" type="dateTime" />
+            <element minOccurs="1" maxOccurs="1" name="orderDuration" type="string" />
           </sequence>
         </complexType>
       </element>
@@ -258,6 +279,32 @@
           </sequence>
         </complexType>
       </element>
+      <element name="CreateNewCustomerNew">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="name" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="vATRegNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="vATPayer" type="boolean" />
+            <element minOccurs="1" maxOccurs="1" name="contactName" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="phoneNo" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="primaryAddress" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="ship2Address" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="city" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="country" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="salesPersonCode" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="postCode" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="mobileNumber" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="areaCode" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateNewCustomerNew_Result">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="return_value" type="string" />
+          </sequence>
+        </complexType>
+      </element>
       <element name="CalcItemInventoryByLocation">
         <complexType>
           <sequence>
@@ -332,6 +379,18 @@
           </sequence>
         </complexType>
       </element>
+      <element name="CreateNewDevice">
+        <complexType>
+          <sequence>
+            <element minOccurs="1" maxOccurs="1" name="deviceId" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateNewDevice_Result">
+        <complexType>
+          <sequence />
+        </complexType>
+      </element>
     </schema>
   </types>
   <message name="GetCustomerFinDetails">
@@ -351,6 +410,12 @@
   </message>
   <message name="GetSalesPersFinDetails_Result">
     <part name="parameters" element="tns:GetSalesPersFinDetails_Result" />
+  </message>
+  <message name="GetSalesPersFinDetails1">
+    <part name="parameters" element="tns:GetSalesPersFinDetails1" />
+  </message>
+  <message name="GetSalesPersFinDetails1_Result">
+    <part name="parameters" element="tns:GetSalesPersFinDetails1_Result" />
   </message>
   <message name="CallSalesPersFinDetails">
     <part name="parameters" element="tns:CallSalesPersFinDetails" />
@@ -424,6 +489,12 @@
   <message name="CreateNewCustomer_Result">
     <part name="parameters" element="tns:CreateNewCustomer_Result" />
   </message>
+  <message name="CreateNewCustomerNew">
+    <part name="parameters" element="tns:CreateNewCustomerNew" />
+  </message>
+  <message name="CreateNewCustomerNew_Result">
+    <part name="parameters" element="tns:CreateNewCustomerNew_Result" />
+  </message>
   <message name="CalcItemInventoryByLocation">
     <part name="parameters" element="tns:CalcItemInventoryByLocation" />
   </message>
@@ -454,6 +525,12 @@
   <message name="OrderWaybillUploaded_Result">
     <part name="parameters" element="tns:OrderWaybillUploaded_Result" />
   </message>
+  <message name="CreateNewDevice">
+    <part name="parameters" element="tns:CreateNewDevice" />
+  </message>
+  <message name="CreateNewDevice_Result">
+    <part name="parameters" element="tns:CreateNewDevice_Result" />
+  </message>
   <portType name="POSMng_Port">
     <operation name="GetCustomerFinDetails">
       <input name="GetCustomerFinDetails" message="tns:GetCustomerFinDetails" />
@@ -466,6 +543,10 @@
     <operation name="GetSalesPersFinDetails">
       <input name="GetSalesPersFinDetails" message="tns:GetSalesPersFinDetails" />
       <output name="GetSalesPersFinDetails_Result" message="tns:GetSalesPersFinDetails_Result" />
+    </operation>
+    <operation name="GetSalesPersFinDetails1">
+      <input name="GetSalesPersFinDetails1" message="tns:GetSalesPersFinDetails1" />
+      <output name="GetSalesPersFinDetails1_Result" message="tns:GetSalesPersFinDetails1_Result" />
     </operation>
     <operation name="CallSalesPersFinDetails">
       <input name="CallSalesPersFinDetails" message="tns:CallSalesPersFinDetails" />
@@ -515,6 +596,10 @@
       <input name="CreateNewCustomer" message="tns:CreateNewCustomer" />
       <output name="CreateNewCustomer_Result" message="tns:CreateNewCustomer_Result" />
     </operation>
+    <operation name="CreateNewCustomerNew">
+      <input name="CreateNewCustomerNew" message="tns:CreateNewCustomerNew" />
+      <output name="CreateNewCustomerNew_Result" message="tns:CreateNewCustomerNew_Result" />
+    </operation>
     <operation name="CalcItemInventoryByLocation">
       <input name="CalcItemInventoryByLocation" message="tns:CalcItemInventoryByLocation" />
       <output name="CalcItemInventoryByLocation_Result" message="tns:CalcItemInventoryByLocation_Result" />
@@ -534,6 +619,10 @@
     <operation name="OrderWaybillUploaded">
       <input name="OrderWaybillUploaded" message="tns:OrderWaybillUploaded" />
       <output name="OrderWaybillUploaded_Result" message="tns:OrderWaybillUploaded_Result" />
+    </operation>
+    <operation name="CreateNewDevice">
+      <input name="CreateNewDevice" message="tns:CreateNewDevice" />
+      <output name="CreateNewDevice_Result" message="tns:CreateNewDevice_Result" />
     </operation>
   </portType>
   <binding name="POSMng_Binding" type="tns:POSMng_Port">
@@ -562,6 +651,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </input>
       <output name="GetSalesPersFinDetails_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
+    <operation name="GetSalesPersFinDetails1">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:GetSalesPersFinDetails1" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="GetSalesPersFinDetails1">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="GetSalesPersFinDetails1_Result">
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
@@ -673,6 +771,15 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
+    <operation name="CreateNewCustomerNew">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateNewCustomerNew" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreateNewCustomerNew">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreateNewCustomerNew_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
     <operation name="CalcItemInventoryByLocation">
       <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CalcItemInventoryByLocation" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       <input name="CalcItemInventoryByLocation">
@@ -718,10 +825,19 @@
         <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
       </output>
     </operation>
+    <operation name="CreateNewDevice">
+      <operation soapAction="urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateNewDevice" style="document" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <input name="CreateNewDevice">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </input>
+      <output name="CreateNewDevice_Result">
+        <body use="literal" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      </output>
+    </operation>
   </binding>
   <service name="POSMng">
     <port name="POSMng_Port" binding="tns:POSMng_Binding">
-      <address location="http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Codeunit/POSMng" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <address location="http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Codeunit/POSMng" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
     </port>
   </service>
 </definitions>

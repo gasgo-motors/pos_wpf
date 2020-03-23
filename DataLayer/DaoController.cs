@@ -338,7 +338,7 @@ namespace DataLayer
             {
                 if (e.Customers.Any(i => i.VATRegistrationNo_ == customer.VATRegistrationNo_))
                     throw new Exception("საიდენთიფიკაციო ნომერი უკვერ არსებობს");
-
+                var post = GetPostCodeCities().Find(c => c.City == customer.City);
                 var r = 0;
                 var rnd = new Random();
                 while (true)
@@ -347,6 +347,7 @@ namespace DataLayer
                     string id = "NC_" + r.ToString("D4");
                     if (!e.Customers.Any(i => i.No_ == id)) break;
                 }
+                customer.PostCode = post.PostCode;
                 customer.No_ = "NC_" + r.ToString("D4");
                 e.Customers.Add(customer);
                 e.Ship_to_Address.Add(new Ship_to_Address
@@ -480,7 +481,9 @@ namespace DataLayer
                     Type = customer.Type,
                     VATRegistrationNo_ = customer.VATRegistrationNo_,
                     VendorNo_ = customer.VendorNo_,
-                    VisitWeekDays = customer.VisitWeekDays
+                    VisitWeekDays = customer.VisitWeekDays,
+                    AreaCode = customer.AreaCode,
+                    Mobile_ = customer.Mobile_
                 };
                 e.Customers.Remove(customer);
                 e.Customers.Add(ncst);
@@ -1969,6 +1972,8 @@ namespace DataLayer
                     VATRegistrationNo_ = i.VATRegistrationNo_,
                     VendorNo_ = i.VendorNo_,
                     VisitWeekDays = i.VisitWeekDays,
+                    i.AreaCode,
+                    i.Mobile_,
                     PaymentSchedule =
                        e.PaymentSchedules.Where(j => j.Date == cdate && j.CustomerNo == i.No_).Sum(j => j.Amount),
                     Addres1 = e.Ship_to_Address.Where(j => j.CustomerNo_ == i.No_).Min(j => j.Address),
@@ -2200,14 +2205,64 @@ namespace DataLayer
         }
 
         public void CreateOrder(SalesHeader header, List<SalesLine> lines, List<PaymentSchedule> schedules,
-            List<GenJournalLine> journals)
+            List<GenJournalLine> journals, DateTime date)
         {
             using (var e = new POSWR1Entities())
             {
                 var dbHedaer =
                     e.SalesHeaders.FirstOrDefault(i => i.No_ == header.No_ && i.DocumentType == header.DocumentType);
+
+                //gio Date    
                 if (dbHedaer != null)
+                {
+
+                    string newDuraction = (DateTime.Now - date).Minutes + ":" + (DateTime.Now - date).Seconds;
+
+                    string[] orderDuractionSplit = header.OrderDuraction.Split(':');
+                    string[] newDuractionSplit = newDuraction.Split(':');
+
+                    int minutes = Int32.Parse(orderDuractionSplit[0]) + Int32.Parse(newDuractionSplit[0]);
+                    int seconts = Int32.Parse(orderDuractionSplit[1]) + Int32.Parse(newDuractionSplit[1]);
+
+                    double res = seconts / 60;
+
+                    if (res == 0)
+                    {
+
+                        int resMinutes = minutes + (int)Math.Floor(res);
+
+                        header.OrderClosedDate = DateTime.Now;
+                        header.OrderDuraction = resMinutes + ":" + seconts;
+                    }
+                    else
+                    {
+                        string decimal_places = "0:00";
+
+                        var regex = new System.Text.RegularExpressions.Regex("(?<=[\\.])[0-9]+");
+                        if (regex.IsMatch(res.ToString()))
+                        {
+                            decimal_places = regex.Match(res.ToString()).Value;
+                        }
+
+                        int resMinutes = minutes + (int)Math.Floor(res);
+
+                        header.OrderClosedDate = DateTime.Now;
+                        header.OrderDuraction = resMinutes + ":" + decimal_places;
+                    }
+
+
                     e.SalesHeaders.Remove(dbHedaer);
+                }
+                else
+                {
+                    header.OrderStartDate = date;
+                    header.OrderClosedDate = DateTime.Now;
+                    header.OrderDuraction = (DateTime.Now - date).Minutes + ":" + (DateTime.Now - date).Seconds;
+                }
+
+
+
+
                 e.SalesHeaders.Add(header);
 
                 e.SalesLines.RemoveRange(e.SalesLines.Where(i => i.DocumentNo_ == header.No_));

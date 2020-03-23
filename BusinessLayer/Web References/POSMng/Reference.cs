@@ -23,7 +23,7 @@ namespace BusinessLayer.POSMng {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="POSMng_Binding", Namespace="urn:microsoft-dynamics-schemas/codeunit/POSMng")]
@@ -34,6 +34,8 @@ namespace BusinessLayer.POSMng {
         private System.Threading.SendOrPostCallback CallCustomerFinDetailsOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetSalesPersFinDetailsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetSalesPersFinDetails1OperationCompleted;
         
         private System.Threading.SendOrPostCallback CallSalesPersFinDetailsOperationCompleted;
         
@@ -59,6 +61,8 @@ namespace BusinessLayer.POSMng {
         
         private System.Threading.SendOrPostCallback CreateNewCustomerOperationCompleted;
         
+        private System.Threading.SendOrPostCallback CreateNewCustomerNewOperationCompleted;
+        
         private System.Threading.SendOrPostCallback CalcItemInventoryByLocationOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetItemInventoryByLocationsOperationCompleted;
@@ -68,6 +72,8 @@ namespace BusinessLayer.POSMng {
         private System.Threading.SendOrPostCallback CreatePOSMessageOperationCompleted;
         
         private System.Threading.SendOrPostCallback OrderWaybillUploadedOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback CreateNewDeviceOperationCompleted;
         
         private bool useDefaultCredentialsSetExplicitly;
         
@@ -117,6 +123,9 @@ namespace BusinessLayer.POSMng {
         public event GetSalesPersFinDetailsCompletedEventHandler GetSalesPersFinDetailsCompleted;
         
         /// <remarks/>
+        public event GetSalesPersFinDetails1CompletedEventHandler GetSalesPersFinDetails1Completed;
+        
+        /// <remarks/>
         public event CallSalesPersFinDetailsCompletedEventHandler CallSalesPersFinDetailsCompleted;
         
         /// <remarks/>
@@ -153,6 +162,9 @@ namespace BusinessLayer.POSMng {
         public event CreateNewCustomerCompletedEventHandler CreateNewCustomerCompleted;
         
         /// <remarks/>
+        public event CreateNewCustomerNewCompletedEventHandler CreateNewCustomerNewCompleted;
+        
+        /// <remarks/>
         public event CalcItemInventoryByLocationCompletedEventHandler CalcItemInventoryByLocationCompleted;
         
         /// <remarks/>
@@ -166,6 +178,9 @@ namespace BusinessLayer.POSMng {
         
         /// <remarks/>
         public event OrderWaybillUploadedCompletedEventHandler OrderWaybillUploadedCompleted;
+        
+        /// <remarks/>
+        public event CreateNewDeviceCompletedEventHandler CreateNewDeviceCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/POSMng:GetCustomerFinDetails", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", ResponseElementName="GetCustomerFinDetails_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -282,6 +297,42 @@ namespace BusinessLayer.POSMng {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/POSMng:GetSalesPersFinDetails1", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", ResponseElementName="GetSalesPersFinDetails1_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void GetSalesPersFinDetails1(string salesPersNo, ref decimal salesBudgetAmount, ref decimal salesActualAmount, [System.Xml.Serialization.XmlElementAttribute(DataType="date")] System.DateTime dateFilter) {
+            object[] results = this.Invoke("GetSalesPersFinDetails1", new object[] {
+                        salesPersNo,
+                        salesBudgetAmount,
+                        salesActualAmount,
+                        dateFilter});
+            salesBudgetAmount = ((decimal)(results[0]));
+            salesActualAmount = ((decimal)(results[1]));
+        }
+        
+        /// <remarks/>
+        public void GetSalesPersFinDetails1Async(string salesPersNo, decimal salesBudgetAmount, decimal salesActualAmount, System.DateTime dateFilter) {
+            this.GetSalesPersFinDetails1Async(salesPersNo, salesBudgetAmount, salesActualAmount, dateFilter, null);
+        }
+        
+        /// <remarks/>
+        public void GetSalesPersFinDetails1Async(string salesPersNo, decimal salesBudgetAmount, decimal salesActualAmount, System.DateTime dateFilter, object userState) {
+            if ((this.GetSalesPersFinDetails1OperationCompleted == null)) {
+                this.GetSalesPersFinDetails1OperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetSalesPersFinDetails1OperationCompleted);
+            }
+            this.InvokeAsync("GetSalesPersFinDetails1", new object[] {
+                        salesPersNo,
+                        salesBudgetAmount,
+                        salesActualAmount,
+                        dateFilter}, this.GetSalesPersFinDetails1OperationCompleted, userState);
+        }
+        
+        private void OnGetSalesPersFinDetails1OperationCompleted(object arg) {
+            if ((this.GetSalesPersFinDetails1Completed != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetSalesPersFinDetails1Completed(this, new GetSalesPersFinDetails1CompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/POSMng:CallSalesPersFinDetails", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", ResponseElementName="CallSalesPersFinDetails_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public void CallSalesPersFinDetails() {
             this.Invoke("CallSalesPersFinDetails", new object[0]);
@@ -341,7 +392,7 @@ namespace BusinessLayer.POSMng {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateSalesLine", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", ResponseElementName="CreateSalesLine_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void CreateSalesLine(int docType, string docNo, int lineNo, int lineType, string accNo, string locationCode, string uOM, decimal unitPrice, decimal qty, decimal lineDisc, decimal lineDiscAmt) {
+        public void CreateSalesLine(int docType, string docNo, int lineNo, int lineType, string accNo, string locationCode, string uOM, decimal unitPrice, decimal qty, decimal lineDisc, decimal lineDiscAmt, System.DateTime orderStartDate, System.DateTime orderClosedDate, string orderDuration) {
             this.Invoke("CreateSalesLine", new object[] {
                         docType,
                         docNo,
@@ -353,16 +404,19 @@ namespace BusinessLayer.POSMng {
                         unitPrice,
                         qty,
                         lineDisc,
-                        lineDiscAmt});
+                        lineDiscAmt,
+                        orderStartDate,
+                        orderClosedDate,
+                        orderDuration});
         }
         
         /// <remarks/>
-        public void CreateSalesLineAsync(int docType, string docNo, int lineNo, int lineType, string accNo, string locationCode, string uOM, decimal unitPrice, decimal qty, decimal lineDisc, decimal lineDiscAmt) {
-            this.CreateSalesLineAsync(docType, docNo, lineNo, lineType, accNo, locationCode, uOM, unitPrice, qty, lineDisc, lineDiscAmt, null);
+        public void CreateSalesLineAsync(int docType, string docNo, int lineNo, int lineType, string accNo, string locationCode, string uOM, decimal unitPrice, decimal qty, decimal lineDisc, decimal lineDiscAmt, System.DateTime orderStartDate, System.DateTime orderClosedDate, string orderDuration) {
+            this.CreateSalesLineAsync(docType, docNo, lineNo, lineType, accNo, locationCode, uOM, unitPrice, qty, lineDisc, lineDiscAmt, orderStartDate, orderClosedDate, orderDuration, null);
         }
         
         /// <remarks/>
-        public void CreateSalesLineAsync(int docType, string docNo, int lineNo, int lineType, string accNo, string locationCode, string uOM, decimal unitPrice, decimal qty, decimal lineDisc, decimal lineDiscAmt, object userState) {
+        public void CreateSalesLineAsync(int docType, string docNo, int lineNo, int lineType, string accNo, string locationCode, string uOM, decimal unitPrice, decimal qty, decimal lineDisc, decimal lineDiscAmt, System.DateTime orderStartDate, System.DateTime orderClosedDate, string orderDuration, object userState) {
             if ((this.CreateSalesLineOperationCompleted == null)) {
                 this.CreateSalesLineOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCreateSalesLineOperationCompleted);
             }
@@ -377,7 +431,10 @@ namespace BusinessLayer.POSMng {
                         unitPrice,
                         qty,
                         lineDisc,
-                        lineDiscAmt}, this.CreateSalesLineOperationCompleted, userState);
+                        lineDiscAmt,
+                        orderStartDate,
+                        orderClosedDate,
+                        orderDuration}, this.CreateSalesLineOperationCompleted, userState);
         }
         
         private void OnCreateSalesLineOperationCompleted(object arg) {
@@ -726,6 +783,60 @@ namespace BusinessLayer.POSMng {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateNewCustomerNew", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", ResponseElementName="CreateNewCustomerNew_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
+        public string CreateNewCustomerNew(string name, string vATRegNo, bool vATPayer, string contactName, string phoneNo, string primaryAddress, string ship2Address, string city, string country, string salesPersonCode, string postCode, string mobileNumber, string areaCode) {
+            object[] results = this.Invoke("CreateNewCustomerNew", new object[] {
+                        name,
+                        vATRegNo,
+                        vATPayer,
+                        contactName,
+                        phoneNo,
+                        primaryAddress,
+                        ship2Address,
+                        city,
+                        country,
+                        salesPersonCode,
+                        postCode,
+                        mobileNumber,
+                        areaCode});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void CreateNewCustomerNewAsync(string name, string vATRegNo, bool vATPayer, string contactName, string phoneNo, string primaryAddress, string ship2Address, string city, string country, string salesPersonCode, string postCode, string mobileNumber, string areaCode) {
+            this.CreateNewCustomerNewAsync(name, vATRegNo, vATPayer, contactName, phoneNo, primaryAddress, ship2Address, city, country, salesPersonCode, postCode, mobileNumber, areaCode, null);
+        }
+        
+        /// <remarks/>
+        public void CreateNewCustomerNewAsync(string name, string vATRegNo, bool vATPayer, string contactName, string phoneNo, string primaryAddress, string ship2Address, string city, string country, string salesPersonCode, string postCode, string mobileNumber, string areaCode, object userState) {
+            if ((this.CreateNewCustomerNewOperationCompleted == null)) {
+                this.CreateNewCustomerNewOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCreateNewCustomerNewOperationCompleted);
+            }
+            this.InvokeAsync("CreateNewCustomerNew", new object[] {
+                        name,
+                        vATRegNo,
+                        vATPayer,
+                        contactName,
+                        phoneNo,
+                        primaryAddress,
+                        ship2Address,
+                        city,
+                        country,
+                        salesPersonCode,
+                        postCode,
+                        mobileNumber,
+                        areaCode}, this.CreateNewCustomerNewOperationCompleted, userState);
+        }
+        
+        private void OnCreateNewCustomerNewOperationCompleted(object arg) {
+            if ((this.CreateNewCustomerNewCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.CreateNewCustomerNewCompleted(this, new CreateNewCustomerNewCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/POSMng:CalcItemInventoryByLocation", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", ResponseElementName="CalcItemInventoryByLocation_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
         public decimal CalcItemInventoryByLocation(string itemNo, string locationCode) {
@@ -886,6 +997,34 @@ namespace BusinessLayer.POSMng {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateNewDevice", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", ResponseElementName="CreateNewDevice_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void CreateNewDevice(string deviceId) {
+            this.Invoke("CreateNewDevice", new object[] {
+                        deviceId});
+        }
+        
+        /// <remarks/>
+        public void CreateNewDeviceAsync(string deviceId) {
+            this.CreateNewDeviceAsync(deviceId, null);
+        }
+        
+        /// <remarks/>
+        public void CreateNewDeviceAsync(string deviceId, object userState) {
+            if ((this.CreateNewDeviceOperationCompleted == null)) {
+                this.CreateNewDeviceOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCreateNewDeviceOperationCompleted);
+            }
+            this.InvokeAsync("CreateNewDevice", new object[] {
+                        deviceId}, this.CreateNewDeviceOperationCompleted, userState);
+        }
+        
+        private void OnCreateNewDeviceOperationCompleted(object arg) {
+            if ((this.CreateNewDeviceCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.CreateNewDeviceCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -905,11 +1044,11 @@ namespace BusinessLayer.POSMng {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetCustomerFinDetailsCompletedEventHandler(object sender, GetCustomerFinDetailsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetCustomerFinDetailsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -963,15 +1102,15 @@ namespace BusinessLayer.POSMng {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CallCustomerFinDetailsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetSalesPersFinDetailsCompletedEventHandler(object sender, GetSalesPersFinDetailsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetSalesPersFinDetailsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1009,15 +1148,49 @@ namespace BusinessLayer.POSMng {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    public delegate void GetSalesPersFinDetails1CompletedEventHandler(object sender, GetSalesPersFinDetails1CompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetSalesPersFinDetails1CompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetSalesPersFinDetails1CompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public decimal salesBudgetAmount {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((decimal)(this.results[0]));
+            }
+        }
+        
+        /// <remarks/>
+        public decimal salesActualAmount {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((decimal)(this.results[1]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CallSalesPersFinDetailsCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreateSalesHeaderCompletedEventHandler(object sender, CreateSalesHeaderCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CreateSalesHeaderCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1039,47 +1212,47 @@ namespace BusinessLayer.POSMng {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreateSalesLineCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreatePaySchedLineCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreatePaymentLineCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreateCustVendPaymentLineCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreateWhsShipmentCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreateItemCommentCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ReleaseSalesOrderCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ReopenSalesOrderCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void DeleteSalesOrderCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreateNewCustomerCompletedEventHandler(object sender, CreateNewCustomerCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CreateNewCustomerCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1101,11 +1274,37 @@ namespace BusinessLayer.POSMng {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    public delegate void CreateNewCustomerNewCompletedEventHandler(object sender, CreateNewCustomerNewCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class CreateNewCustomerNewCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal CreateNewCustomerNewCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CalcItemInventoryByLocationCompletedEventHandler(object sender, CalcItemInventoryByLocationCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CalcItemInventoryByLocationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1127,11 +1326,11 @@ namespace BusinessLayer.POSMng {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetItemInventoryByLocationsCompletedEventHandler(object sender, GetItemInventoryByLocationsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetItemInventoryByLocationsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1153,15 +1352,15 @@ namespace BusinessLayer.POSMng {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreateCustItemLikeCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreatePOSMessageCompletedEventHandler(object sender, CreatePOSMessageCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CreatePOSMessageCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1183,11 +1382,11 @@ namespace BusinessLayer.POSMng {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void OrderWaybillUploadedCompletedEventHandler(object sender, OrderWaybillUploadedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2556.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class OrderWaybillUploadedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1207,6 +1406,10 @@ namespace BusinessLayer.POSMng {
             }
         }
     }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
+    public delegate void CreateNewDeviceCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
 }
 
 #pragma warning restore 1591

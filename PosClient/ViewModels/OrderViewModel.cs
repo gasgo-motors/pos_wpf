@@ -520,13 +520,13 @@ namespace PosClient.ViewModels
                         newSalesLines.ForEach(n => { n.DocumentNo_ = newHeader.No_; });
                         newHeader.AmountIncludingVat = newSalesLines.Sum(i => i.AmountIncludingVAT);
                         DaoController.Current.CreateOrder(newHeader, newSalesLines,
-                            new List<PaymentSchedule>(), new List<GenJournalLine>() );
+                            new List<PaymentSchedule>(), new List<GenJournalLine>(), DateTime.Now );
                     }
                 }
                 sLines = sLines.Where(s => !s.PostingDate.HasValue || s.PostingDate.Value.Date == Order.PostingDate.Value.Date).ToList();
                 Order.AmountIncludingVat = sLines.Sum(i => i.AmountIncludingVAT);
                 DaoController.Current.CreateOrder((SalesHeader)Order, sLines,
-                    (List<PaymentSchedule>)PaymentSchedules, (List<GenJournalLine>)GenJournalLines);
+                    (List<PaymentSchedule>)PaymentSchedules, (List<GenJournalLine>)GenJournalLines, DateTime.Now);
             }
             else
             {
@@ -580,7 +580,7 @@ namespace PosClient.ViewModels
                             Service_Provider = i.Service_Provider,
                             Customer_Vehicle = i.Customer_Vehicle
                         }).ToList(),
-                        new List<PaymentSchedule>(), new List<GenJournalLine>());
+                        new List<PaymentSchedule>(), new List<GenJournalLine>(), DateTime.Now);
 
                 }
                 else

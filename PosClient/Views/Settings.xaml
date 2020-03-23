@@ -229,8 +229,12 @@
                     <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_ConcurrentQoutePrefix" />
                     <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_ConcurrentQoutePrefix, Mode=TwoWay}"  />
                 </Grid>
-                
-                
+
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_Show_Shelf">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_Show_Shelf" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"   Text="{Binding CurrentSettings.Settings_Show_Shelf, Mode=TwoWay}"  />
+                </Grid>
+
 
                 <Grid Style="{StaticResource GridSetting}" x:Name="Settings_RsUsername">
                     <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_RsUsername" />
