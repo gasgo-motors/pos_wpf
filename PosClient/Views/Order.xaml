@@ -180,6 +180,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <WebBrowser x:Name="pdfWebViewer" Grid.Row="1" Visibility="Collapsed"></WebBrowser>
         <Grid Grid.Row="2">
             <Grid>
                 <Grid.RowDefinitions>
@@ -222,7 +223,7 @@
 
 
                     <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                        <Button VerticalAlignment="Center" x:Name="BtnPrint" FontSize="15" Click="BtnPrint_Click" Content="ბეჭდვა" Visibility="{Binding EditButttonVisibility, Mode=OneWay}"/>
+                        <Button VerticalAlignment="Center" x:Name="BtnPrint" FontSize="15" Margin="0,0,10,0" Click="BtnPrint_Click" Content="ბეჭდვა" Visibility="{Binding EditButttonVisibility, Mode=OneWay}"/>
                         <Button VerticalAlignment="Center" x:Name="BtnEdit" FontSize="15" Click="BtnEdit_OnClick" Content="რედაქტირება" Visibility="{Binding EditButttonVisibility, Mode=OneWay}"/>
                         <Button VerticalAlignment="Center" x:Name="BtnSave" FontSize="15" Click="BtnSave_OnClick" Margin="20,0,0,0" Content="შენახვა" Visibility="{Binding SaveAndCancelButtonsVisibility, Mode=OneWay}"/>
                         <Button VerticalAlignment="Center" x:Name="BtnSaveAndSend" FontSize="15" Click="BtnSaveAndSend_OnClick" Margin="20,0,0,0" Content="შენახვა-გადაგზავნა" Visibility="{Binding SaveAndSendButtonsVisibility, Mode=OneWay}"/>

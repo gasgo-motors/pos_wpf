@@ -27,6 +27,7 @@ using iText.Layout.Properties;
 using iText.Kernel.Font;
 using iText.IO.Font.Constants;
 using iText.IO.Font;
+using iText.Kernel.Pdf.Canvas.Draw;
 
 namespace PosClient.Views
 {
@@ -39,7 +40,7 @@ namespace PosClient.Views
         public Order()
         {
             InitializeComponent();
-
+            pdfWebViewer.Navigate(new Uri("about:blank"));
         }
 
 
@@ -294,32 +295,49 @@ namespace PosClient.Views
             {
                 var pdfWriter = new PdfWriter(memoryStream);
                 var pdfDocument = new PdfDocument(pdfWriter);
-                var document = new Document(pdfDocument); //  , PageSize.A4, true);
+                var document = new Document(pdfDocument, new PageSize(250, 500) ); //  , PageSize.A4, true);
+                document.SetMargins(5, 5, 5, 5);
                 PdfFont sylfaenfont = PdfFontFactory.CreateFont(@"c:\\windows\fonts\Sylfaen.ttf", PdfEncodings.IDENTITY_H);
                 document.SetFont(sylfaenfont);
                 document.Add(new Paragraph("შპს გასგო მოტორსი"));
                 document.Add(new Paragraph(order.Ship_toAddress));
                 document.Add(new Paragraph(order.PostingDate.HasValue ? order.PostingDate.Value.ToString("dd/MM/yyyy HH:mm") : ""));
                 document.Add(new Paragraph(order.No_));
-                Table table = new Table(UnitValue.CreatePercentArray(new float[] { 1, 7,5 }))
+
+                document.Add(new LineSeparator(new DashedLine()));
+
+                Table table = new Table(UnitValue.CreatePercentArray(new float[] { 1, 12,6 }))
                 .UseAllAvailableWidth();
                 var count = 0;
+                table.SetBorder(iText.Layout.Borders.Border.NO_BORDER);
+                table.SetFontSize(10);
                 foreach(var l in order.SalesLines)
                 {
                     count++;
-                    table.AddCell(new Cell().Add(new Paragraph(count.ToString()) ) );
-                    table.AddCell(new Cell().Add(new Paragraph( string.IsNullOrEmpty(l.LargeDescription) ? "" : l.LargeDescription)));
-                    table.AddCell(new Cell().Add(new Paragraph( $"{l.Quantity}*{l.UnitPrice:F2}={l.AmountIncludingVAT:F2}"  )));
+                    table.AddCell(new Cell().Add(new Paragraph(count.ToString()) ).SetBorder(iText.Layout.Borders.Border.NO_BORDER) );
+                    table.AddCell(new Cell().Add(new Paragraph( string.IsNullOrEmpty(l.LargeDescription) ? "" : l.LargeDescription)).SetBorder(iText.Layout.Borders.Border.NO_BORDER));
+                    table.AddCell(new Cell().Add(new Paragraph( $"{l.Quantity:N0}*{l.UnitPrice:F2}={l.AmountIncludingVAT:F2} ₾"  ).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.RIGHT) );
                 }
                 document.Add(table);
-                document.Add(new Paragraph($"ჯამი    {order.AmountIncludingVat:F2}"));
+
+                DashedLine line = new DashedLine();
+                document.Add(new LineSeparator(line));
+
+                document.Add(new Paragraph($"ჯამი    {order.AmountIncludingVat:F2} ₾").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetFontSize(15).SetBold() );
 
                 document.Close();
 
                 result = memoryStream.ToArray();
-            }
 
-            File.WriteAllBytes(@"C:\ddddd\iTextQuoteM.pdf", result);
+                pdfWebViewer.NavigateToStream(memoryStream);
+            }
+            var fileName = $@"C:\wr\check_{order.No_}_{Guid.NewGuid()}.pdf";
+            File.WriteAllBytes(fileName, result);
+
+            pdfWebViewer.Navigate(fileName);
+
+            // pdfWebViewer.Visibility = Visibility.Visible;
+
         }
     }
 }
