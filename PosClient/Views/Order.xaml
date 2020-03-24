@@ -104,7 +104,7 @@
                 <DataGridTextColumn  Binding="{Binding AmountIncludingVAT, StringFormat=\{0:F2\}, Mode=OneWay}" Header="თანხა" />
                 <DataGridTextColumn  Binding="{Binding OrderTypeString}" Header="" />
 
-                <DataGridTemplateColumn Header="vendor" Width="140">
+                <DataGridTemplateColumn Header="vendor" Width="200">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Grid>
@@ -223,7 +223,7 @@
 
 
                     <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
-                        <Button VerticalAlignment="Center" x:Name="BtnPrint" FontSize="15" Margin="0,0,10,0" Click="BtnPrint_Click" Content="ბეჭდვა" Visibility="{Binding EditButttonVisibility, Mode=OneWay}"/>
+                        <Button VerticalAlignment="Center" x:Name="BtnPrint" FontSize="15" Margin="0,0,10,0" Click="BtnPrint_Click" Content="ბეჭდვა" />
                         <Button VerticalAlignment="Center" x:Name="BtnEdit" FontSize="15" Click="BtnEdit_OnClick" Content="რედაქტირება" Visibility="{Binding EditButttonVisibility, Mode=OneWay}"/>
                         <Button VerticalAlignment="Center" x:Name="BtnSave" FontSize="15" Click="BtnSave_OnClick" Margin="20,0,0,0" Content="შენახვა" Visibility="{Binding SaveAndCancelButtonsVisibility, Mode=OneWay}"/>
                         <Button VerticalAlignment="Center" x:Name="BtnSaveAndSend" FontSize="15" Click="BtnSaveAndSend_OnClick" Margin="20,0,0,0" Content="შენახვა-გადაგზავნა" Visibility="{Binding SaveAndSendButtonsVisibility, Mode=OneWay}"/>

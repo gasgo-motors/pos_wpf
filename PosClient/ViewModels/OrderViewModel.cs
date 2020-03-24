@@ -22,6 +22,9 @@ namespace PosClient.ViewModels
 
         public static string Sell_toCustomerNo;
 
+
+        private DateTime _currentDate = DateTime.Now;
+
         public Customer CurrentCustomer
         {
             get
@@ -459,8 +462,9 @@ namespace PosClient.ViewModels
             RefreshGrid();
         }
 
-        public void CreateOrder()
+        public List<string> CreateOrder()
         {
+            var res = new List<string>();
             if (Order.OrderBaseType == OrderBaseTypes.Current)
             {
                 if (App.Current.User.UserType == PosUserTypes.Shop &&
@@ -520,13 +524,15 @@ namespace PosClient.ViewModels
                         newSalesLines.ForEach(n => { n.DocumentNo_ = newHeader.No_; });
                         newHeader.AmountIncludingVat = newSalesLines.Sum(i => i.AmountIncludingVAT);
                         DaoController.Current.CreateOrder(newHeader, newSalesLines,
-                            new List<PaymentSchedule>(), new List<GenJournalLine>(), DateTime.Now );
+                            new List<PaymentSchedule>(), new List<GenJournalLine>(), _currentDate);
+                        res.Add(newHeader.No_);
                     }
                 }
                 sLines = sLines.Where(s => !s.PostingDate.HasValue || s.PostingDate.Value.Date == Order.PostingDate.Value.Date).ToList();
                 Order.AmountIncludingVat = sLines.Sum(i => i.AmountIncludingVAT);
                 DaoController.Current.CreateOrder((SalesHeader)Order, sLines,
-                    (List<PaymentSchedule>)PaymentSchedules, (List<GenJournalLine>)GenJournalLines, DateTime.Now);
+                    (List<PaymentSchedule>)PaymentSchedules, (List<GenJournalLine>)GenJournalLines, _currentDate );
+                res.Add(Order.No_);
             }
             else
             {
@@ -578,9 +584,11 @@ namespace PosClient.ViewModels
                             LineDiscountPercent = 0,
                             LargeDescription = i.LargeDescription,
                             Service_Provider = i.Service_Provider,
+                            Service_Provider_Name = i.Service_Provider_Name,
                             Customer_Vehicle = i.Customer_Vehicle
                         }).ToList(),
-                        new List<PaymentSchedule>(), new List<GenJournalLine>(), DateTime.Now);
+                        new List<PaymentSchedule>(), new List<GenJournalLine>(), _currentDate);
+                    res.Add(oNo);
 
                 }
                 else
@@ -592,9 +600,11 @@ namespace PosClient.ViewModels
                     DaoController.Current.CreateReleaseOrder((ReleasedSalesHeader)Order,
                         (List<ReleasedSalesLine>)SalesLines, (List<ReleasedPaymentSchedule>)PaymentSchedules,
                         (List<ReleasedGenJournalLine>)GenJournalLines);
+                    res.Add(Order.No_);
                 }
 
             }
+            return res;
         }
 
         public decimal ClientBalance
@@ -742,6 +752,9 @@ namespace PosClient.ViewModels
                 if (_salesLine.Service_Provider != value)
                 {
                     _salesLine.Service_Provider = value;
+                    var vendor = Vendors.FirstOrDefault(v => v.No_ == _salesLine.Service_Provider);
+                    if (vendor != null)
+                        _salesLine.Service_Provider_Name = vendor.Name;
                     PropertyChanged(this, new PropertyChangedEventArgs("Service_Provider"));
                 }
             }
@@ -768,6 +781,9 @@ namespace PosClient.ViewModels
                 if (value != null && _salesLine.Service_Provider != value.No_)
                 {
                     _salesLine.Service_Provider = value.No_;
+                    var vendor = Vendors.FirstOrDefault(v => v.No_ == _salesLine.Service_Provider);
+                    if (vendor != null)
+                        _salesLine.Service_Provider_Name = vendor.Name;
                     PropertyChanged(this, new PropertyChangedEventArgs("Service_Provider"));
                     PropertyChanged(this, new PropertyChangedEventArgs("Service_ProviderObject"));
                 }

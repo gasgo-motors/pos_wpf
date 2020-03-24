@@ -234,9 +234,10 @@ namespace PosClient.Views
                     App.Current.CurrentMainWindow.ShowMessageAsync("გსურთ შენახვა და გადაგზავნა?", "",
                         MessageDialogStyle.AffirmativeAndNegative) != MessageDialogResult.Negative)
             {
+                List<string> orders;
                 try
                 {
-                    CurrentModel.CreateOrder();
+                    orders = CurrentModel.CreateOrder();
                 }
                 catch (Exception ex)
                 {
@@ -261,21 +262,16 @@ namespace PosClient.Views
                 await Task.Factory.StartNew(() =>
                 {
                     sCount =
-                        SendServiceManager.Current.SendOrders(
-                            new List<string>() { orderNo }, true,
+                        SendServiceManager.Current.SendOrders(orders
+                             , true,
                             out errorNo, out errorMessage, out rList);
                 });
 
+
+
+
+
                 await controller.CloseAsync();
-
-                //var model = new SendToNavResultViewModel(sCount, errorNo, errorMessage, rList);
-                //var dialog = (BaseMetroDialog)this.Resources["SendDetail"];
-                //dialog.DataContext = model;
-                //await App.Current.CurrentMainWindow.ShowMetroDialogAsync(dialog);
-
-                // CurrentModel.Refresh();
-
-
                 if (CurrentModel.Order.Sell_toCustomerNo == App.Current.PosSetting.Settings_GenCustomerCode)
                     OpenNewOrder();
                 else
@@ -315,7 +311,7 @@ namespace PosClient.Views
                 {
                     count++;
                     table.AddCell(new Cell().Add(new Paragraph(count.ToString()) ).SetBorder(iText.Layout.Borders.Border.NO_BORDER) );
-                    table.AddCell(new Cell().Add(new Paragraph( string.IsNullOrEmpty(l.LargeDescription) ? "" : l.LargeDescription)).SetBorder(iText.Layout.Borders.Border.NO_BORDER));
+                    table.AddCell(new Cell().Add(new Paragraph(  $"{(string.IsNullOrEmpty(l.LargeDescription) ? "" : l.LargeDescription)}\n{l.Service_Provider_Name}\n{l.Customer_Vehicle}" ) ).SetBorder(iText.Layout.Borders.Border.NO_BORDER));
                     table.AddCell(new Cell().Add(new Paragraph( $"{l.Quantity:N0}*{l.UnitPrice:F2}={l.AmountIncludingVAT:F2} ₾"  ).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.RIGHT) );
                 }
                 document.Add(table);

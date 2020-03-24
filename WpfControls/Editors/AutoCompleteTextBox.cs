@@ -271,6 +271,9 @@
                 Editor.PreviewKeyDown += OnEditorKeyDown;
                 Editor.LostFocus += OnEditorLostFocus;
 
+
+                Editor.GotFocus += OnEditorGotFocus;
+
                 if (SelectedItem != null)
                 {
                     Editor.Text = BindingEvaluator.Evaluate(SelectedItem);
@@ -292,6 +295,12 @@
                 SelectionAdapter.SelectionChanged += OnSelectionAdapterSelectionChanged;
             }
         }
+
+        private void OnEditorGotFocus(object sender, RoutedEventArgs e)
+        {
+            OnEditorTextChanged(null, null);
+        }
+
         private string GetDisplayText(object dataItem)
         {
             if (BindingEvaluator == null)
@@ -360,19 +369,21 @@
             FetchTimer.IsEnabled = false;
             FetchTimer.Stop();
             SetSelectedItem(null);
-            if (Editor.Text.Length > 0)
-            {
+            //if (Editor.Text.Length > 0)
+            //{
                 IsLoading = true;
                 IsDropDownOpen = true;
                 ItemsSelector.ItemsSource = null;
                 FetchTimer.IsEnabled = true;
                 FetchTimer.Start();
-            }
-            else
-            {
-                IsDropDownOpen = false;
-            }
+            //}
+            //else
+            //{
+            //    IsDropDownOpen = true;
+            //}
         }
+
+        
 
         private void OnFetchTimerTick(object sender, EventArgs e)
         {

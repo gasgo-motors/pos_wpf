@@ -2220,7 +2220,7 @@ namespace DataLayer
 
                     string newDuraction = (DateTime.Now - date).Minutes + ":" + (DateTime.Now - date).Seconds;
 
-                    string[] orderDuractionSplit = header.OrderDuraction.Split(':');
+                    string[] orderDuractionSplit =  !string.IsNullOrEmpty(header.OrderDuraction) ? header.OrderDuraction.Split(':') : new string[] { "0", "0"};
                     string[] newDuractionSplit = newDuraction.Split(':');
 
                     int minutes = Int32.Parse(orderDuractionSplit[0]) + Int32.Parse(newDuractionSplit[0]);
@@ -2297,6 +2297,7 @@ namespace DataLayer
                             LineDiscountAmount = 0,
                             LineDiscountPercent = 0,
                             Service_Provider = sl.Service_Provider,
+                            Service_Provider_Name = sl.Service_Provider_Name,
                             Customer_Vehicle = sl.Customer_Vehicle
                         });
                         sl.Quantity = lq.Value;
