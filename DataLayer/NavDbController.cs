@@ -909,7 +909,6 @@ FROM [dbo].[{0}$Item Item]";
 ,[Payment Method Code]
 ,[Prices Including VAT]
 ,[VAT Registration No_]
-,[Visit Week Days]
 FROM [dbo].[{0}$Customer]
 WHERE [Salesperson Code] = '{1}'";
             s = string.Format(s, setting.Settings_NavCompanyName, setting.Settings_SalesPersonCode);
@@ -948,28 +947,32 @@ WHERE [Salesperson Code] = '{1}'";
 
         public bool getCustomersForPresaler(ref string errorMessage, ref DataTable result)
         {
-            string s = @"SELECT [No_]
-,[Name]
-,[Name 2]
-,[Address]
-,[Address 2]
-,[City]
-,[Contact]
-,[Phone No_]
-,[Credit Limit (LCY)]
-,[Customer Price Group]
-,[Payment Terms Code]
-,[Salesperson Code]
-,[Shipping Agent Code]
-,[Customer Disc_ Group]
-,[Bill-to Customer No_]
-,[Payment Method Code]
-,[Prices Including VAT]
-,[VAT Registration No_]
-,[Visit Week Days]
-FROM [dbo].[{0}$Customer]
+            string s = @"SELECT c.[No_]
+,c.[Name]
+,c.[Address]
+,c.[City]
+,c.[Contact]
+,c.[Phone No_]
+,c.[Credit Limit (LCY)]
+,c.[Customer Price Group]
+,c.[Payment Terms Code]
+,c.[Salesperson Code]
+,c.[Shipping Agent Code]
+,c.[Customer Disc_ Group]
+,c.[Bill-to Customer No_]
+,c.[Payment Method Code]
+,c.[Prices Including VAT]
+,c.[VAT Registration No_]
+,
+
+(select top 1 [Visit Week Days] FROM [Gasgo].[dbo].[Gasgo$Salesperson Ship-to Address] s where s.[Customer No_] =  [No_] AND s.[Salesperson Code] = '{2}') [Visit Week Days]
+FROM [dbo].[{0}$Customer] c
+
 WHERE [No_] in({1})";
-            s = string.Format(s, setting.Settings_NavCompanyName, getCustomersNoSalesPersonToString());
+
+
+
+            s = string.Format(s, setting.Settings_NavCompanyName, getCustomersNoSalesPersonToString(), setting.Settings_SalesPersonCode);
             return fillDataTable(s, ref errorMessage, ref result);
         }
 
@@ -1005,55 +1008,55 @@ WHERE [No_] in({1})";
 
         public bool getCustomersForDistibutor(ref string errorMessage, ref DataTable result)
         {
-            string s = @"SELECT [No_]
-,[Name]
-,[Name 2]
-,[Address]
-,[Address 2]
-,[City]
-,[Contact]
-,[Phone No_]
-,[Credit Limit (LCY)]
-,[Customer Price Group]
-,[Payment Terms Code]
-,[Salesperson Code]
-,[Shipping Agent Code]
-,[Customer Disc_ Group]
-,[Bill-to Customer No_]
-,[Payment Method Code]
-,[Prices Including VAT]
-,[VAT Registration No_]
-,[Visit Week Days]
-FROM [dbo].[{0}$Customer]
+            string s = @"SELECT c.[No_]
+,c.[Name]
+,c.[Address]
+,c.[City]
+,c.[Contact]
+,c.[Phone No_]
+,c.[Credit Limit (LCY)]
+,c.[Customer Price Group]
+,c.[Payment Terms Code]
+,c.[Salesperson Code]
+,c.[Shipping Agent Code]
+,c.[Customer Disc_ Group]
+,c.[Bill-to Customer No_]
+,c.[Payment Method Code]
+,c.[Prices Including VAT]
+,c.[VAT Registration No_]
+,
+
+(select top 1 [Shipping Week Days] FROM [Gasgo].[dbo].[Gasgo$Salesperson Ship-to Address] s where [Customer No_] =  [No_] AND s.[Shipping Agent Code] = '{2}' ) [Visit Week Days]
+FROM [dbo].[{0}$Customer] c
 WHERE [No_] in({1})";
-            s = string.Format(s, setting.Settings_NavCompanyName, getCustomersNoDistibutorToString());
+            s = string.Format(s, setting.Settings_NavCompanyName, getCustomersNoDistibutorToString(), setting.Settings_SalesPersonCode);
             return fillDataTable(s, ref errorMessage, ref result);
         }
 
 
+
         public bool getCustomersAll(ref string errorMessage, ref DataTable result)
         {
-            string s = @"SELECT [No_]
-,[Name]
-,[Name 2]
-,[Address]
-,[Address 2]
-,[City]
-,[Contact]
-,[Phone No_]
-,[Credit Limit (LCY)]
-,[Customer Price Group]
-,[Payment Terms Code]
-,[Salesperson Code]
-,[Shipping Agent Code]
-,[Customer Disc_ Group]
-,[Bill-to Customer No_]
-,[Payment Method Code]
-,[Prices Including VAT]
-,[VAT Registration No_]
-,[Visit Week Days]
-FROM [dbo].[{0}$Customer]";
-            s = string.Format(s, setting.Settings_NavCompanyName);
+            string s = @"SELECT c.[No_]
+,c.[Name]
+,c.[Address]
+,c.[City]
+,c.[Contact]
+,c.[Phone No_]
+,c.[Credit Limit (LCY)]
+,c.[Customer Price Group]
+,c.[Payment Terms Code]
+,c.[Salesperson Code]
+,c.[Shipping Agent Code]
+,c.[Customer Disc_ Group]
+,c.[Bill-to Customer No_]
+,c.[Payment Method Code]
+,c.[Prices Including VAT]
+,c.[VAT Registration No_]
+,
+(select top 1 [Visit Week Days] FROM [Gasgo].[dbo].[Gasgo$Salesperson Ship-to Address] s where [Customer No_] =  c.[No_] AND [Salesperson Code] = '{1}' ) [Visit Week Days]
+FROM [dbo].[{0}$Customer] c";
+            s = string.Format(s, setting.Settings_NavCompanyName, setting.Settings_SalesPersonCode);
             return fillDataTable(s, ref errorMessage, ref result);
         }
 
@@ -1077,7 +1080,6 @@ FROM [dbo].[{0}$Customer]";
 ,[Payment Method Code]
 ,[Prices Including VAT]
 ,[VAT Registration No_]
-,[Visit Week Days]
 FROM [dbo].[{0}$Customer]
 WHERE [No_] = '{1}'";
             s = string.Format(s, setting.Settings_NavCompanyName, customer_no);

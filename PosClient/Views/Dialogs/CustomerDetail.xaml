@@ -102,8 +102,9 @@
         <TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" TextWrapping="Wrap">რეზიდენტი:</TextBlock>
         <controls:ToggleSwitch x:Name="isResident" Grid.Row="5" Grid.Column="3"  Margin="10"
                                Style="{StaticResource MahApps.Metro.Styles.ToggleSwitch.Win10}"
+                               IsChecked="{Binding CurrentCustomer.CustomerPostingGroupIChecked}" 
                                OffLabel="არა"
-                               OnLabel="კი" IsChecked="True" />
+                               OnLabel="კი"  />
 
 
         <Grid Grid.Row="6" Grid.ColumnSpan="4">

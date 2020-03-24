@@ -137,6 +137,7 @@
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="Mobile_" Type="varchar" MaxLength="50" />
           <Property Name="AreaCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Customer Posting Group" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="DeletedSalesHeader">
           <Key>
@@ -2056,6 +2057,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="ShipToAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Mobile_" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="AreaCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Customer_Posting_Group" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ItemCategory">
           <Key>
@@ -3371,6 +3373,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="POSModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="Customer_Posting_Group" ColumnName="Customer Posting Group" />
                 <ScalarProperty Name="AreaCode" ColumnName="AreaCode" />
                 <ScalarProperty Name="Mobile_" ColumnName="Mobile_" />
                 <ScalarProperty Name="ShipToAddress" ColumnName="ShipToAddress" />

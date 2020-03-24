@@ -131,7 +131,8 @@ namespace PosClient.ViewModels
                 NeedsVATInvoice = true,
                 IsNewCustomer = true,
                 CustomerPriceGroup = "RETAIL",
-                AreaCode = "9001"
+                AreaCode = "9001",
+                Customer_Posting_Group = "CUSTL_LTD"
             };
             Error = "";
             _isNew = true;

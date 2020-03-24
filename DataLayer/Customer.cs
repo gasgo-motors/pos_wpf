@@ -46,5 +46,6 @@ namespace DataLayer
         public string ShipToAddress { get; set; }
         public string Mobile_ { get; set; }
         public string AreaCode { get; set; }
+        public string Customer_Posting_Group { get; set; }
     }
 }

@@ -7,7 +7,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-ALTER TABLE dbo.Customer add	[Customer Posting Group] [nvarchar](10) NOT NULL
+ALTER TABLE dbo.Customer add	[Customer Posting Group] [nvarchar](10)  NULL
 go
 
 ALTER TABLE dbo.Settings add	[Settings_RsUsername] [nvarchar](50) NULL

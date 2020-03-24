@@ -89,7 +89,8 @@ namespace BusinessLayer
                     l.Quantity = quantity;
                 }
                 if (l.Quantity > 0)
-                    pc.CreateSalesLine(l.DocumentType, h.No_, l.LineNo_, l.Type.Value, l.No_, l.LocationCode, l.UnitOfMeasureCode, l.UnitPrice.Value, l.Quantity.Value, l.LineDiscountPercent.Value, l.LineDiscountAmount.Value, Convert.ToDateTime(h.OrderStartDate), Convert.ToDateTime(h.OrderClosedDate), "0:00");
+                    pc.CreateSalesLine(l.DocumentType, h.No_, l.LineNo_, l.Type.Value, l.No_, l.LocationCode, l.UnitOfMeasureCode, l.UnitPrice.Value, l.Quantity.Value, l.LineDiscountPercent.Value, l.LineDiscountAmount.Value, Convert.ToDateTime(h.OrderStartDate), Convert.ToDateTime(h.OrderClosedDate), "0:00",
+                        l.Service_Provider, l.Customer_Vehicle);
             }
             pc.ReleaseSalesOrder(h.DocumentType, h.No_);
             pc.CreateWhsShipment(h.DocumentType, h.No_);

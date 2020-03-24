@@ -483,7 +483,8 @@ namespace DataLayer
                     VendorNo_ = customer.VendorNo_,
                     VisitWeekDays = customer.VisitWeekDays,
                     AreaCode = customer.AreaCode,
-                    Mobile_ = customer.Mobile_
+                    Mobile_ = customer.Mobile_,
+                    Customer_Posting_Group = customer.Customer_Posting_Group
                 };
                 e.Customers.Remove(customer);
                 e.Customers.Add(ncst);
@@ -1974,6 +1975,7 @@ namespace DataLayer
                     VisitWeekDays = i.VisitWeekDays,
                     i.AreaCode,
                     i.Mobile_,
+                    i.Customer_Posting_Group,
                     PaymentSchedule =
                        e.PaymentSchedules.Where(j => j.Date == cdate && j.CustomerNo == i.No_).Sum(j => j.Amount),
                     Addres1 = e.Ship_to_Address.Where(j => j.CustomerNo_ == i.No_).Min(j => j.Address),
@@ -2015,7 +2017,8 @@ namespace DataLayer
                     Address1 = !string.IsNullOrEmpty(i.Addres1) ? i.Addres1 : i.Address,
                     City1 = !string.IsNullOrEmpty(i.City1) ? i.City1 : i.City,
                     AreaCode = i.AreaCode,
-                    Mobile_= i.Mobile_
+                    Mobile_= i.Mobile_,
+                    Customer_Posting_Group = i.Customer_Posting_Group
                 }).ToList();
             }
         }
