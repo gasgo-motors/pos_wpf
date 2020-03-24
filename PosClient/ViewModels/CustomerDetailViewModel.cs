@@ -130,7 +130,8 @@ namespace PosClient.ViewModels
             {
                 NeedsVATInvoice = true,
                 IsNewCustomer = true,
-                CustomerPriceGroup = "RETAIL"
+                CustomerPriceGroup = "RETAIL",
+                AreaCode = "9001"
             };
             Error = "";
             _isNew = true;
@@ -176,6 +177,10 @@ namespace PosClient.ViewModels
             //{
             //    errorText = "შეიყვანეთ ქალაქი";
             //}
+            else if (String.IsNullOrEmpty(_currentCustomer.Mobile_) )
+            {
+                errorText = "შეიყვანეთ მობილური";
+            }
             else if (!String.IsNullOrEmpty(_currentCustomer.Mobile_) && _currentCustomer.Mobile_.Length < 9)
             {
                 errorText = "მობილურის ნომრის სიგრძე ნაკლებია 9 ზე";

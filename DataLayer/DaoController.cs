@@ -347,7 +347,7 @@ namespace DataLayer
                     string id = "NC_" + r.ToString("D4");
                     if (!e.Customers.Any(i => i.No_ == id)) break;
                 }
-                customer.PostCode = post.PostCode;
+                customer.PostCode = post?.PostCode;
                 customer.No_ = "NC_" + r.ToString("D4");
                 e.Customers.Add(customer);
                 e.Ship_to_Address.Add(new Ship_to_Address
@@ -2013,7 +2013,9 @@ namespace DataLayer
                     VisitWeekDays = i.VisitWeekDays,
                     PaymentSchedule = i.PaymentSchedule,
                     Address1 = !string.IsNullOrEmpty(i.Addres1) ? i.Addres1 : i.Address,
-                    City1 = !string.IsNullOrEmpty(i.City1) ? i.City1 : i.City
+                    City1 = !string.IsNullOrEmpty(i.City1) ? i.City1 : i.City,
+                    AreaCode = i.AreaCode,
+                    Mobile_= i.Mobile_
                 }).ToList();
             }
         }
