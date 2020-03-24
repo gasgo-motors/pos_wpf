@@ -84,20 +84,31 @@ namespace PosClient.Views.Dialogs
         {
             if( Tbx_vat.Text.Length == 9 || Tbx_vat.Text.Length == 11)
             {
-                NtosService client = new NtosService();
-                string name;
-                if(user_id <= 0)
+                try
                 {
-                    client.get_ser_users(App.Current.PosSetting.Settings_RsUsername , App.Current.PosSetting.Settings_RsPassword, out user_id);
-                }
-                if (user_id > 0)
-                {
-                    var un_id = client.get_un_id_from_tin(user_id, Tbx_vat.Text, App.Current.PosSetting.Settings_RsServiceUsername , App.Current.PosSetting.Settings_RsPassword, out name);
-                    if (!string.IsNullOrEmpty(name))
+                    NtosService client = new NtosService();
+                    string name;
+                    if (user_id <= 0)
                     {
-                        (this.DataContext as CustomerDetailViewModel).SetName(name);
-                        Tbx_customer_name.Text = name;
+                        client.get_ser_users(App.Current.PosSetting.Settings_RsUsername,
+                            App.Current.PosSetting.Settings_RsPassword, out user_id);
                     }
+
+                    if (user_id > 0)
+                    {
+                        var un_id = client.get_un_id_from_tin(user_id, Tbx_vat.Text,
+                            App.Current.PosSetting.Settings_RsServiceUsername,
+                            App.Current.PosSetting.Settings_RsPassword, out name);
+                        if (!string.IsNullOrEmpty(name))
+                        {
+                            (this.DataContext as CustomerDetailViewModel).SetName(name);
+                            Tbx_customer_name.Text = name;
+                        }
+                    }
+                }
+                catch (Exception e1)
+                {
+
                 }
             }
         }
