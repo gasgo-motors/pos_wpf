@@ -392,7 +392,23 @@ namespace BusinessLayer.POSMng {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateSalesLine", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", ResponseElementName="CreateSalesLine_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void CreateSalesLine(int docType, string docNo, int lineNo, int lineType, string accNo, string locationCode, string uOM, decimal unitPrice, decimal qty, decimal lineDisc, decimal lineDiscAmt, System.DateTime orderStartDate, System.DateTime orderClosedDate, string orderDuration) {
+        public void CreateSalesLine(
+                    int docType, 
+                    string docNo, 
+                    int lineNo, 
+                    int lineType, 
+                    string accNo, 
+                    string locationCode, 
+                    string uOM, 
+                    decimal unitPrice, 
+                    decimal qty, 
+                    decimal lineDisc, 
+                    decimal lineDiscAmt, 
+                    System.DateTime orderStartDate, 
+                    System.DateTime orderClosedDate, 
+                    string orderDuration, 
+                    string serviceProvider, 
+                    string customerVehicle) {
             this.Invoke("CreateSalesLine", new object[] {
                         docType,
                         docNo,
@@ -407,16 +423,51 @@ namespace BusinessLayer.POSMng {
                         lineDiscAmt,
                         orderStartDate,
                         orderClosedDate,
-                        orderDuration});
+                        orderDuration,
+                        serviceProvider,
+                        customerVehicle});
         }
         
         /// <remarks/>
-        public void CreateSalesLineAsync(int docType, string docNo, int lineNo, int lineType, string accNo, string locationCode, string uOM, decimal unitPrice, decimal qty, decimal lineDisc, decimal lineDiscAmt, System.DateTime orderStartDate, System.DateTime orderClosedDate, string orderDuration) {
-            this.CreateSalesLineAsync(docType, docNo, lineNo, lineType, accNo, locationCode, uOM, unitPrice, qty, lineDisc, lineDiscAmt, orderStartDate, orderClosedDate, orderDuration, null);
+        public void CreateSalesLineAsync(
+                    int docType, 
+                    string docNo, 
+                    int lineNo, 
+                    int lineType, 
+                    string accNo, 
+                    string locationCode, 
+                    string uOM, 
+                    decimal unitPrice, 
+                    decimal qty, 
+                    decimal lineDisc, 
+                    decimal lineDiscAmt, 
+                    System.DateTime orderStartDate, 
+                    System.DateTime orderClosedDate, 
+                    string orderDuration, 
+                    string serviceProvider, 
+                    string customerVehicle) {
+            this.CreateSalesLineAsync(docType, docNo, lineNo, lineType, accNo, locationCode, uOM, unitPrice, qty, lineDisc, lineDiscAmt, orderStartDate, orderClosedDate, orderDuration, serviceProvider, customerVehicle, null);
         }
         
         /// <remarks/>
-        public void CreateSalesLineAsync(int docType, string docNo, int lineNo, int lineType, string accNo, string locationCode, string uOM, decimal unitPrice, decimal qty, decimal lineDisc, decimal lineDiscAmt, System.DateTime orderStartDate, System.DateTime orderClosedDate, string orderDuration, object userState) {
+        public void CreateSalesLineAsync(
+                    int docType, 
+                    string docNo, 
+                    int lineNo, 
+                    int lineType, 
+                    string accNo, 
+                    string locationCode, 
+                    string uOM, 
+                    decimal unitPrice, 
+                    decimal qty, 
+                    decimal lineDisc, 
+                    decimal lineDiscAmt, 
+                    System.DateTime orderStartDate, 
+                    System.DateTime orderClosedDate, 
+                    string orderDuration, 
+                    string serviceProvider, 
+                    string customerVehicle, 
+                    object userState) {
             if ((this.CreateSalesLineOperationCompleted == null)) {
                 this.CreateSalesLineOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCreateSalesLineOperationCompleted);
             }
@@ -434,7 +485,9 @@ namespace BusinessLayer.POSMng {
                         lineDiscAmt,
                         orderStartDate,
                         orderClosedDate,
-                        orderDuration}, this.CreateSalesLineOperationCompleted, userState);
+                        orderDuration,
+                        serviceProvider,
+                        customerVehicle}, this.CreateSalesLineOperationCompleted, userState);
         }
         
         private void OnCreateSalesLineOperationCompleted(object arg) {
@@ -785,7 +838,7 @@ namespace BusinessLayer.POSMng {
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("urn:microsoft-dynamics-schemas/codeunit/POSMng:CreateNewCustomerNew", RequestNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", ResponseElementName="CreateNewCustomerNew_Result", ResponseNamespace="urn:microsoft-dynamics-schemas/codeunit/POSMng", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         [return: System.Xml.Serialization.XmlElementAttribute("return_value")]
-        public string CreateNewCustomerNew(string name, string vATRegNo, bool vATPayer, string contactName, string phoneNo, string primaryAddress, string ship2Address, string city, string country, string salesPersonCode, string postCode, string mobileNumber, string areaCode) {
+        public string CreateNewCustomerNew(string name, string vATRegNo, bool vATPayer, string contactName, string phoneNo, string primaryAddress, string ship2Address, string city, string country, string salesPersonCode, string postCode, string mobileNumber, string areaCode, string custPostingGroup) {
             object[] results = this.Invoke("CreateNewCustomerNew", new object[] {
                         name,
                         vATRegNo,
@@ -799,17 +852,18 @@ namespace BusinessLayer.POSMng {
                         salesPersonCode,
                         postCode,
                         mobileNumber,
-                        areaCode});
+                        areaCode,
+                        custPostingGroup});
             return ((string)(results[0]));
         }
         
         /// <remarks/>
-        public void CreateNewCustomerNewAsync(string name, string vATRegNo, bool vATPayer, string contactName, string phoneNo, string primaryAddress, string ship2Address, string city, string country, string salesPersonCode, string postCode, string mobileNumber, string areaCode) {
-            this.CreateNewCustomerNewAsync(name, vATRegNo, vATPayer, contactName, phoneNo, primaryAddress, ship2Address, city, country, salesPersonCode, postCode, mobileNumber, areaCode, null);
+        public void CreateNewCustomerNewAsync(string name, string vATRegNo, bool vATPayer, string contactName, string phoneNo, string primaryAddress, string ship2Address, string city, string country, string salesPersonCode, string postCode, string mobileNumber, string areaCode, string custPostingGroup) {
+            this.CreateNewCustomerNewAsync(name, vATRegNo, vATPayer, contactName, phoneNo, primaryAddress, ship2Address, city, country, salesPersonCode, postCode, mobileNumber, areaCode, custPostingGroup, null);
         }
         
         /// <remarks/>
-        public void CreateNewCustomerNewAsync(string name, string vATRegNo, bool vATPayer, string contactName, string phoneNo, string primaryAddress, string ship2Address, string city, string country, string salesPersonCode, string postCode, string mobileNumber, string areaCode, object userState) {
+        public void CreateNewCustomerNewAsync(string name, string vATRegNo, bool vATPayer, string contactName, string phoneNo, string primaryAddress, string ship2Address, string city, string country, string salesPersonCode, string postCode, string mobileNumber, string areaCode, string custPostingGroup, object userState) {
             if ((this.CreateNewCustomerNewOperationCompleted == null)) {
                 this.CreateNewCustomerNewOperationCompleted = new System.Threading.SendOrPostCallback(this.OnCreateNewCustomerNewOperationCompleted);
             }
@@ -826,7 +880,8 @@ namespace BusinessLayer.POSMng {
                         salesPersonCode,
                         postCode,
                         mobileNumber,
-                        areaCode}, this.CreateNewCustomerNewOperationCompleted, userState);
+                        areaCode,
+                        custPostingGroup}, this.CreateNewCustomerNewOperationCompleted, userState);
         }
         
         private void OnCreateNewCustomerNewOperationCompleted(object arg) {

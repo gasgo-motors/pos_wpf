@@ -57,6 +57,7 @@
           <xsd:element minOccurs="0" maxOccurs="1" name="PriceExists" type="xsd:boolean" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Unit_Price" type="xsd:decimal" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Line_Amount" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Amount_Including_VAT" type="xsd:decimal" />
           <xsd:element minOccurs="0" maxOccurs="1" name="LineDiscExists" type="xsd:boolean" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Line_Discount_Percent" type="xsd:decimal" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Line_Discount_Amount" type="xsd:decimal" />
@@ -71,6 +72,8 @@
           <xsd:element minOccurs="0" maxOccurs="1" name="Blanket_Order_No" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Blanket_Order_Line_No" type="xsd:int" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Appl_to_Item_Entry" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Stockkeeping_Inventory" type="xsd:decimal" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Stockkeeping_Other_Inventory" type="xsd:decimal" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Shortcut_Dimension_1_Code" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Shortcut_Dimension_2_Code" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="ShortcutDimCode_x005B_3_x005D_" type="xsd:string" />
@@ -618,7 +621,7 @@
   </binding>
   <service name="SalesQuote_Service">
     <port name="SalesQuote_Port" binding="tns:SalesQuote_Binding">
-      <address location="http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesQuote" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <address location="http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Page/SalesQuote" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
     </port>
   </service>
 </definitions>

@@ -23,7 +23,7 @@ namespace BusinessLayer.salesorderservice {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="SalesOrder_Binding", Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
@@ -475,7 +475,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -489,6 +489,10 @@ namespace BusinessLayer.salesorderservice {
         private bool document_TypeFieldSpecified;
         
         private string noField;
+        
+        private bool is_New_CustomerField;
+        
+        private bool is_New_CustomerFieldSpecified;
         
         private string sell_to_Customer_NoField;
         
@@ -613,6 +617,10 @@ namespace BusinessLayer.salesorderservice {
         private bool shipping_AdviceFieldSpecified;
         
         private string outbound_Whse_Handling_TimeField;
+        
+        private bool is_New_AddressField;
+        
+        private bool is_New_AddressFieldSpecified;
         
         private string ship_to_CodeField;
         
@@ -766,6 +774,27 @@ namespace BusinessLayer.salesorderservice {
             }
             set {
                 this.noField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool Is_New_Customer {
+            get {
+                return this.is_New_CustomerField;
+            }
+            set {
+                this.is_New_CustomerField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool Is_New_CustomerSpecified {
+            get {
+                return this.is_New_CustomerFieldSpecified;
+            }
+            set {
+                this.is_New_CustomerFieldSpecified = value;
             }
         }
         
@@ -1414,6 +1443,27 @@ namespace BusinessLayer.salesorderservice {
         }
         
         /// <remarks/>
+        public bool Is_New_Address {
+            get {
+                return this.is_New_AddressField;
+            }
+            set {
+                this.is_New_AddressField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool Is_New_AddressSpecified {
+            get {
+                return this.is_New_AddressFieldSpecified;
+            }
+            set {
+                this.is_New_AddressFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
         public string Ship_to_Code {
             get {
                 return this.ship_to_CodeField;
@@ -2000,7 +2050,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum Document_Type {
@@ -2025,7 +2075,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum Job_Queue_Status {
@@ -2044,7 +2094,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum POS_Order_Type {
@@ -2060,7 +2110,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum Status {
@@ -2079,7 +2129,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum Shipping_Advice {
@@ -2092,7 +2142,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2328,6 +2378,14 @@ namespace BusinessLayer.salesorderservice {
         private bool appl_to_Item_EntryFieldSpecified;
         
         private string deferral_CodeField;
+        
+        private string vendorField;
+        
+        private string manufacturer_CodeField;
+        
+        private string product_Group_CodeField;
+        
+        private string item_Category_CodeField;
         
         private string shortcut_Dimension_1_CodeField;
         
@@ -3600,6 +3658,46 @@ namespace BusinessLayer.salesorderservice {
         }
         
         /// <remarks/>
+        public string Vendor {
+            get {
+                return this.vendorField;
+            }
+            set {
+                this.vendorField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Manufacturer_Code {
+            get {
+                return this.manufacturer_CodeField;
+            }
+            set {
+                this.manufacturer_CodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Product_Group_Code {
+            get {
+                return this.product_Group_CodeField;
+            }
+            set {
+                this.product_Group_CodeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Item_Category_Code {
+            get {
+                return this.item_Category_CodeField;
+            }
+            set {
+                this.item_Category_CodeField = value;
+            }
+        }
+        
+        /// <remarks/>
         public string Shortcut_Dimension_1_Code {
             get {
                 return this.shortcut_Dimension_1_CodeField;
@@ -3956,7 +4054,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum Type {
@@ -3981,7 +4079,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum IC_Partner_Ref_Type {
@@ -4006,7 +4104,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum Reserve {
@@ -4022,7 +4120,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum Document_Type_1 {
@@ -4047,7 +4145,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum Status_50003 {
@@ -4066,7 +4164,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -4099,7 +4197,7 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.7.2612.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.8.3752.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="urn:microsoft-dynamics-schemas/page/salesorder")]
     public enum SalesOrder_Fields {
@@ -4109,6 +4207,9 @@ namespace BusinessLayer.salesorderservice {
         
         /// <remarks/>
         No,
+        
+        /// <remarks/>
+        Is_New_Customer,
         
         /// <remarks/>
         Sell_to_Customer_No,
@@ -4247,6 +4348,9 @@ namespace BusinessLayer.salesorderservice {
         
         /// <remarks/>
         Outbound_Whse_Handling_Time,
+        
+        /// <remarks/>
+        Is_New_Address,
         
         /// <remarks/>
         ShippingOptions,
@@ -4391,11 +4495,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ReadCompletedEventHandler(object sender, ReadCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ReadCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -4417,11 +4521,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ReadByRecIdCompletedEventHandler(object sender, ReadByRecIdCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ReadByRecIdCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -4443,11 +4547,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void ReadMultipleCompletedEventHandler(object sender, ReadMultipleCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class ReadMultipleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -4469,11 +4573,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void IsUpdatedCompletedEventHandler(object sender, IsUpdatedCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class IsUpdatedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -4495,11 +4599,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void GetRecIdFromKeyCompletedEventHandler(object sender, GetRecIdFromKeyCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetRecIdFromKeyCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -4521,11 +4625,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreateCompletedEventHandler(object sender, CreateCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CreateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -4547,11 +4651,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void CreateMultipleCompletedEventHandler(object sender, CreateMultipleCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CreateMultipleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -4573,11 +4677,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void UpdateCompletedEventHandler(object sender, UpdateCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UpdateCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -4599,11 +4703,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void UpdateMultipleCompletedEventHandler(object sender, UpdateMultipleCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UpdateMultipleCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -4625,11 +4729,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void DeleteCompletedEventHandler(object sender, DeleteCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class DeleteCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -4651,11 +4755,11 @@ namespace BusinessLayer.salesorderservice {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     public delegate void Delete_SalesLinesCompletedEventHandler(object sender, Delete_SalesLinesCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2053.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.8.3752.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class Delete_SalesLinesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {

@@ -118,6 +118,10 @@
           <xsd:element minOccurs="0" maxOccurs="1" name="Appl_from_Item_Entry" type="xsd:int" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Appl_to_Item_Entry" type="xsd:int" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Deferral_Code" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Vendor" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Manufacturer_Code" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Product_Group_Code" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Item_Category_Code" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Shortcut_Dimension_1_Code" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Shortcut_Dimension_2_Code" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="ShortcutDimCode_x005B_3_x005D_" type="xsd:string" />
@@ -220,6 +224,10 @@
           <xsd:enumeration value="Appl_from_Item_Entry" />
           <xsd:enumeration value="Appl_to_Item_Entry" />
           <xsd:enumeration value="Deferral_Code" />
+          <xsd:enumeration value="Vendor" />
+          <xsd:enumeration value="Manufacturer_Code" />
+          <xsd:enumeration value="Product_Group_Code" />
+          <xsd:enumeration value="Item_Category_Code" />
           <xsd:enumeration value="Shortcut_Dimension_1_Code" />
           <xsd:enumeration value="Shortcut_Dimension_2_Code" />
           <xsd:enumeration value="ShortcutDimCode_x005B_3_x005D_" />
@@ -596,7 +604,7 @@
   </binding>
   <service name="SalesOrderLine_Service">
     <port name="SalesOrderLine_Port" binding="tns:SalesOrderLine_Binding">
-      <address location="http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesOrderLine" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <address location="http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Page/SalesOrderLine" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
     </port>
   </service>
 </definitions>

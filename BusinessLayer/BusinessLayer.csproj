@@ -115,10 +115,10 @@
     <WebReferences Include="Web References\" />
   </ItemGroup>
   <ItemGroup>
-    <WebReferenceUrl Include="http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Codeunit/POSMng">
+    <WebReferenceUrl Include="http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Codeunit/POSMng">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\POSMng\</RelPath>
-      <UpdateFromURL>http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Codeunit/POSMng</UpdateFromURL>
+      <UpdateFromURL>http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Codeunit/POSMng</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -126,10 +126,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>BusinessLayer_POSMng_POSMng</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesOrder">
+    <WebReferenceUrl Include="http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Page/SalesOrder">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\salesorderservice\</RelPath>
-      <UpdateFromURL>http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesOrder</UpdateFromURL>
+      <UpdateFromURL>http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Page/SalesOrder</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -137,10 +137,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>BusinessLayer_salesorderservice_SalesOrder_Service</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesOrderLine">
+    <WebReferenceUrl Include="http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Page/SalesOrderLine">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\salesordersubform\</RelPath>
-      <UpdateFromURL>http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesOrderLine</UpdateFromURL>
+      <UpdateFromURL>http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Page/SalesOrderLine</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>
@@ -148,10 +148,10 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>BusinessLayer_salesordersubform_SalesOrderLine_Service</CachedSettingsPropName>
     </WebReferenceUrl>
-    <WebReferenceUrl Include="http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesQuote">
+    <WebReferenceUrl Include="http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Page/SalesQuote">
       <UrlBehavior>Dynamic</UrlBehavior>
       <RelPath>Web References\salesquoteservice\</RelPath>
-      <UpdateFromURL>http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesQuote</UpdateFromURL>
+      <UpdateFromURL>http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Page/SalesQuote</UpdateFromURL>
       <ServiceLocationURL>
       </ServiceLocationURL>
       <CachedDynamicPropName>

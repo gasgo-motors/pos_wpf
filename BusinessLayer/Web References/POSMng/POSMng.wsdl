@@ -119,6 +119,8 @@
             <element minOccurs="1" maxOccurs="1" name="orderStartDate" type="dateTime" />
             <element minOccurs="1" maxOccurs="1" name="orderClosedDate" type="dateTime" />
             <element minOccurs="1" maxOccurs="1" name="orderDuration" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="serviceProvider" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="customerVehicle" type="string" />
           </sequence>
         </complexType>
       </element>
@@ -295,6 +297,7 @@
             <element minOccurs="1" maxOccurs="1" name="postCode" type="string" />
             <element minOccurs="1" maxOccurs="1" name="mobileNumber" type="string" />
             <element minOccurs="1" maxOccurs="1" name="areaCode" type="string" />
+            <element minOccurs="1" maxOccurs="1" name="custPostingGroup" type="string" />
           </sequence>
         </complexType>
       </element>

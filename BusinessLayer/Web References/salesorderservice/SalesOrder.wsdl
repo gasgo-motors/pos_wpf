@@ -157,6 +157,10 @@
           <xsd:element minOccurs="0" maxOccurs="1" name="Appl_from_Item_Entry" type="xsd:int" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Appl_to_Item_Entry" type="xsd:int" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Deferral_Code" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Vendor" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Manufacturer_Code" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Product_Group_Code" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Item_Category_Code" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Shortcut_Dimension_1_Code" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Shortcut_Dimension_2_Code" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="ShortcutDimCode_x005B_3_x005D_" type="xsd:string" />
@@ -194,6 +198,7 @@
           <xsd:element minOccurs="0" maxOccurs="1" name="Key" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Document_Type" type="tns:Document_Type" />
           <xsd:element minOccurs="0" maxOccurs="1" name="No" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Is_New_Customer" type="xsd:boolean" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Sell_to_Customer_No" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Sell_to_Customer_Name" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Sell_to_Address" type="xsd:string" />
@@ -240,6 +245,7 @@
           <xsd:element minOccurs="0" maxOccurs="1" name="Late_Order_Shipping" type="xsd:boolean" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Shipping_Advice" type="tns:Shipping_Advice" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Outbound_Whse_Handling_Time" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Is_New_Address" type="xsd:boolean" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Ship_to_Code" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Ship_to_Name" type="xsd:string" />
           <xsd:element minOccurs="0" maxOccurs="1" name="Ship_to_Address" type="xsd:string" />
@@ -297,6 +303,7 @@
         <xsd:restriction base="xsd:string">
           <xsd:enumeration value="Document_Type" />
           <xsd:enumeration value="No" />
+          <xsd:enumeration value="Is_New_Customer" />
           <xsd:enumeration value="Sell_to_Customer_No" />
           <xsd:enumeration value="Sell_to_Customer_Name" />
           <xsd:enumeration value="Sell_to_Address" />
@@ -343,6 +350,7 @@
           <xsd:enumeration value="Late_Order_Shipping" />
           <xsd:enumeration value="Shipping_Advice" />
           <xsd:enumeration value="Outbound_Whse_Handling_Time" />
+          <xsd:enumeration value="Is_New_Address" />
           <xsd:enumeration value="ShippingOptions" />
           <xsd:enumeration value="Ship_to_Code" />
           <xsd:enumeration value="Ship_to_Name" />
@@ -773,7 +781,7 @@
   </binding>
   <service name="SalesOrder_Service">
     <port name="SalesOrder_Port" binding="tns:SalesOrder_Binding">
-      <address location="http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesOrder" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
+      <address location="http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Page/SalesOrder" xmlns="http://schemas.xmlsoap.org/wsdl/soap/" />
     </port>
   </service>
 </definitions>

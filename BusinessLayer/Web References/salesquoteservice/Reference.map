@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DiscoveryClientResultsFile xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Results>
-    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://testserver.bit.ge:10055/DynamicsNAV100_Gasgo/WS/Gasgo/Page/SalesQuote" filename="SalesQuote.wsdl" />
+    <DiscoveryClientResult referenceType="System.Web.Services.Discovery.ContractReference" url="http://192.168.1.10:7047/DynamicsNAV100/WS/Gasgo/Page/SalesQuote" filename="SalesQuote.wsdl" />
   </Results>
 </DiscoveryClientResultsFile>
