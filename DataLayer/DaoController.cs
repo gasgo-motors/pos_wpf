@@ -377,6 +377,9 @@ namespace DataLayer
                     throw new Exception("საიდენთიფიკაციო ნომერი უკვერ არსებობს");
 
                 e.Customers.Remove(e.Customers.First(j => j.No_ == customer.No_));
+                var post = GetPostCodeCities().Find(c => c.City == customer.City);
+                customer.PostCode = post?.PostCode;
+
 
                 e.Customers.Add(customer);
 
@@ -484,7 +487,8 @@ namespace DataLayer
                     VisitWeekDays = customer.VisitWeekDays,
                     AreaCode = customer.AreaCode,
                     Mobile_ = customer.Mobile_,
-                    Customer_Posting_Group = customer.Customer_Posting_Group
+                    Customer_Posting_Group = customer.Customer_Posting_Group,
+                    
                 };
                 e.Customers.Remove(customer);
                 e.Customers.Add(ncst);
@@ -1980,6 +1984,7 @@ namespace DataLayer
                        e.PaymentSchedules.Where(j => j.Date == cdate && j.CustomerNo == i.No_).Sum(j => j.Amount),
                     Addres1 = e.Ship_to_Address.Where(j => j.CustomerNo_ == i.No_).Min(j => j.Address),
                     City1 = e.Ship_to_Address.Where(j => j.CustomerNo_ == i.No_).Min(j => j.City)
+                    
                 }).ToList();
                 return list.Select(i => new Customer
                 {
@@ -2019,6 +2024,7 @@ namespace DataLayer
                     AreaCode = i.AreaCode,
                     Mobile_= i.Mobile_,
                     Customer_Posting_Group = i.Customer_Posting_Group
+                    
                 }).ToList();
             }
         }
@@ -2301,7 +2307,8 @@ namespace DataLayer
                             LineDiscountPercent = 0,
                             Service_Provider = sl.Service_Provider,
                             Service_Provider_Name = sl.Service_Provider_Name,
-                            Customer_Vehicle = sl.Customer_Vehicle
+                            Customer_Vehicle = sl.Customer_Vehicle,
+                            LargeDescription = sl.LargeDescription
                         });
                         sl.Quantity = lq.Value;
                         if (sl.Quantity > 0)

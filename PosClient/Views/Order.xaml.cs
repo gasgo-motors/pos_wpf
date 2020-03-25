@@ -283,7 +283,7 @@ namespace PosClient.Views
         private void BtnPrint_Click(object sender, RoutedEventArgs e)
         {
             var order = (this.DataContext as OrderViewModel).Order;
-
+            var salesLines = (this.DataContext as OrderViewModel).SalesLines;
 
             byte[] result;
 
@@ -307,7 +307,7 @@ namespace PosClient.Views
                 var count = 0;
                 table.SetBorder(iText.Layout.Borders.Border.NO_BORDER);
                 table.SetFontSize(10);
-                foreach(var l in order.SalesLines)
+                foreach(var l in salesLines)
                 {
                     count++;
                     table.AddCell(new Cell().Add(new Paragraph(count.ToString()) ).SetBorder(iText.Layout.Borders.Border.NO_BORDER) );
