@@ -275,7 +275,17 @@ namespace PosClient.Views
                 if (CurrentModel.Order.Sell_toCustomerNo == App.Current.PosSetting.Settings_GenCustomerCode)
                     OpenNewOrder();
                 else
+                {
+                    if (!string.IsNullOrEmpty(errorNo) || !string.IsNullOrEmpty(errorMessage))
+                    {
+                        var model = new SendToNavResultViewModel(sCount, errorNo, errorMessage, rList);
+                        var dialog = (BaseMetroDialog) this.Resources["SendDetail"];
+                        dialog.DataContext = model;
+                        await App.Current.CurrentMainWindow.ShowMetroDialogAsync(dialog);
+                    }
+
                     NavigateToControl(PrevUserControl);
+                }
 
             }
         }

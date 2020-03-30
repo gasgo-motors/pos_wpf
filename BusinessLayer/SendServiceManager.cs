@@ -9,6 +9,12 @@ namespace BusinessLayer
 {
     public class SendServiceManager : PosManager<SendServiceManager>
     {
+        private string NullToEmpty(string s)
+        {
+            return s ?? string.Empty;
+        }
+
+
         public void SendCustomers()
         {
             var customers = DaoController.Current.GetNewCustomers();
@@ -21,7 +27,7 @@ namespace BusinessLayer
             foreach (var customer in customers)
             {
                 var newCode = pc.CreateNewCustomerNew(customer.Name, customer.VATRegistrationNo_, customer.NeedsVATInvoice.Value, customer.Contact,
-                    customer.PhoneNo_, customer.Address, customer.ShipToAddress, customer.City, customer.Country_RegionCode, PosSetting.Settings_SalesPersonCode, customer.PostCode, customer.Mobile_, customer.AreaCode, customer.Customer_Posting_Group);
+                   NullToEmpty(customer.PhoneNo_), NullToEmpty(customer.Address), NullToEmpty(customer.ShipToAddress), NullToEmpty(customer.City), NullToEmpty(customer.Country_RegionCode), PosSetting.Settings_SalesPersonCode, NullToEmpty(customer.PostCode), customer.Mobile_, NullToEmpty(customer.AreaCode), customer.Customer_Posting_Group);
                 DaoController.Current.UpdateCustomerStatus(customer.No_, newCode);
             }
         }
@@ -177,7 +183,7 @@ namespace BusinessLayer
                         pc.CreateSalesLine(l.DocumentType, h.No_, l.LineNo_, l.Type.Value, l.No_, l.LocationCode,
                             l.UnitOfMeasureCode, l.UnitPrice.Value, l.Quantity.Value,
                             l.LineDiscountPercent.Value, l.LineDiscountAmount.Value,  Convert.ToDateTime(h.OrderStartDate).ToUniversalTime(), Convert.ToDateTime(h.OrderClosedDate).ToUniversalTime(), h.OrderDuraction,
-                            l.Service_Provider, l.Customer_Vehicle);
+                            NullToEmpty(l.Service_Provider), NullToEmpty(l.Customer_Vehicle)  );
 
                     }
                 }
@@ -224,7 +230,7 @@ namespace BusinessLayer
                     pc.CreateSalesLine(0, no, l.LineNo_, l.Type.Value, l.No_, l.LocationCode,
                         l.UnitOfMeasureCode, l.UnitPrice.Value, l.Quantity.Value, l.LineDiscountPercent.Value,
                         l.LineDiscountAmount.Value, Convert.ToDateTime(h.OrderStartDate).ToUniversalTime(), Convert.ToDateTime(h.OrderClosedDate).ToUniversalTime(), h.OrderDuraction,
-                        l.Service_Provider, l.Customer_Vehicle
+                        NullToEmpty( l.Service_Provider), NullToEmpty( l.Customer_Vehicle)
                         );
 
                     var quantity = pc.CalcItemInventoryByLocation(l.No_, l.LocationCode);
@@ -266,7 +272,7 @@ namespace BusinessLayer
                     pc.CreateSalesLine(0, no, l.LineNo_, l.Type.Value, l.No_, l.LocationCode,
                         l.UnitOfMeasureCode, l.UnitPrice.Value, l.Quantity.Value, l.LineDiscountPercent.Value,
                         l.LineDiscountAmount.Value, Convert.ToDateTime(h.OrderStartDate).ToUniversalTime(), Convert.ToDateTime(h.OrderClosedDate).ToUniversalTime(), h.OrderDuraction,
-                        l.Service_Provider, l.Customer_Vehicle);
+                        NullToEmpty( l.Service_Provider), NullToEmpty(l.Customer_Vehicle)  );
                 }
 
                 pc.ReleaseSalesOrder(0, no);
@@ -297,7 +303,7 @@ namespace BusinessLayer
                     pc.CreateSalesLine(l.DocumentType, no, l.LineNo_, l.Type.Value, l.No_, l.LocationCode,
                         l.UnitOfMeasureCode, l.UnitPrice.Value, l.Quantity.Value, l.LineDiscountPercent.Value,
                         l.LineDiscountAmount.Value, Convert.ToDateTime(h.OrderStartDate).ToUniversalTime(), Convert.ToDateTime(h.OrderClosedDate).ToUniversalTime(), h.OrderDuraction,
-                        l.Service_Provider, l.Customer_Vehicle);
+                        NullToEmpty(l.Service_Provider), NullToEmpty( l.Customer_Vehicle)  );
                 }
 
                 pc.ReleaseSalesOrder(1, no);

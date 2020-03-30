@@ -61,7 +61,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>65A97EAF93248CD8AE2633489743E0619AF987EC</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>49D266F42BB5406927979268BB22370E3A93BDCD</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>PosClient_TemporaryKey.pfx</ManifestKeyFile>

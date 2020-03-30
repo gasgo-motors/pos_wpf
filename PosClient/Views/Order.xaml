@@ -6,6 +6,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PosClient.Views"
              xmlns:ViewModels="clr-namespace:PosClient.ViewModels"
+            xmlns:dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+            dialogs:DialogParticipation.Register="{Binding}"   
+             xmlns:dialogs1="clr-namespace:PosClient.Views.Dialogs"
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:Converters="clr-namespace:PosClient.Converters"
             xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -23,6 +26,11 @@
             <ViewModels:CustomersProvider x:Key="fclients" />
             <Converters:BooleanVisibilityConverter x:Key="BooleanVisibilityConverter"/>
             <Converters:VehicleNumberConverter x:Key="VehicleNumberConverter" />
+            <dialogs:CustomDialog x:Key="SendDetail"
+                                  x:Name="SendDetail"
+                                  Title="">
+                <dialogs1:SendtoNavResult x:Name="sendResultDetailControl" DataContext="{Binding}"  />
+            </dialogs:CustomDialog>
         </ResourceDictionary>
     </UserControl.Resources>
     
