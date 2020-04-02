@@ -19,7 +19,7 @@
                 <StackPanel Margin="5">
                     <TextBlock><Run Text="ნაშთიანი პროდუქტები:"/></TextBlock>
                     <DataGrid 
-                        Height="100"
+                        Height="150"
                   RowHeaderWidth="0"
                   SelectionMode="Single"
                   IsReadOnly="True"
@@ -33,7 +33,7 @@
                             <DataGridTextColumn Binding="{Binding ItemNo}" Header="პროდუქტის N" />
                             <DataGridTextColumn Binding="{Binding ItemDesc}" Header="დასახელება" />
                             <DataGridTextColumn Binding="{Binding RequestedQuantity, StringFormat=\{0:F2\}}" Header="მოთხოვნილი რაოდენობა" />
-                            <DataGridTextColumn Binding="{Binding RemainingQuantity, StringFormat=\{0:F2\}}" Header="დარჩენილი რაოდნოება" />
+                            <DataGridTextColumn Binding="{Binding RemainingQuantity, StringFormat=\{0:F2\}}" Header="ქვოტირებული რაოდნოება" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Grid>

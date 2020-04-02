@@ -85,6 +85,20 @@ namespace BusinessLayer
         }
 
 
+        private void AddRemainingEntires(List<RemainingItemEntry> r, RemainingItemEntry val)
+        {
+            var already = r.FirstOrDefault(i => i.OrderNo == val.OrderNo && i.ItemNo == val.ItemNo);
+            if (already == null)
+                r.Add(val);
+            else
+            {
+                already.RequestedQuantity += val.RequestedQuantity;
+                already.RemainingQuantity += val.RemainingQuantity;
+            }
+            
+        }
+
+
         private List<RemainingItemEntry> SendOrder(SalesHeader h)
         {
             List<RemainingItemEntry> remainingItems = new List<RemainingItemEntry>();
@@ -124,14 +138,22 @@ namespace BusinessLayer
                     var quantity = pc.CalcItemInventoryByLocation(l.No_, l.LocationCode);
                     if (l.Quantity > quantity)
                     {
-                        remainingItems.Add(new RemainingItemEntry
+                        AddRemainingEntires(remainingItems, new RemainingItemEntry
                         {
                             OrderNo = h.No_,
                             ItemNo = l.No_,
                             ItemDesc = l.LargeDescription,
-                            RequestedQuantity = l.Quantity.Value,
-                            RemainingQuantity = l.Quantity.Value - quantity
+                            RequestedQuantity = quantity,
+                            RemainingQuantity = 0
                         });
+                        //remainingItems.Add(new RemainingItemEntry
+                        //{
+                        //    OrderNo = h.No_,
+                        //    ItemNo = l.No_,
+                        //    ItemDesc = l.LargeDescription,
+                        //    RequestedQuantity = l.Quantity.Value,
+                        //    RemainingQuantity = l.Quantity.Value - quantity
+                        //});
 
 
                         h.SalesLines.Add(new SalesLine
@@ -145,6 +167,7 @@ namespace BusinessLayer
                             Quantity = l.Quantity.Value - quantity,
                             UnitPrice = l.UnitPrice,
                             Sell_toCustomerNo = h.Sell_toCustomerNo,
+                            LargeDescription = l.LargeDescription,
                             LocationCode = l.LocationCode,
                             AmountIncludingVAT = 0,
                             UnitOfMeasureCode = l.UnitOfMeasureCode,
@@ -234,15 +257,24 @@ namespace BusinessLayer
                         );
 
                     var quantity = pc.CalcItemInventoryByLocation(l.No_, l.LocationCode);
-                    remainingItems.Add(new RemainingItemEntry
+
+                    AddRemainingEntires(remainingItems, new RemainingItemEntry
                     {
                         OrderNo = h.No_,
                         ItemNo = l.No_,
-                        ItemDesc = l.Description,
+                        ItemDesc = l.LargeDescription,
                         RequestedQuantity = l.Quantity.Value,
                         RemainingQuantity = l.Quantity.Value - quantity
                     });
 
+                    //remainingItems.Add(new RemainingItemEntry
+                    //{
+                    //    OrderNo = h.No_,
+                    //    ItemNo = l.No_,
+                    //    ItemDesc = l.LargeDescription,
+                    //    RequestedQuantity = l.Quantity.Value,
+                    //    RemainingQuantity = l.Quantity.Value - quantity
+                    //});
 
                 }
 

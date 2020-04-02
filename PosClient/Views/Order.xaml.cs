@@ -276,7 +276,7 @@ namespace PosClient.Views
                     OpenNewOrder();
                 else
                 {
-                    if (!string.IsNullOrEmpty(errorNo) || !string.IsNullOrEmpty(errorMessage))
+                    if (!string.IsNullOrEmpty(errorNo) || !string.IsNullOrEmpty(errorMessage) || (rList != null &&  rList.Count > 0 ) )
                     {
                         var model = new SendToNavResultViewModel(sCount, errorNo, errorMessage, rList);
                         var dialog = (BaseMetroDialog) this.Resources["SendDetail"];

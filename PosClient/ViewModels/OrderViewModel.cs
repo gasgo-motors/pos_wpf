@@ -518,10 +518,11 @@ namespace PosClient.ViewModels
                                 SalesLines = new List<SalesLine>(),
                                 JournalLines = new List<GenJournalLine>(),
                                 PaymentSchedules = new List<PaymentSchedule>(),
-                                CurrentCustomer = Order.CurrentCustomer
+                                CurrentCustomer = Order.CurrentCustomer,
+                                
                             };
                         var newSalesLines = sLines.Where(s => s.PostingDate.HasValue && s.PostingDate.Value.Date == dt).ToList();
-                        newSalesLines.ForEach(n => { n.DocumentNo_ = newHeader.No_; });
+                        newSalesLines.ForEach(n => { n.DocumentNo_ = newHeader.No_; n.OrderType = 2; });
                         newHeader.AmountIncludingVat = newSalesLines.Sum(i => i.AmountIncludingVAT);
                         DaoController.Current.CreateOrder(newHeader, newSalesLines,
                             new List<PaymentSchedule>(), new List<GenJournalLine>(), _currentDate);
