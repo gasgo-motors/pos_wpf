@@ -9,6 +9,12 @@ namespace BusinessLayer
 {
     public class OrdersManager : PosManager<OrdersManager>
     {
+
+        private string NullToEmpty(string s)
+        {
+            return s ?? string.Empty;
+        }
+
         public string GetItemInventoryByLocations(string itemNo)
         {
             POSMng.POSMng pc = new POSMng.POSMng
@@ -75,7 +81,8 @@ namespace BusinessLayer
             List<RemainingItemEntry> RemainingItems = new List<RemainingItemEntry>();
             foreach (var l in h.SalesLines.Where(i => i.IsNew).ToList())
             {
-                var quantity = pc.CalcItemInventoryByLocation(l.No_, l.LocationCode);
+                var item = DaoController.Current.GetItem(l.No_);
+                var quantity = (item != null && item.ItemType == 1) ? decimal.MaxValue : pc.CalcItemInventoryByLocation(l.No_, l.LocationCode);
                 if (l.Quantity > quantity)
                 {
                     RemainingItems.Add(new RemainingItemEntry
@@ -90,7 +97,7 @@ namespace BusinessLayer
                 }
                 if (l.Quantity > 0)
                     pc.CreateSalesLine(l.DocumentType, h.No_, l.LineNo_, l.Type.Value, l.No_, l.LocationCode, l.UnitOfMeasureCode, l.UnitPrice.Value, l.Quantity.Value, l.LineDiscountPercent.Value, l.LineDiscountAmount.Value, Convert.ToDateTime(h.OrderStartDate), Convert.ToDateTime(h.OrderClosedDate), "0:00",
-                        l.Service_Provider, l.Customer_Vehicle);
+                       NullToEmpty( l.Service_Provider), NullToEmpty( l.Customer_Vehicle ) );
             }
             pc.ReleaseSalesOrder(h.DocumentType, h.No_);
             pc.CreateWhsShipment(h.DocumentType, h.No_);

@@ -248,6 +248,7 @@ namespace BusinessLayer
             string res = "";
             DataTable dt = null;
 
+
             progressAction("მიმდინარეობს მარაგების სინქრონიზაცია..", "Getting  Item Ledger Entries", 0);
 
             DaoController.Current.ClearItemLedgerEntries();
@@ -301,7 +302,7 @@ namespace BusinessLayer
                     break;
                 case PosUserTypes.Manager:
                     DaoController.Current.DeleteItems();
-                    NavDbController.Current.getItemsAll(ref res, ref itemsDt);
+                    NavDbController.Current.getItemsAll(new int[] { 0,1}, ref res, ref itemsDt);
                     break;
                 case PosUserTypes.Shop:
                     DaoController.Current.DeleteItems();
@@ -355,6 +356,14 @@ namespace BusinessLayer
             NavDbController.Current.getItemSalesPricesA(ref res, ref itemSalesPricesDt);
             if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             DaoController.Current.SyncItemSalesPrices(itemSalesPricesDt);
+
+            progressAction(null, "Synchronizing stock keeping units", 50);
+            DataTable stockkeepingUnitsDt = null;
+            NavDbController.Current.getStockkeepingUnit(ref res, ref stockkeepingUnitsDt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncStockkeepingUnit(stockkeepingUnitsDt);
+
+            
 
             //progressAction(null, "Synchronizing Items VehicleModles", 40); gio es manqanis modelebshi
             //DataTable itemVehicleModlesDt = null;
@@ -497,6 +506,12 @@ namespace BusinessLayer
                 if (!string.IsNullOrEmpty(res)) throw new PosException(res);
                 DaoController.Current.SyncItems(itemsDt);
             }
+
+            // load servie items
+            //DaoController.Current.ClearServiceItems();
+            //NavDbController.Current.getItemsAll(new int[] { 1 }, ref res, ref itemsDt);
+            //if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            //DaoController.Current.SyncItems(itemsDt);
 
         }
 

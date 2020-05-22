@@ -76,7 +76,11 @@ namespace DataLayer
 
         public bool getStockkeepingUnit(ref string errorMessage, ref DataTable result)
         {
-            string s = @"SELECT *
+            string s = @"SELECT [Location Code]
+                ,[Item No_]
+                ,[Variant Code]
+                ,[Shelf No_]
+                ,[Shelf No_ AS]
   FROM [dbo].[{0}$Stockkeeping Unit]";
             s = string.Format(s, setting.Settings_NavCompanyName);
             return fillDataTable(s, ref errorMessage, ref result);
@@ -380,6 +384,7 @@ WHERE [Location Code] = '{1}' GROUP BY [Item No_]";
 ,[Parameters Grouping Code AS]
 ,[Brand Number AS]
 ,[Promoted Item]
+,[Type]
 FROM [dbo].[{0}$Item]
 WHERE[No_] = '{1}'";
             s = string.Format(s, setting.Settings_NavCompanyName, item_no);
@@ -411,13 +416,14 @@ WHERE[No_] = '{1}'";
 ,[Parameters Grouping Code AS]
 ,[Brand Number AS]
 ,[Promoted Item]
+,[Type]
 FROM [dbo].[{0}$Item]
 where [Manufacturing Policy] = 0";
             s = string.Format(s, setting.Settings_NavCompanyName);
             return fillDataTable(s, ref errorMessage, ref result);
         }
 
-        public bool getItemsAll(ref string errorMessage, ref DataTable result)
+        public bool getItemsAll(int[] types, ref string errorMessage, ref DataTable result)
         {
             string s = @"SELECT [No_]
 ,[No_ 2]
@@ -442,8 +448,9 @@ where [Manufacturing Policy] = 0";
 ,[Parameters Grouping Code AS]
 ,[Brand Number AS]
 ,[Promoted Item]
-FROM [dbo].[{0}$Item]";
-            s = string.Format(s, setting.Settings_NavCompanyName);
+,[Type]
+FROM [dbo].[{0}$Item] where [Type] in ({1}) ";
+            s = string.Format(s, setting.Settings_NavCompanyName, string.Join(",",types )  );
             return fillDataTable(s, ref errorMessage, ref result);
         }
 
@@ -474,6 +481,7 @@ FROM [dbo].[{0}$Item]";
 ,[Parameters Grouping Code AS]
 ,[Brand Number AS]
 ,[Promoted Item]
+,[Type]
 FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS'";
             s = string.Format(s, setting.Settings_NavCompanyName);
             return fillDataTable(s, ref errorMessage, ref result);
@@ -504,6 +512,7 @@ FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS'";
 ,[Parameters Grouping Code AS]
 ,[Brand Number AS]
 ,[Promoted Item]
+,[Type]
 FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS' or [Gen_ Prod_ Posting Group] = 'AUTOSERV'";
             s = string.Format(s, setting.Settings_NavCompanyName);
             return fillDataTable(s, ref errorMessage, ref result);
@@ -535,6 +544,7 @@ FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS' or [Gen_ P
 ,[Parameters Grouping Code AS]
 ,[Brand Number AS]
 ,[Promoted Item]
+,[Type]
 FROM [dbo].[{0}$Item]
 where [No_] in ( {1}   )
 ";

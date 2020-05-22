@@ -402,7 +402,15 @@ namespace PosClient.ViewModels
             get
             {
                 if (_salesLines == null) return null;
-                return _salesLines.Select(i => new SalesLineShortEntry(i, this, Vendors)).ToList();
+                var res = _salesLines.Select(i => new SalesLineShortEntry(i, this, Vendors)).ToList();
+                if (App.Current.User.UserType == PosUserTypes.Shop)
+                {
+                    res.ForEach(i =>
+                    {
+                        i.ShelfNo = DaoController.Current.GetStockShelfNoByItemId(i.ItemNo);
+                    });
+                }
+                return res;
             }
         }
 
@@ -695,6 +703,11 @@ namespace PosClient.ViewModels
             get { return _salesLine.UnitPrice; }
         }
 
+        public string ItemNo 
+        {
+            get { return _salesLine.No_; }
+        }
+
         public decimal? AmountIncludingVAT
         {
             get { return _salesLine.AmountIncludingVAT; }
@@ -819,7 +832,7 @@ namespace PosClient.ViewModels
             }
         }
 
-
+        public string ShelfNo { get; set; }
     }
 
     public class OeNumbersSuggestionProvider : ISuggestionProvider

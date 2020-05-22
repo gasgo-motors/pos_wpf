@@ -548,59 +548,20 @@ namespace DataLayer
         {
             using (var e = new POSWR1Entities())
             {
-                //e.Database.ExecuteSqlCommand("delete from [dbo].[keepingUnit]");
-                ////foreach (DataRow r in dt.Rows)
-                ////{
-                //keepingUnit s = new keepingUnit();
-                //s.Location_Code = "Location_Code";
-                //s.Item_No_ = "Item_No"; 
-                //s.Variant_Code = "Variant Code";
-                //s.Shelf_No_ = "Shelf No_";
-                //s.Unit_Cost = 0;
-                //s.Standard_Cost = 0;
-                //s.Last_Direct_Cost = 0;
-                //s.Vendor_No_ = "Vendor No_";
-                //s.Vendor_Item_No_ = "Vendor Item No_";
-                //s.Lead_Time_Calculation = "Lead Time Calculation";
-                //s.Reorder_Point = 0;
-                //s.Maximum_Inventory = 0;
-                //s.Reorder_Quantity = 0;
-                //s.Last_Date_Modified = DateTime.Now;
-                //s.Assembly_Policy = 1;
-                //s.Transfer_Level_Code = 1;
-                //s.Lot_Size = 0;
-                //s.Discrete_Order_Quantity = 0;
-                //s.Maximum_Order_Quantity = 0;
-                //s.Minimum_Order_Quantity = 0;
-                //s.Safety_Stock_Quantity = 0;
-                //s.Order_Multiple = 0;
-                //s.Safety_Lead_Time = "Safety Lead Time";
-                //s.Components_at_Location = "Components at Location";
-                //s.Flushing_Method = 1;
-                //s.Replenishment_System = 1;
-                //s.Time_Bucket = "Time Bucket";
-                //s.Reordering_Policy = 1;
-                //s.Include_Inventory = 1;
-                //s.Manufacturing_Policy = 1;
-                //s.Rescheduling_Period = "Rescheduling Period";
-                //s.Lot_Accumulation_Period = "Lot Accumulation Period";
-                //s.Dampener_Period = "Dampener Period";
-                //s.Dampener_Quantity = 0;
-                //s.Overflow_Level = 0;
-                //s.Transfer_from_Code = "Transfer-from Code";
-                //s.Special_Equipment_Code = "Special Equipment Code";
-                //s.Put_away_Template_Code = "Put-away Template Code";
-                //s.Put_away_Unit_of_Measure_Code = "Put-away Unit of Measure Code";
-                //s.Phys_Invt_Counting_Period_Code = "Phys Invt Counting Period Code";
-                //s.Last_Counting_Period_Update = DateTime.Now;
-                //s.Use_Cross_Docking = 0;
-                //s.Next_Counting_Start_Date = DateTime.Now;
-                //s.Next_Counting_End_Date = DateTime.Now;
-                //s.Shelf_No__AS = "Shelf No_ AS";
-
-                //e.keepingUnits.Add(s);
-                ////}
-                //e.SaveChanges();
+                e.Database.ExecuteSqlCommand("delete from dbo.StockkeepingUnit");
+                var items = new List<StockkeepingUnit>();
+                foreach (DataRow r in dt.Rows)
+                {
+                    StockkeepingUnit u = new StockkeepingUnit();
+                    u.Location_Code = r["Location Code"].ToString();
+                    u.Item_No_ = r["Item No_"].ToString();
+                    u.Variant_Code = r["Variant Code"].ToString();
+                    u.Shelf_No_ = r["Shelf No_"].ToString();
+                    u.Shelf_No__AS = r["Shelf No_ AS"].ToString();
+                    items.Add(u);
+                }
+                e.StockkeepingUnits.AddRange(items);
+                e.BulkSaveChanges(b => b.BatchSize = 2000);
             }
         }
 
@@ -898,6 +859,7 @@ namespace DataLayer
                     b.ParametersGroupingCodeAS = r["Parameters Grouping Code AS"].ToString();
                     b.BrandNumberAS = r["Brand Number AS"].ToString();
                     b.PromotedItem = (bool)(r["Promoted Item"].ToString() == "1");
+                    b.ItemType = (int)r["Type"];
                     itemsList.Add(b);
                     //e.Items.Add(b);
                 }
@@ -948,6 +910,7 @@ namespace DataLayer
                     b.ParametersGroupingCodeAS = r["Parameters Grouping Code AS"].ToString();
                     b.BrandNumberAS = r["Brand Number AS"].ToString();
                     b.PromotedItem = (bool)(r["Promoted Item"].ToString() == "1");
+                    b.ItemType = (int)r["Type"];
                     if (isNew)
                         e.Items.Add(b);
                 }
@@ -1542,9 +1505,9 @@ namespace DataLayer
         {
             using (var e = new POSWR1Entities())
             {
+                e.Database.ExecuteSqlCommand("delete from dbo.VehicleGroup");
                 foreach (DataRow r in dt.Rows)
                 {
-                    e.Database.ExecuteSqlCommand("delete from dbo.VehicleGroup");
                     VehicleGroup b = new VehicleGroup();
                     b.No = r["No_"].ToString();
                     b.Description = r["Description"].ToString();
@@ -1917,11 +1880,11 @@ namespace DataLayer
             }
         }
 
-        public void ClearAllItemsShort()
+        public void ClearServiceItems()
         {
             using (var e = new POSWR1Entities())
             {
-                e.Database.ExecuteSqlCommand("TRUNCATE TABLE dbo.Item");
+                e.Database.ExecuteSqlCommand("delete from  dbo.Item where ItemType = 1");
                 e.SaveChanges();
             }
         }
@@ -2105,6 +2068,14 @@ namespace DataLayer
             }
         }
 
+        public Item GetItem(string no)
+        {
+            using (var e = new POSWR1Entities())
+            {
+                return e.Items.FirstOrDefault(i => i.No_ == no);
+            }
+        }
+
         public List<Salesperson_Purchaser> GetSalesPersons()
         {
             using (var e = new POSWR1Entities())
@@ -2283,8 +2254,10 @@ namespace DataLayer
                 {
                     var sl = lines[r];
                     if (sl.OrderType != 0) continue;
+                    var qItem = e.Items.FirstOrDefault(j => j.No_ == sl.No_);
                     var lq = e.ItemLedgerEntries.Where(j => j.ItemNo == sl.No_).Sum(k => k.Quantity);
                     if (lq == null) lq = 0;
+                    if (qItem != null && qItem.ItemType == 1) lq = decimal.MaxValue;
                     if (sl.Quantity > lq)
                     {
                         var maxLine = lines.Max(i => i.LineNo_) + 1;
@@ -2311,7 +2284,7 @@ namespace DataLayer
                             LargeDescription = sl.LargeDescription
                         });
                         sl.Quantity = lq.Value;
-                        if (sl.Quantity > 0)
+                        if (sl.Quantity > 0 && !(qItem != null && qItem.ItemType == 1))
                         {
                             AddItemLedgerEntry(new ItemLedgerEntry()
                             {
@@ -2327,7 +2300,7 @@ namespace DataLayer
                             });
                         }
                     }
-                    else
+                    else if(!(qItem != null && qItem.ItemType == 1))
                     {
                         AddItemLedgerEntry(new ItemLedgerEntry()
                         {
@@ -2698,6 +2671,15 @@ namespace DataLayer
                         e.SalesHeaders.ToList();
                 return e.SalesHeaders.Where(i => orderNos.Any(j => j == i.No_)).ToList();
 
+            }
+        }
+
+        public string GetStockShelfNoByItemId(string item_no)
+        {
+            using (var e = new POSWR1Entities())
+            {
+                var res = e.StockkeepingUnits.FirstOrDefault(i => i.Item_No_ == item_no);
+                return res != null ? res.Shelf_No__AS : "";
             }
         }
 

@@ -261,6 +261,9 @@
     <Compile Include="Ship_to_Address.cs">
       <DependentUpon>PosDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="StockkeepingUnit.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="UnitOfMeasure.cs">
       <DependentUpon>PosDB.tt</DependentUpon>
     </Compile>

@@ -341,6 +341,7 @@
           <Property Name="VAT Bus_ Posting Gr_ (Price)" Type="nvarchar" MaxLength="10" />
           <Property Name="Country_Region of Origin Code" Type="nvarchar" MaxLength="10" />
           <Property Name="Manufacturing Policy" Type="int" />
+          <Property Name="ItemType" Type="int" />
         </EntityType>
         <EntityType Name="ItemCatalogue">
           <Key>
@@ -1030,9 +1031,9 @@
           <Property Name="ModifiedUser" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="Shelf" Type="nvarchar" MaxLength="50" />
+          <Property Name="Service Provider" Type="nvarchar" MaxLength="10" />
           <Property Name="Service Provider Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Customer Vehicle" Type="nvarchar" MaxLength="10" />
-          <Property Name="Service Provider" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Salesperson/Purchaser">
           <Key>
@@ -1169,6 +1170,18 @@
           <Property Name="Visit Week Days" Type="varchar" MaxLength="20" />
           <Property Name="Shipping Week Days" Type="varchar" MaxLength="20" />
           <Property Name="Shipment Address Code" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="StockkeepingUnit">
+          <Key>
+            <PropertyRef Name="Location Code" />
+            <PropertyRef Name="Item No_" />
+            <PropertyRef Name="Variant Code" />
+          </Key>
+          <Property Name="Location Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Item No_" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Variant Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Shelf No_" Type="nvarchar" MaxLength="10" />
+          <Property Name="Shelf No_ AS" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="UnitOfMeasure">
           <Key>
@@ -1375,6 +1388,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShippingAgent" EntityType="Self.ShippingAgent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ship-to-Address" EntityType="Self.Ship-to-Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StockkeepingUnit" EntityType="Self.StockkeepingUnit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitOfMeasure" EntityType="Self.UnitOfMeasure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserSetup" EntityType="Self.UserSetup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vehicle" EntityType="Self.Vehicle" Schema="dbo" store:Type="Tables" />
@@ -1981,6 +1995,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="Vehicles" EntityType="POSModel.Vehicle" />
           <EntitySet Name="Vendors" EntityType="POSModel.Vendor" />
           <EntitySet Name="Dimension_Values" EntityType="POSModel.Dimension_Value" />
+          <EntitySet Name="StockkeepingUnits" EntityType="POSModel.StockkeepingUnit" />
         </EntityContainer>
         <EntityType Name="ItemCrossReference">
           <Key>
@@ -2112,6 +2127,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="VAT_Bus__Posting_Gr___Price_" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Country_Region_of_Origin_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Manufacturing_Policy" Type="Int32" />
+          <Property Name="ItemType" Type="Int32" />
         </EntityType>
         <EntityType Name="RegionBudgetActual">
           <Key>
@@ -2835,6 +2851,18 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="Name_2" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="DimensionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="StockkeepingUnit">
+          <Key>
+            <PropertyRef Name="Location_Code" />
+            <PropertyRef Name="Item_No_" />
+            <PropertyRef Name="Variant_Code" />
+          </Key>
+          <Property Name="Location_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Item_No_" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Variant_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Shelf_No_" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Shelf_No__AS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3429,6 +3457,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="POSModel.Item">
               <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
                 <ScalarProperty Name="Manufacturing_Policy" ColumnName="Manufacturing Policy" />
                 <ScalarProperty Name="Country_Region_of_Origin_Code" ColumnName="Country_Region of Origin Code" />
                 <ScalarProperty Name="VAT_Bus__Posting_Gr___Price_" ColumnName="VAT Bus_ Posting Gr_ (Price)" />
@@ -4178,6 +4207,17 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Dimension_Code" ColumnName="Dimension Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockkeepingUnits">
+            <EntityTypeMapping TypeName="POSModel.StockkeepingUnit">
+              <MappingFragment StoreEntitySet="StockkeepingUnit">
+                <ScalarProperty Name="Shelf_No__AS" ColumnName="Shelf No_ AS" />
+                <ScalarProperty Name="Shelf_No_" ColumnName="Shelf No_" />
+                <ScalarProperty Name="Variant_Code" ColumnName="Variant Code" />
+                <ScalarProperty Name="Item_No_" ColumnName="Item No_" />
+                <ScalarProperty Name="Location_Code" ColumnName="Location Code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

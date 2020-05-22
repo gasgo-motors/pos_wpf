@@ -186,6 +186,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn  Binding="{Binding ShelfNo}" Header="" />
             </DataGrid.Columns>
         </DataGrid>
         <WebBrowser x:Name="pdfWebViewer" Grid.Row="1" Visibility="Collapsed"></WebBrowser>

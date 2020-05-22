@@ -321,7 +321,17 @@ namespace PosClient.Views
                 {
                     count++;
                     table.AddCell(new Cell().Add(new Paragraph(count.ToString()) ).SetBorder(iText.Layout.Borders.Border.NO_BORDER) );
-                    table.AddCell(new Cell().Add(new Paragraph(  $"{(string.IsNullOrEmpty(l.LargeDescription) ? "" : l.LargeDescription)}\n{l.Service_Provider_Name}\n{l.Customer_Vehicle}" ) ).SetBorder(iText.Layout.Borders.Border.NO_BORDER));
+                    var desc = $"{(string.IsNullOrEmpty(l.LargeDescription) ? "" : l.LargeDescription)}";
+                    if(!string.IsNullOrEmpty(l.Service_Provider_Name))
+                        desc = $"{desc}\n{l.Service_Provider_Name}";
+                    if (!string.IsNullOrEmpty(l.Customer_Vehicle))
+                        desc = $"{desc}\n{l.Customer_Vehicle}";
+                    if (App.Current.User.UserType == PosUserTypes.Shop)
+                    {
+                        var shelfno = DaoController.Current.GetStockShelfNoByItemId(l.No_);
+                        desc = $"{desc}\n{shelfno}";
+                    }
+                    table.AddCell(new Cell().Add(new Paragraph( desc ) ).SetBorder(iText.Layout.Borders.Border.NO_BORDER));
                     table.AddCell(new Cell().Add(new Paragraph( $"{l.Quantity:N0}*{l.UnitPrice:F2}={l.AmountIncludingVAT:F2} ₾"  ).SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT)).SetBorder(iText.Layout.Borders.Border.NO_BORDER).SetHorizontalAlignment(iText.Layout.Properties.HorizontalAlignment.RIGHT) );
                 }
                 document.Add(table);

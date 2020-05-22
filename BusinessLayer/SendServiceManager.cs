@@ -135,26 +135,18 @@ namespace BusinessLayer
                 bool shemovida = false;
                 foreach (var l in h.OkSalesLines)
                 {
-                    var quantity = pc.CalcItemInventoryByLocation(l.No_, l.LocationCode);
+                    var item = DaoController.Current.GetItem(l.No_);
+                    var quantity = (item != null && item.ItemType == 1 ) ? decimal.MaxValue :  pc.CalcItemInventoryByLocation(l.No_, l.LocationCode);
                     if (l.Quantity > quantity)
                     {
-                        AddRemainingEntires(remainingItems, new RemainingItemEntry
-                        {
-                            OrderNo = h.No_,
-                            ItemNo = l.No_,
-                            ItemDesc = l.LargeDescription,
-                            RequestedQuantity = quantity,
-                            RemainingQuantity = 0
-                        });
-                        //remainingItems.Add(new RemainingItemEntry
+                        //AddRemainingEntires(remainingItems, new RemainingItemEntry
                         //{
                         //    OrderNo = h.No_,
                         //    ItemNo = l.No_,
                         //    ItemDesc = l.LargeDescription,
-                        //    RequestedQuantity = l.Quantity.Value,
-                        //    RemainingQuantity = l.Quantity.Value - quantity
+                        //    RequestedQuantity = quantity,
+                        //    RemainingQuantity = 0
                         //});
-
 
                         h.SalesLines.Add(new SalesLine
                         {
@@ -202,6 +194,15 @@ namespace BusinessLayer
                             client.Update(ref s);
                             shemovida = true;
                         }
+
+                        AddRemainingEntires(remainingItems, new RemainingItemEntry
+                        {
+                            OrderNo = h.No_,
+                            ItemNo = l.No_,
+                            ItemDesc = l.LargeDescription,
+                            RequestedQuantity = l.Quantity.Value,
+                            RemainingQuantity = 0
+                        });
 
                         pc.CreateSalesLine(l.DocumentType, h.No_, l.LineNo_, l.Type.Value, l.No_, l.LocationCode,
                             l.UnitOfMeasureCode, l.UnitPrice.Value, l.Quantity.Value,
@@ -343,7 +344,7 @@ namespace BusinessLayer
 
             DaoController.Current.PostSalesHeader(h);
 
-            return remainingItems;
+            return remainingItems.Where(r => r.RemainingQuantity > 0).ToList();
         }
 
         public void SendComments()
