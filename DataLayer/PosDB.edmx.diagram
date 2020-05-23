@@ -35,7 +35,6 @@
         <EntityTypeShape EntityType="POSModel.Customer" Width="1.5" PointX="21.375" PointY="17.75" />
         <EntityTypeShape EntityType="POSModel.ItemCategory" Width="1.5" PointX="4.5" PointY="4.875" />
         <EntityTypeShape EntityType="POSModel.ProductGroup" Width="1.5" PointX="0.75" PointY="22.75" />
-        <EntityTypeShape EntityType="POSModel.Item" Width="1.5" PointX="9.375" PointY="22.75" />
         <EntityTypeShape EntityType="POSModel.RegionBudgetActual" Width="1.5" PointX="8.875" PointY="7.125" />
         <EntityTypeShape EntityType="POSModel.ItemItem" Width="1.5" PointX="9.25" PointY="10" />
         <EntityTypeShape EntityType="POSModel.PaymentSchedule" Width="1.5" PointX="7" PointY="9.875" />
@@ -59,7 +58,6 @@
         <EntityTypeShape EntityType="POSModel.UserSetup" Width="1.5" PointX="27.375" PointY="4.75" />
         <EntityTypeShape EntityType="POSModel.ItemVehicleGroup" Width="1.5" PointX="3.375" PointY="20.75" />
         <EntityTypeShape EntityType="POSModel.VehicleGroup" Width="1.5" PointX="27.375" PointY="16.75" />
-        <EntityTypeShape EntityType="POSModel.ItemsView" Width="1.5" PointX="27.375" PointY="19.75" />
         <EntityTypeShape EntityType="POSModel.GenJournalLine" Width="1.5" PointX="15.375" PointY="23.75" />
         <EntityTypeShape EntityType="POSModel.Setting" Width="1.5" PointX="25.375" PointY="28.75" />
         <EntityTypeShape EntityType="POSModel.VehicleModel" Width="1.5" PointX="18.875" PointY="8.25" />
@@ -67,6 +65,8 @@
         <EntityTypeShape EntityType="POSModel.Vendor" Width="1.5" PointX="27.375" PointY="13.75" />
         <EntityTypeShape EntityType="POSModel.Dimension_Value" Width="1.5" PointX="27.375" PointY="28.75" />
         <EntityTypeShape EntityType="POSModel.StockkeepingUnit" Width="1.5" PointX="29.375" PointY="0.75" />
+        <EntityTypeShape EntityType="POSModel.Item" Width="1.5" PointX="7.375" PointY="23.75" />
+        <EntityTypeShape EntityType="POSModel.ItemsView" Width="1.5" PointX="29.375" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

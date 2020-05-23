@@ -44,6 +44,11 @@ namespace DataLayer
         public string ParametersGroupingCodeAS { get; set; }
         public string BrandNumberAS { get; set; }
         public Nullable<bool> PromotedItem { get; set; }
+        public string VAT_Bus__Posting_Gr___Price_ { get; set; }
+        public string Country_Region_of_Origin_Code { get; set; }
+        public Nullable<int> Manufacturing_Policy { get; set; }
+        public Nullable<int> ItemType { get; set; }
+        public string Sorting_Number { get; set; }
         public Nullable<decimal> quantitiy { get; set; }
         public string OeNumbers { get; set; }
         public string VehicleGroups { get; set; }

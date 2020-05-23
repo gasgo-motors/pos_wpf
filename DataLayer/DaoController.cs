@@ -860,6 +860,7 @@ namespace DataLayer
                     b.BrandNumberAS = r["Brand Number AS"].ToString();
                     b.PromotedItem = (bool)(r["Promoted Item"].ToString() == "1");
                     b.ItemType = (int)r["Type"];
+                    b.Sorting_Number = r["Sorting Number"].ToString();
                     itemsList.Add(b);
                     //e.Items.Add(b);
                 }

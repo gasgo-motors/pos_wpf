@@ -342,6 +342,7 @@
           <Property Name="Country_Region of Origin Code" Type="nvarchar" MaxLength="10" />
           <Property Name="Manufacturing Policy" Type="int" />
           <Property Name="ItemType" Type="int" />
+          <Property Name="Sorting Number" Type="nvarchar" MaxLength="30" />
         </EntityType>
         <EntityType Name="ItemCatalogue">
           <Key>
@@ -1324,6 +1325,11 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="ParametersGroupingCodeAS" Type="nvarchar" MaxLength="20" />
           <Property Name="BrandNumberAS" Type="nvarchar" MaxLength="40" />
           <Property Name="PromotedItem" Type="bit" />
+          <Property Name="VAT Bus_ Posting Gr_ (Price)" Type="nvarchar" MaxLength="10" />
+          <Property Name="Country_Region of Origin Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="Manufacturing Policy" Type="int" />
+          <Property Name="ItemType" Type="int" />
+          <Property Name="Sorting Number" Type="nvarchar" MaxLength="30" />
           <Property Name="quantitiy" Type="decimal" Precision="38" Scale="20" />
           <Property Name="OeNumbers" Type="nvarchar(max)" />
           <Property Name="VehicleGroups" Type="nvarchar(max)" />
@@ -1427,6 +1433,11 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
     [ItemsView].[ParametersGroupingCodeAS] AS [ParametersGroupingCodeAS], 
     [ItemsView].[BrandNumberAS] AS [BrandNumberAS], 
     [ItemsView].[PromotedItem] AS [PromotedItem], 
+    [ItemsView].[VAT Bus_ Posting Gr_ (Price)] AS [VAT Bus_ Posting Gr_ (Price)], 
+    [ItemsView].[Country_Region of Origin Code] AS [Country_Region of Origin Code], 
+    [ItemsView].[Manufacturing Policy] AS [Manufacturing Policy], 
+    [ItemsView].[ItemType] AS [ItemType], 
+    [ItemsView].[Sorting Number] AS [Sorting Number], 
     [ItemsView].[quantitiy] AS [quantitiy], 
     [ItemsView].[OeNumbers] AS [OeNumbers], 
     [ItemsView].[VehicleGroups] AS [VehicleGroups]
@@ -1959,7 +1970,6 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="Customers" EntityType="POSModel.Customer" />
           <EntitySet Name="ItemCategories" EntityType="POSModel.ItemCategory" />
           <EntitySet Name="ProductGroups" EntityType="POSModel.ProductGroup" />
-          <EntitySet Name="Items" EntityType="POSModel.Item" />
           <EntitySet Name="RegionBudgetActuals" EntityType="POSModel.RegionBudgetActual" />
           <EntitySet Name="ItemItems" EntityType="POSModel.ItemItem" />
           <EntitySet Name="PaymentSchedules" EntityType="POSModel.PaymentSchedule" />
@@ -1983,7 +1993,6 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="UserSetups" EntityType="POSModel.UserSetup" />
           <EntitySet Name="ItemVehicleGroups" EntityType="POSModel.ItemVehicleGroup" />
           <EntitySet Name="VehicleGroups" EntityType="POSModel.VehicleGroup" />
-          <EntitySet Name="ItemsViews" EntityType="POSModel.ItemsView" />
           <EntitySet Name="GenJournalLines" EntityType="POSModel.GenJournalLine" />
           <FunctionImport Name="ItemsViewProcedure" ReturnType="Collection(POSModel.ItemsViewProcedure_Result)">
             <Parameter Name="customerCode" Mode="In" Type="String" />
@@ -1996,6 +2005,8 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="Vendors" EntityType="POSModel.Vendor" />
           <EntitySet Name="Dimension_Values" EntityType="POSModel.Dimension_Value" />
           <EntitySet Name="StockkeepingUnits" EntityType="POSModel.StockkeepingUnit" />
+          <EntitySet Name="Items" EntityType="POSModel.Item" />
+          <EntitySet Name="ItemsViews" EntityType="POSModel.ItemsView" />
         </EntityContainer>
         <EntityType Name="ItemCrossReference">
           <Key>
@@ -2089,45 +2100,6 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="ItemCategoryCode" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Code" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Item">
-          <Key>
-            <PropertyRef Name="No_" />
-          </Key>
-          <Property Name="No_" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="No_2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LargeDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="Inventory" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BillOfMaterials" Type="Boolean" />
-          <Property Name="BaseUnitOfMeasure" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="AllowLineDisc" Type="Boolean" />
-          <Property Name="AllowInvoiceDisc" Type="Boolean" />
-          <Property Name="VendorNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="VendorItemNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="GrossWeight" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="NetWeight" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="UnitVolume" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="PriceIncludesVAT" Type="Boolean" />
-          <Property Name="ItemCategoryCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ProductGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ProductSubGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedUserID" Type="Guid" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ManufacturerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ABCCategoryGroupingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ABCCategoryCode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="CommentAS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ParametersGroupingCodeAS" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="BrandNumberAS" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="PromotedItem" Type="Boolean" />
-          <Property Name="VAT_Bus__Posting_Gr___Price_" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Country_Region_of_Origin_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Manufacturing_Policy" Type="Int32" />
-          <Property Name="ItemType" Type="Int32" />
         </EntityType>
         <EntityType Name="RegionBudgetActual">
           <Key>
@@ -2594,44 +2566,6 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="No" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="ItemsView">
-          <Key>
-            <PropertyRef Name="No_" />
-          </Key>
-          <Property Name="No_" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="No_2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LargeDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="Inventory" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BillOfMaterials" Type="Boolean" />
-          <Property Name="BaseUnitOfMeasure" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="AllowLineDisc" Type="Boolean" />
-          <Property Name="AllowInvoiceDisc" Type="Boolean" />
-          <Property Name="VendorNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="VendorItemNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="GrossWeight" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="NetWeight" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="UnitVolume" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="PriceIncludesVAT" Type="Boolean" />
-          <Property Name="ItemCategoryCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ProductGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ProductSubGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedUserID" Type="Guid" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="ManufacturerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ABCCategoryGroupingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ABCCategoryCode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="CommentAS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ParametersGroupingCodeAS" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="BrandNumberAS" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
-          <Property Name="PromotedItem" Type="Boolean" />
-          <Property Name="quantitiy" Type="Decimal" Precision="38" Scale="20" />
-          <Property Name="OeNumbers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="VehicleGroups" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="GenJournalLine">
           <Key>
             <PropertyRef Name="TemplateName" />
@@ -2699,6 +2633,12 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Type="Decimal" Name="quantitiy" Nullable="true" Precision="38" Scale="20" />
           <Property Type="String" Name="OeNumbers" Nullable="true" />
           <Property Type="String" Name="VehicleGroups" Nullable="true" />
+          <Property Type="String" Name="VAT_Bus__Posting_Gr___Price_" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Country_Region_of_Origin_Code" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="Manufacturing_Policy" Nullable="true" />
+          <Property Type="Int32" Name="ItemType" Nullable="true" />
+          <Property Type="String" Name="Sorting_Number" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Shelf" Nullable="true" MaxLength="100" />
         </ComplexType>
         <EntityType Name="Setting">
           <Key>
@@ -2862,6 +2802,89 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="Variant_Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Shelf_No_" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Shelf_No__AS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="No_" />
+          </Key>
+          <Property Name="No_" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="No_2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LargeDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="Inventory" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BillOfMaterials" Type="Boolean" />
+          <Property Name="BaseUnitOfMeasure" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AllowLineDisc" Type="Boolean" />
+          <Property Name="AllowInvoiceDisc" Type="Boolean" />
+          <Property Name="VendorNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VendorItemNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="GrossWeight" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="NetWeight" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="UnitVolume" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="PriceIncludesVAT" Type="Boolean" />
+          <Property Name="ItemCategoryCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ProductGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ProductSubGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedUserID" Type="Guid" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ManufacturerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ABCCategoryGroupingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ABCCategoryCode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CommentAS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParametersGroupingCodeAS" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BrandNumberAS" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="PromotedItem" Type="Boolean" />
+          <Property Name="VAT_Bus__Posting_Gr___Price_" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Country_Region_of_Origin_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Manufacturing_Policy" Type="Int32" />
+          <Property Name="ItemType" Type="Int32" />
+          <Property Name="Sorting_Number" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ItemsView">
+          <Key>
+            <PropertyRef Name="No_" />
+          </Key>
+          <Property Name="No_" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="No_2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LargeDescription" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="Inventory" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="Color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BillOfMaterials" Type="Boolean" />
+          <Property Name="BaseUnitOfMeasure" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AllowLineDisc" Type="Boolean" />
+          <Property Name="AllowInvoiceDisc" Type="Boolean" />
+          <Property Name="VendorNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VendorItemNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="GrossWeight" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="NetWeight" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="UnitVolume" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="PriceIncludesVAT" Type="Boolean" />
+          <Property Name="ItemCategoryCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ProductGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ProductSubGroupCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedUserID" Type="Guid" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="ManufacturerCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ABCCategoryGroupingCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ABCCategoryCode" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="CommentAS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ParametersGroupingCodeAS" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BrandNumberAS" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="PromotedItem" Type="Boolean" />
+          <Property Name="VAT_Bus__Posting_Gr___Price_" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Country_Region_of_Origin_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Manufacturing_Policy" Type="Int32" />
+          <Property Name="ItemType" Type="Int32" />
+          <Property Name="Sorting_Number" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="quantitiy" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="OeNumbers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="VehicleGroups" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3454,46 +3477,6 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Items">
-            <EntityTypeMapping TypeName="POSModel.Item">
-              <MappingFragment StoreEntitySet="Item">
-                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
-                <ScalarProperty Name="Manufacturing_Policy" ColumnName="Manufacturing Policy" />
-                <ScalarProperty Name="Country_Region_of_Origin_Code" ColumnName="Country_Region of Origin Code" />
-                <ScalarProperty Name="VAT_Bus__Posting_Gr___Price_" ColumnName="VAT Bus_ Posting Gr_ (Price)" />
-                <ScalarProperty Name="PromotedItem" ColumnName="PromotedItem" />
-                <ScalarProperty Name="BrandNumberAS" ColumnName="BrandNumberAS" />
-                <ScalarProperty Name="ParametersGroupingCodeAS" ColumnName="ParametersGroupingCodeAS" />
-                <ScalarProperty Name="CommentAS" ColumnName="CommentAS" />
-                <ScalarProperty Name="ABCCategoryCode" ColumnName="ABCCategoryCode" />
-                <ScalarProperty Name="ABCCategoryGroupingCode" ColumnName="ABCCategoryGroupingCode" />
-                <ScalarProperty Name="ManufacturerCode" ColumnName="ManufacturerCode" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedUserID" ColumnName="ModifiedUserID" />
-                <ScalarProperty Name="ProductSubGroupCode" ColumnName="ProductSubGroupCode" />
-                <ScalarProperty Name="ProductGroupCode" ColumnName="ProductGroupCode" />
-                <ScalarProperty Name="ItemCategoryCode" ColumnName="ItemCategoryCode" />
-                <ScalarProperty Name="PriceIncludesVAT" ColumnName="PriceIncludesVAT" />
-                <ScalarProperty Name="UnitVolume" ColumnName="UnitVolume" />
-                <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
-                <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
-                <ScalarProperty Name="VendorItemNo" ColumnName="VendorItemNo" />
-                <ScalarProperty Name="VendorNo" ColumnName="VendorNo" />
-                <ScalarProperty Name="AllowInvoiceDisc" ColumnName="AllowInvoiceDisc" />
-                <ScalarProperty Name="AllowLineDisc" ColumnName="AllowLineDisc" />
-                <ScalarProperty Name="BaseUnitOfMeasure" ColumnName="BaseUnitOfMeasure" />
-                <ScalarProperty Name="BillOfMaterials" ColumnName="BillOfMaterials" />
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="Inventory" ColumnName="Inventory" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="LargeDescription" ColumnName="LargeDescription" />
-                <ScalarProperty Name="Description2" ColumnName="Description2" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="No_2" ColumnName="No_2" />
-                <ScalarProperty Name="No_" ColumnName="No_" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="RegionBudgetActuals">
             <EntityTypeMapping TypeName="POSModel.RegionBudgetActual">
               <MappingFragment StoreEntitySet="RegionBudgetActual">
@@ -3952,45 +3935,6 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ItemsViews">
-            <EntityTypeMapping TypeName="POSModel.ItemsView">
-              <MappingFragment StoreEntitySet="ItemsView">
-                <ScalarProperty Name="VehicleGroups" ColumnName="VehicleGroups" />
-                <ScalarProperty Name="OeNumbers" ColumnName="OeNumbers" />
-                <ScalarProperty Name="quantitiy" ColumnName="quantitiy" />
-                <ScalarProperty Name="PromotedItem" ColumnName="PromotedItem" />
-                <ScalarProperty Name="BrandNumberAS" ColumnName="BrandNumberAS" />
-                <ScalarProperty Name="ParametersGroupingCodeAS" ColumnName="ParametersGroupingCodeAS" />
-                <ScalarProperty Name="CommentAS" ColumnName="CommentAS" />
-                <ScalarProperty Name="ABCCategoryCode" ColumnName="ABCCategoryCode" />
-                <ScalarProperty Name="ABCCategoryGroupingCode" ColumnName="ABCCategoryGroupingCode" />
-                <ScalarProperty Name="ManufacturerCode" ColumnName="ManufacturerCode" />
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
-                <ScalarProperty Name="ModifiedUserID" ColumnName="ModifiedUserID" />
-                <ScalarProperty Name="ProductSubGroupCode" ColumnName="ProductSubGroupCode" />
-                <ScalarProperty Name="ProductGroupCode" ColumnName="ProductGroupCode" />
-                <ScalarProperty Name="ItemCategoryCode" ColumnName="ItemCategoryCode" />
-                <ScalarProperty Name="PriceIncludesVAT" ColumnName="PriceIncludesVAT" />
-                <ScalarProperty Name="UnitVolume" ColumnName="UnitVolume" />
-                <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
-                <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
-                <ScalarProperty Name="VendorItemNo" ColumnName="VendorItemNo" />
-                <ScalarProperty Name="VendorNo" ColumnName="VendorNo" />
-                <ScalarProperty Name="AllowInvoiceDisc" ColumnName="AllowInvoiceDisc" />
-                <ScalarProperty Name="AllowLineDisc" ColumnName="AllowLineDisc" />
-                <ScalarProperty Name="BaseUnitOfMeasure" ColumnName="BaseUnitOfMeasure" />
-                <ScalarProperty Name="BillOfMaterials" ColumnName="BillOfMaterials" />
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="Inventory" ColumnName="Inventory" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="LargeDescription" ColumnName="LargeDescription" />
-                <ScalarProperty Name="Description2" ColumnName="Description2" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="No_2" ColumnName="No_2" />
-                <ScalarProperty Name="No_" ColumnName="No_" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="GenJournalLines">
             <EntityTypeMapping TypeName="POSModel.GenJournalLine">
               <MappingFragment StoreEntitySet="GenJournalLine">
@@ -4058,6 +4002,12 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
                 <ScalarProperty Name="quantitiy" ColumnName="quantitiy" />
                 <ScalarProperty Name="OeNumbers" ColumnName="OeNumbers" />
                 <ScalarProperty Name="VehicleGroups" ColumnName="VehicleGroups" />
+                <ScalarProperty Name="VAT_Bus__Posting_Gr___Price_" ColumnName="VAT Bus_ Posting Gr_ (Price)" />
+                <ScalarProperty Name="Country_Region_of_Origin_Code" ColumnName="Country_Region of Origin Code" />
+                <ScalarProperty Name="Manufacturing_Policy" ColumnName="Manufacturing Policy" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="Sorting_Number" ColumnName="Sorting Number" />
+                <ScalarProperty Name="Shelf" ColumnName="Shelf" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -4218,6 +4168,91 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
                 <ScalarProperty Name="Variant_Code" ColumnName="Variant Code" />
                 <ScalarProperty Name="Item_No_" ColumnName="Item No_" />
                 <ScalarProperty Name="Location_Code" ColumnName="Location Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Items">
+            <EntityTypeMapping TypeName="POSModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Sorting_Number" ColumnName="Sorting Number" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="Manufacturing_Policy" ColumnName="Manufacturing Policy" />
+                <ScalarProperty Name="Country_Region_of_Origin_Code" ColumnName="Country_Region of Origin Code" />
+                <ScalarProperty Name="VAT_Bus__Posting_Gr___Price_" ColumnName="VAT Bus_ Posting Gr_ (Price)" />
+                <ScalarProperty Name="PromotedItem" ColumnName="PromotedItem" />
+                <ScalarProperty Name="BrandNumberAS" ColumnName="BrandNumberAS" />
+                <ScalarProperty Name="ParametersGroupingCodeAS" ColumnName="ParametersGroupingCodeAS" />
+                <ScalarProperty Name="CommentAS" ColumnName="CommentAS" />
+                <ScalarProperty Name="ABCCategoryCode" ColumnName="ABCCategoryCode" />
+                <ScalarProperty Name="ABCCategoryGroupingCode" ColumnName="ABCCategoryGroupingCode" />
+                <ScalarProperty Name="ManufacturerCode" ColumnName="ManufacturerCode" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedUserID" ColumnName="ModifiedUserID" />
+                <ScalarProperty Name="ProductSubGroupCode" ColumnName="ProductSubGroupCode" />
+                <ScalarProperty Name="ProductGroupCode" ColumnName="ProductGroupCode" />
+                <ScalarProperty Name="ItemCategoryCode" ColumnName="ItemCategoryCode" />
+                <ScalarProperty Name="PriceIncludesVAT" ColumnName="PriceIncludesVAT" />
+                <ScalarProperty Name="UnitVolume" ColumnName="UnitVolume" />
+                <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
+                <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
+                <ScalarProperty Name="VendorItemNo" ColumnName="VendorItemNo" />
+                <ScalarProperty Name="VendorNo" ColumnName="VendorNo" />
+                <ScalarProperty Name="AllowInvoiceDisc" ColumnName="AllowInvoiceDisc" />
+                <ScalarProperty Name="AllowLineDisc" ColumnName="AllowLineDisc" />
+                <ScalarProperty Name="BaseUnitOfMeasure" ColumnName="BaseUnitOfMeasure" />
+                <ScalarProperty Name="BillOfMaterials" ColumnName="BillOfMaterials" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Inventory" ColumnName="Inventory" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="LargeDescription" ColumnName="LargeDescription" />
+                <ScalarProperty Name="Description2" ColumnName="Description2" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="No_2" ColumnName="No_2" />
+                <ScalarProperty Name="No_" ColumnName="No_" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemsViews">
+            <EntityTypeMapping TypeName="POSModel.ItemsView">
+              <MappingFragment StoreEntitySet="ItemsView">
+                <ScalarProperty Name="VehicleGroups" ColumnName="VehicleGroups" />
+                <ScalarProperty Name="OeNumbers" ColumnName="OeNumbers" />
+                <ScalarProperty Name="quantitiy" ColumnName="quantitiy" />
+                <ScalarProperty Name="Sorting_Number" ColumnName="Sorting Number" />
+                <ScalarProperty Name="ItemType" ColumnName="ItemType" />
+                <ScalarProperty Name="Manufacturing_Policy" ColumnName="Manufacturing Policy" />
+                <ScalarProperty Name="Country_Region_of_Origin_Code" ColumnName="Country_Region of Origin Code" />
+                <ScalarProperty Name="VAT_Bus__Posting_Gr___Price_" ColumnName="VAT Bus_ Posting Gr_ (Price)" />
+                <ScalarProperty Name="PromotedItem" ColumnName="PromotedItem" />
+                <ScalarProperty Name="BrandNumberAS" ColumnName="BrandNumberAS" />
+                <ScalarProperty Name="ParametersGroupingCodeAS" ColumnName="ParametersGroupingCodeAS" />
+                <ScalarProperty Name="CommentAS" ColumnName="CommentAS" />
+                <ScalarProperty Name="ABCCategoryCode" ColumnName="ABCCategoryCode" />
+                <ScalarProperty Name="ABCCategoryGroupingCode" ColumnName="ABCCategoryGroupingCode" />
+                <ScalarProperty Name="ManufacturerCode" ColumnName="ManufacturerCode" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedUserID" ColumnName="ModifiedUserID" />
+                <ScalarProperty Name="ProductSubGroupCode" ColumnName="ProductSubGroupCode" />
+                <ScalarProperty Name="ProductGroupCode" ColumnName="ProductGroupCode" />
+                <ScalarProperty Name="ItemCategoryCode" ColumnName="ItemCategoryCode" />
+                <ScalarProperty Name="PriceIncludesVAT" ColumnName="PriceIncludesVAT" />
+                <ScalarProperty Name="UnitVolume" ColumnName="UnitVolume" />
+                <ScalarProperty Name="NetWeight" ColumnName="NetWeight" />
+                <ScalarProperty Name="GrossWeight" ColumnName="GrossWeight" />
+                <ScalarProperty Name="VendorItemNo" ColumnName="VendorItemNo" />
+                <ScalarProperty Name="VendorNo" ColumnName="VendorNo" />
+                <ScalarProperty Name="AllowInvoiceDisc" ColumnName="AllowInvoiceDisc" />
+                <ScalarProperty Name="AllowLineDisc" ColumnName="AllowLineDisc" />
+                <ScalarProperty Name="BaseUnitOfMeasure" ColumnName="BaseUnitOfMeasure" />
+                <ScalarProperty Name="BillOfMaterials" ColumnName="BillOfMaterials" />
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Inventory" ColumnName="Inventory" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="LargeDescription" ColumnName="LargeDescription" />
+                <ScalarProperty Name="Description2" ColumnName="Description2" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="No_2" ColumnName="No_2" />
+                <ScalarProperty Name="No_" ColumnName="No_" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

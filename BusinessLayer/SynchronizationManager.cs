@@ -144,6 +144,12 @@ namespace BusinessLayer
             DaoController.Current.SyncDimensionValue(dt);
 
 
+            progressAction(null, "Synchronizing stock keeping units", 99);
+            DataTable stockkeepingUnitsDt = null;
+            NavDbController.Current.getStockkeepingUnit(ref res, ref stockkeepingUnitsDt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncStockkeepingUnit(stockkeepingUnitsDt);
+
 
             progressAction(null, "messages", 99);
             SendServiceManager.Current.SendNewMessages();
@@ -356,12 +362,6 @@ namespace BusinessLayer
             NavDbController.Current.getItemSalesPricesA(ref res, ref itemSalesPricesDt);
             if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             DaoController.Current.SyncItemSalesPrices(itemSalesPricesDt);
-
-            progressAction(null, "Synchronizing stock keeping units", 50);
-            DataTable stockkeepingUnitsDt = null;
-            NavDbController.Current.getStockkeepingUnit(ref res, ref stockkeepingUnitsDt);
-            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
-            DaoController.Current.SyncStockkeepingUnit(stockkeepingUnitsDt);
 
             
 

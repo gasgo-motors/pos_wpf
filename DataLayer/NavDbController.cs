@@ -385,6 +385,7 @@ WHERE [Location Code] = '{1}' GROUP BY [Item No_]";
 ,[Brand Number AS]
 ,[Promoted Item]
 ,[Type]
+,[Sorting Number]
 FROM [dbo].[{0}$Item]
 WHERE[No_] = '{1}'";
             s = string.Format(s, setting.Settings_NavCompanyName, item_no);
@@ -417,6 +418,7 @@ WHERE[No_] = '{1}'";
 ,[Brand Number AS]
 ,[Promoted Item]
 ,[Type]
+,[Sorting Number]
 FROM [dbo].[{0}$Item]
 where [Manufacturing Policy] = 0";
             s = string.Format(s, setting.Settings_NavCompanyName);
@@ -449,6 +451,7 @@ where [Manufacturing Policy] = 0";
 ,[Brand Number AS]
 ,[Promoted Item]
 ,[Type]
+,[Sorting Number]
 FROM [dbo].[{0}$Item] where [Type] in ({1}) ";
             s = string.Format(s, setting.Settings_NavCompanyName, string.Join(",",types )  );
             return fillDataTable(s, ref errorMessage, ref result);
@@ -482,6 +485,7 @@ FROM [dbo].[{0}$Item] where [Type] in ({1}) ";
 ,[Brand Number AS]
 ,[Promoted Item]
 ,[Type]
+,[Sorting Number]
 FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS'";
             s = string.Format(s, setting.Settings_NavCompanyName);
             return fillDataTable(s, ref errorMessage, ref result);
@@ -513,6 +517,7 @@ FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS'";
 ,[Brand Number AS]
 ,[Promoted Item]
 ,[Type]
+,[Sorting Number]
 FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS' or [Gen_ Prod_ Posting Group] = 'AUTOSERV'";
             s = string.Format(s, setting.Settings_NavCompanyName);
             return fillDataTable(s, ref errorMessage, ref result);
@@ -545,6 +550,7 @@ FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS' or [Gen_ P
 ,[Brand Number AS]
 ,[Promoted Item]
 ,[Type]
+,[Sorting Number]
 FROM [dbo].[{0}$Item]
 where [No_] in ( {1}   )
 ";

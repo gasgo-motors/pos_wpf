@@ -48,5 +48,6 @@ namespace DataLayer
         public string Country_Region_of_Origin_Code { get; set; }
         public Nullable<int> Manufacturing_Policy { get; set; }
         public Nullable<int> ItemType { get; set; }
+        public string Sorting_Number { get; set; }
     }
 }
