@@ -67,5 +67,6 @@ namespace DataLayer
         public string Settings_RsPassword { get; set; }
         public string Settings_RsServiceUsername { get; set; }
         public string Settings_RsServicePassword { get; set; }
+        public string Settings_Printers { get; set; }
     }
 }

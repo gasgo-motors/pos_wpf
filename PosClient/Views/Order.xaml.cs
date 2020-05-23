@@ -28,6 +28,8 @@ using iText.Kernel.Font;
 using iText.IO.Font.Constants;
 using iText.IO.Font;
 using iText.Kernel.Pdf.Canvas.Draw;
+using System.Drawing.Printing;
+using RawPrint;
 
 namespace PosClient.Views
 {
@@ -340,13 +342,26 @@ namespace PosClient.Views
                 document.Add(new LineSeparator(line));
 
                 document.Add(new Paragraph($"ჯამი    {order.AmountIncludingVat:F2} ₾").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetFontSize(15).SetBold() );
-
-                document.Close();
+                                document.Close();
 
                 result = memoryStream.ToArray();
 
+                if (!string.IsNullOrEmpty(App.Current.PosSetting.Settings_Printers))
+                {
+
+                    foreach (var printerName in App.Current.PosSetting.Settings_Printers.Split(',').ToList())
+                    {
+                        printToPrinter(printerName, result);
+                    }
+                    return;
+                }
+
+
                 pdfWebViewer.NavigateToStream(memoryStream);
             }
+
+
+
             var fileName = $@"C:\wr\check_{order.No_}_{Guid.NewGuid()}.pdf";
             File.WriteAllBytes(fileName, result);
 
@@ -355,5 +370,16 @@ namespace PosClient.Views
             // pdfWebViewer.Visibility = Visibility.Visible;
 
         }
+
+        private void printToPrinter(string printerName, byte[] bits)
+        {
+            using (var memoryStream = new MemoryStream(bits))
+            {
+                IPrinter printer = new Printer();
+                printer.PrintRawStream(printerName, memoryStream, "print.pdf");
+            }
+        }
+
+
     }
 }

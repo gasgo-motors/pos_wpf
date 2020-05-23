@@ -1137,6 +1137,7 @@
           <Property Name="Settings_RsPassword" Type="nvarchar" MaxLength="50" />
           <Property Name="Settings_RsServiceUsername" Type="nvarchar" MaxLength="50" />
           <Property Name="Settings_RsServicePassword" Type="nvarchar" MaxLength="50" />
+          <Property Name="Settings_Printers" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ShippingAgent">
           <Key>
@@ -1999,7 +2000,6 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
             <Parameter Name="customerGroup" Mode="In" Type="String" />
             <Parameter Name="locationCode" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="Settings" EntityType="POSModel.Setting" />
           <EntitySet Name="VehicleModels" EntityType="POSModel.VehicleModel" />
           <EntitySet Name="Vehicles" EntityType="POSModel.Vehicle" />
           <EntitySet Name="Vendors" EntityType="POSModel.Vendor" />
@@ -2007,6 +2007,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="StockkeepingUnits" EntityType="POSModel.StockkeepingUnit" />
           <EntitySet Name="Items" EntityType="POSModel.Item" />
           <EntitySet Name="ItemsViews" EntityType="POSModel.ItemsView" />
+          <EntitySet Name="Settings" EntityType="POSModel.Setting" />
         </EntityContainer>
         <EntityType Name="ItemCrossReference">
           <Key>
@@ -2640,64 +2641,6 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Type="String" Name="Sorting_Number" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="Shelf" Nullable="true" MaxLength="100" />
         </ComplexType>
-        <EntityType Name="Setting">
-          <Key>
-            <PropertyRef Name="Settings_No" />
-          </Key>
-          <Property Name="Settings_No" Type="Int32" Nullable="false" />
-          <Property Name="Settings_SalesPersonCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_SalesPersonName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ResponsibilityCenter" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_Location" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_SalesHeaderPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ReturnHeaderPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_GenCustomerCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_DiplomaticCustomerCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_NavSQLServer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_NavSQLDatabase" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_NavSQLUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_NavSQLPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_NavCompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_DBVersion" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ManagerCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ManagerName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ShopName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ShopAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ShopTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ShopWebAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ShopReturnTerms" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ShopThanks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ShopPrintReceipt" Type="Boolean" />
-          <Property Name="Settings_PosServiceUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Settings_PosServiceUrl1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Settings_PosServiceUrl2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Settings_PosServiceUrl3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Settings_PosServiceUrl4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Settings_PosServiceUrl5" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Settings_PosServiceUrl6" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Settings_PosServiceUrl7" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Settings_ResponsibilityCenterName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_QoutePrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_SpecOrderPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_JnlTemplateName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_JnlBatchName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_RespEmployee" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_PaymentOrderPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_TransitLocation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_DomainName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_DomainUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_DomainPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_JnlGeneralBatchName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ChangeSuggestionsInMinutes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_SalesHeaderNumberCount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_ConcurrentQoutePrefix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_Show_Shelf" Type="Int32" />
-          <Property Name="Settings_LocationAll" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_RsUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_RsPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_RsServiceUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Settings_RsServicePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="VehicleModel">
           <Key>
             <PropertyRef Name="ManufacturerCode" />
@@ -2885,6 +2828,65 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="quantitiy" Type="Decimal" Precision="38" Scale="20" />
           <Property Name="OeNumbers" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="VehicleGroups" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="Settings_No" />
+          </Key>
+          <Property Name="Settings_No" Type="Int32" Nullable="false" />
+          <Property Name="Settings_SalesPersonCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_SalesPersonName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ResponsibilityCenter" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_Location" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_SalesHeaderPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ReturnHeaderPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_GenCustomerCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_DiplomaticCustomerCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_NavSQLServer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_NavSQLDatabase" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_NavSQLUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_NavSQLPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_NavCompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_DBVersion" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ManagerCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ManagerName" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ShopName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ShopAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ShopTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ShopWebAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ShopReturnTerms" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ShopThanks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ShopPrintReceipt" Type="Boolean" />
+          <Property Name="Settings_PosServiceUrl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Settings_PosServiceUrl1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Settings_PosServiceUrl2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Settings_PosServiceUrl3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Settings_PosServiceUrl4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Settings_PosServiceUrl5" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Settings_PosServiceUrl6" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Settings_PosServiceUrl7" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Settings_ResponsibilityCenterName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_QoutePrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_SpecOrderPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_JnlTemplateName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_JnlBatchName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_RespEmployee" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_PaymentOrderPrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_TransitLocation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_DomainName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_DomainUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_DomainPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_JnlGeneralBatchName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ChangeSuggestionsInMinutes" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_SalesHeaderNumberCount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ConcurrentQoutePrefix" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_Show_Shelf" Type="Int32" />
+          <Property Name="Settings_LocationAll" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_RsUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_RsPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_RsServiceUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_RsServicePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_Printers" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -4011,65 +4013,6 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="Settings">
-            <EntityTypeMapping TypeName="POSModel.Setting">
-              <MappingFragment StoreEntitySet="Settings">
-                <ScalarProperty Name="Settings_RsServicePassword" ColumnName="Settings_RsServicePassword" />
-                <ScalarProperty Name="Settings_RsServiceUsername" ColumnName="Settings_RsServiceUsername" />
-                <ScalarProperty Name="Settings_RsPassword" ColumnName="Settings_RsPassword" />
-                <ScalarProperty Name="Settings_RsUsername" ColumnName="Settings_RsUsername" />
-                <ScalarProperty Name="Settings_LocationAll" ColumnName="Settings_LocationAll" />
-                <ScalarProperty Name="Settings_Show_Shelf" ColumnName="Settings_Show_Shelf" />
-                <ScalarProperty Name="Settings_ConcurrentQoutePrefix" ColumnName="Settings_ConcurrentQoutePrefix" />
-                <ScalarProperty Name="Settings_SalesHeaderNumberCount" ColumnName="Settings_SalesHeaderNumberCount" />
-                <ScalarProperty Name="Settings_ChangeSuggestionsInMinutes" ColumnName="Settings_ChangeSuggestionsInMinutes" />
-                <ScalarProperty Name="Settings_JnlGeneralBatchName" ColumnName="Settings_JnlGeneralBatchName" />
-                <ScalarProperty Name="Settings_DomainPassword" ColumnName="Settings_DomainPassword" />
-                <ScalarProperty Name="Settings_DomainUserName" ColumnName="Settings_DomainUserName" />
-                <ScalarProperty Name="Settings_DomainName" ColumnName="Settings_DomainName" />
-                <ScalarProperty Name="Settings_TransitLocation" ColumnName="Settings_TransitLocation" />
-                <ScalarProperty Name="Settings_PaymentOrderPrefix" ColumnName="Settings_PaymentOrderPrefix" />
-                <ScalarProperty Name="Settings_RespEmployee" ColumnName="Settings_RespEmployee" />
-                <ScalarProperty Name="Settings_JnlBatchName" ColumnName="Settings_JnlBatchName" />
-                <ScalarProperty Name="Settings_JnlTemplateName" ColumnName="Settings_JnlTemplateName" />
-                <ScalarProperty Name="Settings_SpecOrderPrefix" ColumnName="Settings_SpecOrderPrefix" />
-                <ScalarProperty Name="Settings_QoutePrefix" ColumnName="Settings_QoutePrefix" />
-                <ScalarProperty Name="Settings_ResponsibilityCenterName" ColumnName="Settings_ResponsibilityCenterName" />
-                <ScalarProperty Name="Settings_PosServiceUrl7" ColumnName="Settings_PosServiceUrl7" />
-                <ScalarProperty Name="Settings_PosServiceUrl6" ColumnName="Settings_PosServiceUrl6" />
-                <ScalarProperty Name="Settings_PosServiceUrl5" ColumnName="Settings_PosServiceUrl5" />
-                <ScalarProperty Name="Settings_PosServiceUrl4" ColumnName="Settings_PosServiceUrl4" />
-                <ScalarProperty Name="Settings_PosServiceUrl3" ColumnName="Settings_PosServiceUrl3" />
-                <ScalarProperty Name="Settings_PosServiceUrl2" ColumnName="Settings_PosServiceUrl2" />
-                <ScalarProperty Name="Settings_PosServiceUrl1" ColumnName="Settings_PosServiceUrl1" />
-                <ScalarProperty Name="Settings_PosServiceUrl" ColumnName="Settings_PosServiceUrl" />
-                <ScalarProperty Name="Settings_ShopPrintReceipt" ColumnName="Settings_ShopPrintReceipt" />
-                <ScalarProperty Name="Settings_ShopThanks" ColumnName="Settings_ShopThanks" />
-                <ScalarProperty Name="Settings_ShopReturnTerms" ColumnName="Settings_ShopReturnTerms" />
-                <ScalarProperty Name="Settings_ShopWebAddress" ColumnName="Settings_ShopWebAddress" />
-                <ScalarProperty Name="Settings_ShopTel" ColumnName="Settings_ShopTel" />
-                <ScalarProperty Name="Settings_ShopAddress" ColumnName="Settings_ShopAddress" />
-                <ScalarProperty Name="Settings_ShopName" ColumnName="Settings_ShopName" />
-                <ScalarProperty Name="Settings_ManagerName" ColumnName="Settings_ManagerName" />
-                <ScalarProperty Name="Settings_ManagerCode" ColumnName="Settings_ManagerCode" />
-                <ScalarProperty Name="Settings_DBVersion" ColumnName="Settings_DBVersion" />
-                <ScalarProperty Name="Settings_NavCompanyName" ColumnName="Settings_NavCompanyName" />
-                <ScalarProperty Name="Settings_NavSQLPass" ColumnName="Settings_NavSQLPass" />
-                <ScalarProperty Name="Settings_NavSQLUser" ColumnName="Settings_NavSQLUser" />
-                <ScalarProperty Name="Settings_NavSQLDatabase" ColumnName="Settings_NavSQLDatabase" />
-                <ScalarProperty Name="Settings_NavSQLServer" ColumnName="Settings_NavSQLServer" />
-                <ScalarProperty Name="Settings_DiplomaticCustomerCode" ColumnName="Settings_DiplomaticCustomerCode" />
-                <ScalarProperty Name="Settings_GenCustomerCode" ColumnName="Settings_GenCustomerCode" />
-                <ScalarProperty Name="Settings_ReturnHeaderPrefix" ColumnName="Settings_ReturnHeaderPrefix" />
-                <ScalarProperty Name="Settings_SalesHeaderPrefix" ColumnName="Settings_SalesHeaderPrefix" />
-                <ScalarProperty Name="Settings_Location" ColumnName="Settings_Location" />
-                <ScalarProperty Name="Settings_ResponsibilityCenter" ColumnName="Settings_ResponsibilityCenter" />
-                <ScalarProperty Name="Settings_SalesPersonName" ColumnName="Settings_SalesPersonName" />
-                <ScalarProperty Name="Settings_SalesPersonCode" ColumnName="Settings_SalesPersonCode" />
-                <ScalarProperty Name="Settings_No" ColumnName="Settings_No" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VehicleModels">
             <EntityTypeMapping TypeName="POSModel.VehicleModel">
               <MappingFragment StoreEntitySet="VehicleModel">
@@ -4253,6 +4196,66 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="No_2" ColumnName="No_2" />
                 <ScalarProperty Name="No_" ColumnName="No_" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="POSModel.Setting">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="Settings_Printers" ColumnName="Settings_Printers" />
+                <ScalarProperty Name="Settings_RsServicePassword" ColumnName="Settings_RsServicePassword" />
+                <ScalarProperty Name="Settings_RsServiceUsername" ColumnName="Settings_RsServiceUsername" />
+                <ScalarProperty Name="Settings_RsPassword" ColumnName="Settings_RsPassword" />
+                <ScalarProperty Name="Settings_RsUsername" ColumnName="Settings_RsUsername" />
+                <ScalarProperty Name="Settings_LocationAll" ColumnName="Settings_LocationAll" />
+                <ScalarProperty Name="Settings_Show_Shelf" ColumnName="Settings_Show_Shelf" />
+                <ScalarProperty Name="Settings_ConcurrentQoutePrefix" ColumnName="Settings_ConcurrentQoutePrefix" />
+                <ScalarProperty Name="Settings_SalesHeaderNumberCount" ColumnName="Settings_SalesHeaderNumberCount" />
+                <ScalarProperty Name="Settings_ChangeSuggestionsInMinutes" ColumnName="Settings_ChangeSuggestionsInMinutes" />
+                <ScalarProperty Name="Settings_JnlGeneralBatchName" ColumnName="Settings_JnlGeneralBatchName" />
+                <ScalarProperty Name="Settings_DomainPassword" ColumnName="Settings_DomainPassword" />
+                <ScalarProperty Name="Settings_DomainUserName" ColumnName="Settings_DomainUserName" />
+                <ScalarProperty Name="Settings_DomainName" ColumnName="Settings_DomainName" />
+                <ScalarProperty Name="Settings_TransitLocation" ColumnName="Settings_TransitLocation" />
+                <ScalarProperty Name="Settings_PaymentOrderPrefix" ColumnName="Settings_PaymentOrderPrefix" />
+                <ScalarProperty Name="Settings_RespEmployee" ColumnName="Settings_RespEmployee" />
+                <ScalarProperty Name="Settings_JnlBatchName" ColumnName="Settings_JnlBatchName" />
+                <ScalarProperty Name="Settings_JnlTemplateName" ColumnName="Settings_JnlTemplateName" />
+                <ScalarProperty Name="Settings_SpecOrderPrefix" ColumnName="Settings_SpecOrderPrefix" />
+                <ScalarProperty Name="Settings_QoutePrefix" ColumnName="Settings_QoutePrefix" />
+                <ScalarProperty Name="Settings_ResponsibilityCenterName" ColumnName="Settings_ResponsibilityCenterName" />
+                <ScalarProperty Name="Settings_PosServiceUrl7" ColumnName="Settings_PosServiceUrl7" />
+                <ScalarProperty Name="Settings_PosServiceUrl6" ColumnName="Settings_PosServiceUrl6" />
+                <ScalarProperty Name="Settings_PosServiceUrl5" ColumnName="Settings_PosServiceUrl5" />
+                <ScalarProperty Name="Settings_PosServiceUrl4" ColumnName="Settings_PosServiceUrl4" />
+                <ScalarProperty Name="Settings_PosServiceUrl3" ColumnName="Settings_PosServiceUrl3" />
+                <ScalarProperty Name="Settings_PosServiceUrl2" ColumnName="Settings_PosServiceUrl2" />
+                <ScalarProperty Name="Settings_PosServiceUrl1" ColumnName="Settings_PosServiceUrl1" />
+                <ScalarProperty Name="Settings_PosServiceUrl" ColumnName="Settings_PosServiceUrl" />
+                <ScalarProperty Name="Settings_ShopPrintReceipt" ColumnName="Settings_ShopPrintReceipt" />
+                <ScalarProperty Name="Settings_ShopThanks" ColumnName="Settings_ShopThanks" />
+                <ScalarProperty Name="Settings_ShopReturnTerms" ColumnName="Settings_ShopReturnTerms" />
+                <ScalarProperty Name="Settings_ShopWebAddress" ColumnName="Settings_ShopWebAddress" />
+                <ScalarProperty Name="Settings_ShopTel" ColumnName="Settings_ShopTel" />
+                <ScalarProperty Name="Settings_ShopAddress" ColumnName="Settings_ShopAddress" />
+                <ScalarProperty Name="Settings_ShopName" ColumnName="Settings_ShopName" />
+                <ScalarProperty Name="Settings_ManagerName" ColumnName="Settings_ManagerName" />
+                <ScalarProperty Name="Settings_ManagerCode" ColumnName="Settings_ManagerCode" />
+                <ScalarProperty Name="Settings_DBVersion" ColumnName="Settings_DBVersion" />
+                <ScalarProperty Name="Settings_NavCompanyName" ColumnName="Settings_NavCompanyName" />
+                <ScalarProperty Name="Settings_NavSQLPass" ColumnName="Settings_NavSQLPass" />
+                <ScalarProperty Name="Settings_NavSQLUser" ColumnName="Settings_NavSQLUser" />
+                <ScalarProperty Name="Settings_NavSQLDatabase" ColumnName="Settings_NavSQLDatabase" />
+                <ScalarProperty Name="Settings_NavSQLServer" ColumnName="Settings_NavSQLServer" />
+                <ScalarProperty Name="Settings_DiplomaticCustomerCode" ColumnName="Settings_DiplomaticCustomerCode" />
+                <ScalarProperty Name="Settings_GenCustomerCode" ColumnName="Settings_GenCustomerCode" />
+                <ScalarProperty Name="Settings_ReturnHeaderPrefix" ColumnName="Settings_ReturnHeaderPrefix" />
+                <ScalarProperty Name="Settings_SalesHeaderPrefix" ColumnName="Settings_SalesHeaderPrefix" />
+                <ScalarProperty Name="Settings_Location" ColumnName="Settings_Location" />
+                <ScalarProperty Name="Settings_ResponsibilityCenter" ColumnName="Settings_ResponsibilityCenter" />
+                <ScalarProperty Name="Settings_SalesPersonName" ColumnName="Settings_SalesPersonName" />
+                <ScalarProperty Name="Settings_SalesPersonCode" ColumnName="Settings_SalesPersonCode" />
+                <ScalarProperty Name="Settings_No" ColumnName="Settings_No" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

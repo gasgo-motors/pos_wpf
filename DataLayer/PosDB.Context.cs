@@ -81,7 +81,6 @@ namespace DataLayer
         public virtual DbSet<ItemVehicleGroup> ItemVehicleGroups { get; set; }
         public virtual DbSet<VehicleGroup> VehicleGroups { get; set; }
         public virtual DbSet<GenJournalLine> GenJournalLines { get; set; }
-        public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<VehicleModel> VehicleModels { get; set; }
         public virtual DbSet<Vehicle> Vehicles { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
@@ -89,6 +88,7 @@ namespace DataLayer
         public virtual DbSet<StockkeepingUnit> StockkeepingUnits { get; set; }
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<ItemsView> ItemsViews { get; set; }
+        public virtual DbSet<Setting> Settings { get; set; }
     
         public virtual ObjectResult<ItemsViewProcedure_Result> ItemsViewProcedure(string customerCode, string customerGroup, string locationCode)
         {

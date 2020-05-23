@@ -254,6 +254,11 @@
                     <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_RsServicePassword, Mode=TwoWay}"  />
                 </Grid>
 
+                <Grid Style="{StaticResource GridSetting}" x:Name="Settings_Printers">
+                    <Label  HorizontalAlignment="Left" Width="245" FontSize="16" BorderBrush="LightGray" BorderThickness="1" Background="White"  Content="Settings_Printers" />
+                    <TextBox  HorizontalAlignment="Right" Width="227"  Text="{Binding CurrentSettings.Settings_Printers, Mode=TwoWay}"  />
+                </Grid>
+
 
             </WrapPanel>
         </ScrollViewer>
