@@ -81,8 +81,9 @@ namespace DataLayer
                 ,[Variant Code]
                 ,[Shelf No_]
                 ,[Shelf No_ AS]
-  FROM [dbo].[{0}$Stockkeeping Unit]";
-            s = string.Format(s, setting.Settings_NavCompanyName);
+  FROM [dbo].[{0}$Stockkeeping Unit]
+  WHERE [Location Code] = '{1}'";
+            s = string.Format(s, setting.Settings_NavCompanyName, setting.Settings_Location);
             return fillDataTable(s, ref errorMessage, ref result);
         }
 
