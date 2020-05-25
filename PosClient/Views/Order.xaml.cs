@@ -346,16 +346,6 @@ namespace PosClient.Views
 
                 result = memoryStream.ToArray();
 
-                if (!string.IsNullOrEmpty(App.Current.PosSetting.Settings_Printers))
-                {
-
-                    foreach (var printerName in App.Current.PosSetting.Settings_Printers.Split(',').ToList())
-                    {
-                        printToPrinter(printerName, result);
-                    }
-                    return;
-                }
-
 
                 pdfWebViewer.NavigateToStream(memoryStream);
             }
@@ -365,19 +355,28 @@ namespace PosClient.Views
             var fileName = $@"C:\wr\check_{order.No_}_{Guid.NewGuid()}.pdf";
             File.WriteAllBytes(fileName, result);
 
-            pdfWebViewer.Navigate(fileName);
+            
 
-            // pdfWebViewer.Visibility = Visibility.Visible;
+            if (!string.IsNullOrEmpty(App.Current.PosSetting.Settings_Printers))
+            {
+
+                foreach (var printerName in App.Current.PosSetting.Settings_Printers.Split(',').ToList())
+                {
+                    printToPrinter(printerName, fileName);
+                }
+                return;
+            }
+            else
+                pdfWebViewer.Navigate(fileName);
+
 
         }
 
-        private void printToPrinter(string printerName, byte[] bits)
+        private void printToPrinter(string printerName, string filePath)
         {
-            using (var memoryStream = new MemoryStream(bits))
-            {
+
                 IPrinter printer = new Printer();
-                printer.PrintRawStream(printerName, memoryStream, "print.pdf");
-            }
+                printer.PrintRawFile(printerName, filePath, "print");
         }
 
 
