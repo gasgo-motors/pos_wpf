@@ -29,6 +29,7 @@ using iText.IO.Font.Constants;
 using iText.IO.Font;
 using iText.Kernel.Pdf.Canvas.Draw;
 using System.Drawing.Printing;
+using System.Threading;
 using RawPrint;
 
 namespace PosClient.Views
@@ -311,7 +312,7 @@ namespace PosClient.Views
                 document.Add(new Paragraph(order.Ship_toAddress));
                 document.Add(new Paragraph(order.PostingDate.HasValue ? order.PostingDate.Value.ToString("dd/MM/yyyy HH:mm") : ""));
                 document.Add(new Paragraph(order.No_));
-
+                
                 document.Add(new LineSeparator(new DashedLine()));
 
                 Table table = new Table(UnitValue.CreatePercentArray(new float[] { 1, 12,6 }))
@@ -363,6 +364,7 @@ namespace PosClient.Views
                 foreach (var printerName in App.Current.PosSetting.Settings_Printers.Split(',').ToList())
                 {
                     printToPrinter(printerName, fileName);
+                    Thread.Sleep(4000);
                 }
                 return;
             }
@@ -375,8 +377,15 @@ namespace PosClient.Views
         private void printToPrinter(string printerName, string filePath)
         {
 
-                IPrinter printer = new Printer();
-                printer.PrintRawFile(printerName, filePath, "print");
+            //IPrinter printer = new Printer();
+            //printer.PrintRawFile(printerName, filePath, "print");
+            Spire.Pdf.PdfDocument pdfdocument = new Spire.Pdf.PdfDocument();
+            pdfdocument.LoadFromFile(filePath);
+            pdfdocument.PrinterName = printerName;
+            //pdfdocument.war
+            pdfdocument.PrintDocument.PrinterSettings.Copies = 1;
+            pdfdocument.PrintDocument.Print();
+            pdfdocument.Dispose();
         }
 
 
