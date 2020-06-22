@@ -310,7 +310,7 @@ namespace PosClient.Views
                 PdfFont sylfaenfont = PdfFontFactory.CreateFont(@"c:\\windows\fonts\Sylfaen.ttf", PdfEncodings.IDENTITY_H);
                 document.SetFont(sylfaenfont);
                 document.Add(new Paragraph("შპს გასგო მოტორსი"));
-                document.Add(new Paragraph(order.Ship_toAddress));
+                document.Add(new Paragraph(order.Ship_toAddress != null ? order.Ship_toAddress : "" ));
                 document.Add(new Paragraph(order.PostingDate.HasValue ? order.PostingDate.Value.ToString("dd/MM/yyyy HH:mm") : ""));
                 document.Add(new Paragraph(order.No_));
                 

@@ -964,7 +964,7 @@ namespace PosClient.ViewModels
                     }
                     else
                     {
-                        maxIndex++;
+                        maxIndex+=100;
                         AddNewSalesLine(CreateSalesLine(item, maxIndex));
                     }
                 }
@@ -975,7 +975,7 @@ namespace PosClient.ViewModels
                 foreach (var item in SelectedItems)
                 {
 
-                    maxIndex++;
+                    maxIndex+=100;
                     AddNewSalesLine(CreateSalesLine(item, maxIndex));
 
                 }

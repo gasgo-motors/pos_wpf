@@ -350,7 +350,7 @@ namespace PosClient.ViewModels
                         Order.CurrentCustomer.CustomerPriceGroup);
                     if (price == null)
                         price = item.UnitPrice;
-                    var ind = SalesLines != null && SalesLines.Count() > 0 ? SalesLines.Max(i => i.LineNo_) + 1 : 1;
+                    var ind = SalesLines != null && SalesLines.Count() > 0 ? SalesLines.Max(i => i.LineNo_) + 100 : 100;
                     var nl = new SalesLine
                     {
                         DocumentNo_ = Order.No_,
