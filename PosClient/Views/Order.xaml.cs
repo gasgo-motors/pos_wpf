@@ -305,8 +305,8 @@ namespace PosClient.Views
             {
                 var pdfWriter = new PdfWriter(memoryStream);
                 var pdfDocument = new PdfDocument(pdfWriter);
-                var document = new Document(pdfDocument, new PageSize(250, 500) ); //  , PageSize.A4, true);
-                document.SetMargins(5, 5, 5, 5);
+                var document = new Document(pdfDocument, new PageSize(270, 500) ); //  , PageSize.A4, true);
+                document.SetMargins(2, 2, 2, 2);
                 PdfFont sylfaenfont = PdfFontFactory.CreateFont(@"c:\\windows\fonts\Sylfaen.ttf", PdfEncodings.IDENTITY_H);
                 document.SetFont(sylfaenfont);
                 document.Add(new Paragraph("შპს გასგო მოტორსი"));
@@ -343,8 +343,10 @@ namespace PosClient.Views
                 DashedLine line = new DashedLine();
                 document.Add(new LineSeparator(line));
 
-                document.Add(new Paragraph($"ჯამი    {order.AmountIncludingVat:F2} ₾").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetFontSize(15).SetBold() );
-                                document.Close();
+                document.Add(new Paragraph($"ჯამი    {order.AmountIncludingVat:F2} ₾").SetTextAlignment(iText.Layout.Properties.TextAlignment.RIGHT).SetFontSize(15).SetBold().SetMarginBottom(20) );
+
+
+                document.Close();
 
                 result = memoryStream.ToArray();
 
@@ -369,8 +371,8 @@ namespace PosClient.Views
 
                 foreach (var printerName in App.Current.PosSetting.Settings_Printers.Split(',').ToList())
                 {
-                    //printToPrinter(printerName, fileName);
-                    print1(printerName, fileName);
+                    printToPrinter(printerName, fileName);
+                    //print1(printerName, fileName);
                     Thread.Sleep(4000);
                 }
                 return;
@@ -417,9 +419,9 @@ namespace PosClient.Views
             // Set printer name
             ps.PrinterName = prtdoc.PrinterSettings.PrinterName;
             // Set PageSize (if required)
-            pgs.PaperSize = new System.Drawing.Printing.PaperSize("Custom", 350, 1000);
+            pgs.PaperSize = new System.Drawing.Printing.PaperSize("Custom", 280, 826);
             // Set PageMargins (if required)
-            pgs.Margins = new System.Drawing.Printing.Margins(0, 0, 100, 200);
+            pgs.Margins = new System.Drawing.Printing.Margins(0, 0, 0, 0);
             // ExStart:PrintDialog
             //System.Windows.Forms.PrintDialog printDialog = new System.Windows.Forms.PrintDialog();
             //if (printDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
