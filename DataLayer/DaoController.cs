@@ -488,7 +488,7 @@ namespace DataLayer
                     AreaCode = customer.AreaCode,
                     Mobile_ = customer.Mobile_,
                     Customer_Posting_Group = customer.Customer_Posting_Group,
-                    
+
                 };
                 e.Customers.Remove(customer);
                 e.Customers.Add(ncst);
@@ -774,6 +774,8 @@ namespace DataLayer
                     Manufacturer u = new Manufacturer();
                     u.Code = r["Code"].ToString();
                     u.Name = r["Name"].ToString();
+                    u.Type = (int)r["Type"];
+                    u.Picture = GetBytesnullFromDataColumn(r["Picture"]);
                     e.Manufacturers.Add(u);
                 }
                 e.SaveChanges();
@@ -861,6 +863,7 @@ namespace DataLayer
                     b.PromotedItem = (bool)(r["Promoted Item"].ToString() == "1");
                     b.ItemType = (int)r["Type"];
                     b.Sorting_Number = r["Sorting Number"].ToString();
+                    b.ItemCreationDate = GetDateTimenullFromDataColumn(r["Item Creation Date"]);
                     itemsList.Add(b);
                     //e.Items.Add(b);
                 }
@@ -1060,6 +1063,24 @@ namespace DataLayer
                 e.SaveChanges();
             }
         }
+
+        public bool ExistsItemPictures(string itemNo, int no)
+        {
+            using (var e = new POSWR1Entities())
+            {
+                return e.ItemPictures.Any(i => i.ItemNo_ == itemNo && i.PictureNo_ == no);
+            }
+        }
+
+        public Dictionary<Tuple<string,int>, Tuple<string, int>> GetItemPicturesIds()
+        {
+            using (var e = new POSWR1Entities())
+            {
+                var res =  e.ItemPictures.Select(i => new { i.ItemNo_, i.PictureNo_ }).ToList().ToDictionary(i => Tuple.Create(i.ItemNo_, i.PictureNo_), i => Tuple.Create(i.ItemNo_, i.PictureNo_));
+                return res;
+            }
+        }
+
 
         public void SyncItemPictures(DataTable dt)
         {
@@ -1948,7 +1969,7 @@ namespace DataLayer
                        e.PaymentSchedules.Where(j => j.Date == cdate && j.CustomerNo == i.No_).Sum(j => j.Amount),
                     Addres1 = e.Ship_to_Address.Where(j => j.CustomerNo_ == i.No_).Min(j => j.Address),
                     City1 = e.Ship_to_Address.Where(j => j.CustomerNo_ == i.No_).Min(j => j.City)
-                    
+
                 }).ToList();
                 return list.Select(i => new Customer
                 {
@@ -1986,9 +2007,9 @@ namespace DataLayer
                     Address1 = !string.IsNullOrEmpty(i.Addres1) ? i.Addres1 : i.Address,
                     City1 = !string.IsNullOrEmpty(i.City1) ? i.City1 : i.City,
                     AreaCode = i.AreaCode,
-                    Mobile_= i.Mobile_,
+                    Mobile_ = i.Mobile_,
                     Customer_Posting_Group = i.Customer_Posting_Group
-                    
+
                 }).ToList();
             }
         }
@@ -2201,7 +2222,7 @@ namespace DataLayer
 
                     string newDuraction = (DateTime.Now - date).Minutes + ":" + (DateTime.Now - date).Seconds;
 
-                    string[] orderDuractionSplit =  !string.IsNullOrEmpty(header.OrderDuraction) ? header.OrderDuraction.Split(':') : new string[] { "0", "0"};
+                    string[] orderDuractionSplit = !string.IsNullOrEmpty(header.OrderDuraction) ? header.OrderDuraction.Split(':') : new string[] { "0", "0" };
                     string[] newDuractionSplit = newDuraction.Split(':');
 
                     int minutes = Int32.Parse(orderDuractionSplit[0]) + Int32.Parse(newDuractionSplit[0]);
@@ -2301,7 +2322,7 @@ namespace DataLayer
                             });
                         }
                     }
-                    else if(!(qItem != null && qItem.ItemType == 1))
+                    else if (!(qItem != null && qItem.ItemType == 1))
                     {
                         AddItemLedgerEntry(new ItemLedgerEntry()
                         {
@@ -3193,14 +3214,14 @@ namespace DataLayer
                     Vehicle a = new Vehicle();
                     a.Vehicle_No_ = r["Vehicle No_"].ToString();
                     a.Model = r["Model"].ToString();
-                    a.Owner_No_= r["Owner No_"].ToString();
+                    a.Owner_No_ = r["Owner No_"].ToString();
                     a.Owner_Name = r["Owner Name"].ToString();
 
-                    a.Ownership = int.Parse( r["Ownership"].ToString() );
+                    a.Ownership = int.Parse(r["Ownership"].ToString());
                     a.Registration_No_ = r["Registration No_"].ToString();
                     a.Trail_Registration_No_ = r["Trail Registration No_"].ToString();
                     a.Tranzit_Location_Code = r["Tranzit Location Code"].ToString();
-                    a.Type = int.Parse( r["Type"].ToString() ) ;
+                    a.Type = int.Parse(r["Type"].ToString());
                     a.Driver_Code = r["Driver Code"].ToString();
                     a.Driver_Name = r["Driver Name"].ToString();
                     a.Driver_ID = r["Driver ID"].ToString();
@@ -3250,5 +3271,139 @@ namespace DataLayer
 
             }
         }
+
+
+        public void SyncCompanyInformation(DataTable dt)
+        {
+            using (var e = new POSWR1Entities())
+            {
+                e.Database.ExecuteSqlCommand("delete from dbo.CompanyInformation");
+                foreach (DataRow r in dt.Rows)
+                {
+                    CompanyInformation c = new CompanyInformation
+                    {
+                        Address = r["Address"].ToString(),
+                        EMail = r["E-Mail"].ToString(),
+                        Name = r["Name"].ToString(),
+                        Primary_Key = r["Primary Key"].ToString(),
+                        Picture = GetBytesnullFromDataColumn(r["Picture"])
+                    };
+                    e.CompanyInformations.Add(c);
+                }
+                e.SaveChanges();
+            }
+        }
+
+        public void SyncSavedItemsForLaterSales(DataTable dt)
+        {
+            using (var e = new POSWR1Entities())
+            {
+                e.Database.ExecuteSqlCommand("delete from dbo.SavedItemsForLaterSales");
+                foreach (DataRow r in dt.Rows)
+                {
+                    SavedItemsForLaterSale c = new SavedItemsForLaterSale
+                    {
+                        ItemNo = r["Item No"].ToString(),
+                        CustomerNo = r["Customer No"].ToString(),
+                        CreationDate = GetDateTimeFromDataColumn(r["Creation Date"])
+                    };
+                    e.SavedItemsForLaterSales.Add(c);
+                }
+                e.SaveChanges();
+            }
+        }
+
+
+        public void SyncItemLedgerEntriesFull(DataTable dt)
+        {
+            using (var e = new POSWR1Entities())
+            {
+                e.Database.ExecuteSqlCommand("truncate table dbo.ItemLedgerEntryFull");
+                foreach (DataRow r in dt.Rows)
+                {
+                    var c = new ItemLedgerEntryFull
+                    {
+                        DocumentType = (int)r["Document Type"],
+                        EntryType = (int)r["Entry Type"],
+                        ItemNo = r["Item No_"].ToString(),
+                        BaseInvoiceNoIsC = r["bi"].ToString() == "1",
+                        LocationCode = r["Location Code"].ToString(),
+                        Quantity = GetDecimalnullFromDataColumn(r["qntity"]),
+                        PostingDate = GetDateTimenullFromDataColumn(r["pdate"])
+                    };
+                    e.ItemLedgerEntryFulls.Add(c);
+                }
+                e.SaveChanges();
+            }
+        }
+
+
+        //public void SyncStockKeepingUnit(DataTable dt)
+        //{
+        //    using (var e = new POSWR1Entities())
+        //    {
+        //        e.Database.ExecuteSqlCommand("delete from [dbo].[StockkeepingUnit]");
+        //        foreach (DataRow r in dt.Rows)
+        //        {
+        //            StockkeepingUnit s = new StockkeepingUnit();
+        //            s.Location_Code = r["Location Code"].ToString();
+        //            s.Item_No_ = r["Item No_"].ToString();
+        //            s.Variant_Code = r["Variant Code"].ToString();
+        //            s.Shelf_No_ = r["Shelf No_"].ToString();
+        //            s.Unit_Cost = (decimal)r["Unit Cost"];
+        //            s.Standard_Cost = (decimal)r["Standard Cost"];
+        //            s.Last_Direct_Cost = (decimal)r["Last Direct Cost"];
+        //            s.Vendor_No_ = r["Vendor No_"].ToString();
+        //            s.Vendor_Item_No_ = r["Vendor Item No_"].ToString();
+        //            s.Lead_Time_Calculation = r["Lead Time Calculation"].ToString();
+        //            s.Reorder_Point = (decimal)r["Reorder Point"];
+        //            s.Maximum_Inventory = (decimal)r["Maximum Inventory"];
+        //            s.Reorder_Quantity = (decimal)r["Reorder Quantity"];
+        //            s.Last_Date_Modified = GetDateTimeFromDataColumn(r["Last Date Modified"]);
+        //            s.Assembly_Policy = (int)r["Assembly Policy"];
+        //            s.Transfer_Level_Code = (int)r["Transfer-Level Code"];
+        //            s.Lot_Size = (decimal)r["Lot Size"];
+        //            s.Discrete_Order_Quantity = (int)r["Discrete Order Quantity"];
+        //            s.Maximum_Order_Quantity = (decimal)r["Minimum Order Quantity"];
+        //            s.Minimum_Order_Quantity = (decimal)r["Maximum Order Quantity"];
+        //            s.Safety_Stock_Quantity = (decimal)r["Safety Stock Quantity"];
+        //            s.Order_Multiple = (decimal)r["Order Multiple"];
+        //            s.Safety_Lead_Time = r["Safety Lead Time"].ToString();
+        //            s.Components_at_Location = r["Components at Location"].ToString();
+        //            s.Flushing_Method = (int)r["Flushing Method"];
+        //            s.Replenishment_System = (int)r["Replenishment System"];
+        //            s.Time_Bucket = r["Time Bucket"].ToString();
+        //            s.Reordering_Policy = (int)r["Reordering Policy"];
+        //            s.Include_Inventory = (byte)r["Include Inventory"];
+        //            s.Manufacturing_Policy = (int)r["Manufacturing Policy"];
+        //            s.Rescheduling_Period = r["Rescheduling Period"].ToString();
+        //            s.Lot_Accumulation_Period = r["Lot Accumulation Period"].ToString();
+        //            s.Dampener_Period = r["Dampener Period"].ToString();
+        //            s.Dampener_Quantity = (decimal)r["Dampener Quantity"];
+        //            s.Overflow_Level = (decimal)r["Overflow Level"];
+        //            s.Transfer_from_Code = r["Transfer-from Code"].ToString();
+        //            s.Special_Equipment_Code = r["Special Equipment Code"].ToString();
+        //            s.Put_away_Template_Code = r["Put-away Template Code"].ToString();
+        //            s.Put_away_Unit_of_Measure_Code = r["Put-away Unit of Measure Code"].ToString();
+        //            s.Phys_Invt_Counting_Period_Code = r["Phys Invt Counting Period Code"].ToString();
+        //            s.Last_Counting_Period_Update = GetDateTimeFromDataColumn(r["Last Counting Period Update"]);
+        //            s.Use_Cross_Docking = (byte)r["Use Cross-Docking"];
+        //            s.Next_Counting_Start_Date = GetDateTimeFromDataColumn(r["Next Counting Start Date"]);
+        //            s.Next_Counting_End_Date = GetDateTimeFromDataColumn(r["Next Counting End Date"]);
+        //            s.Shelf_No__AS = r["Shelf No_ AS"].ToString();
+
+        //            e.StockkeepingUnits.Add(s);
+        //        }
+        //        //try
+        //        //{
+        //        e.SaveChanges();
+        //        //}
+        //        //catch(DbEntityValidationException ex)
+        //        //{
+
+        //        //}
+
+        //    }
+        //}
     }
 }

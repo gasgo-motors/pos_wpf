@@ -181,8 +181,11 @@ namespace DataLayer
 
         public bool getManufacturer(ref string errorMessage, ref DataTable result)
         {
-            string s = String.Format(@"SELECT [Code]
+            string s = String.Format(@"SELECT 
+                     [Code]
                     ,[Name]
+                    ,[Type]
+                    ,[Picture]
                     FROM [dbo].[{0}$Manufacturer]", setting.Settings_NavCompanyName);
             return fillDataTable(s, ref errorMessage, ref result);
         }
@@ -285,19 +288,19 @@ GROUP BY [Item No_]";
             return fillDataTable(s, ref errorMessage, ref result);
         }
 
-        public decimal getItemLedgerEntryQuantity(string ItemNo, ref string errorMessage)
-        {
-            DataTable dt = null;
+        //        public decimal getItemLedgerEntryQuantity(string ItemNo, ref string errorMessage)
+        //        {
+        //            DataTable dt = null;
 
-            string s = @"SELECT SUM([Quantity]) AS quantity 
-FROM [dbo].[{0}$Item Ledger Entry] 
-WHERE [Location Code] = '{1}' AND [Item No_] = '{2}'";
-            s = string.Format(s, setting.Settings_NavCompanyName, setting.Settings_Location, ItemNo);
-            fillDataTable(s, ref errorMessage, ref dt);
-            if (dt.Rows.Count > 0 && dt.Rows[0]["quantity"] != DBNull.Value)
-                return (decimal)dt.Rows[0]["quantity"];
-            return 0;
-        }
+        //            string s = @"SELECT SUM([Quantity]) AS quantity 
+        //FROM [dbo].[{0}$Item Ledger Entry] 
+        //WHERE [Location Code] = '{1}' AND [Item No_] = '{2}'";
+        //            s = string.Format(s, setting.Settings_NavCompanyName, setting.Settings_Location, ItemNo);
+        //            fillDataTable(s, ref errorMessage, ref dt);
+        //            if (dt.Rows.Count > 0 && dt.Rows[0]["quantity"] != DBNull.Value)
+        //                return (decimal)dt.Rows[0]["quantity"];
+        //            return 0;
+        //        }
 
         public bool getItemLedgerEntryQuantityA(ref string errorMessage, ref DataTable result)
         {
@@ -387,6 +390,7 @@ WHERE [Location Code] = '{1}' GROUP BY [Item No_]";
 ,[Promoted Item]
 ,[Type]
 ,[Sorting Number]
+,[Item Creation Date]
 FROM [dbo].[{0}$Item]
 WHERE[No_] = '{1}'";
             s = string.Format(s, setting.Settings_NavCompanyName, item_no);
@@ -420,6 +424,7 @@ WHERE[No_] = '{1}'";
 ,[Promoted Item]
 ,[Type]
 ,[Sorting Number]
+,[Item Creation Date]
 FROM [dbo].[{0}$Item]
 where [Manufacturing Policy] = 0";
             s = string.Format(s, setting.Settings_NavCompanyName);
@@ -453,8 +458,9 @@ where [Manufacturing Policy] = 0";
 ,[Promoted Item]
 ,[Type]
 ,[Sorting Number]
+,[Item Creation Date]
 FROM [dbo].[{0}$Item] where [Type] in ({1}) ";
-            s = string.Format(s, setting.Settings_NavCompanyName, string.Join(",",types )  );
+            s = string.Format(s, setting.Settings_NavCompanyName, string.Join(",", types));
             return fillDataTable(s, ref errorMessage, ref result);
         }
 
@@ -487,6 +493,7 @@ FROM [dbo].[{0}$Item] where [Type] in ({1}) ";
 ,[Promoted Item]
 ,[Type]
 ,[Sorting Number]
+,[Item Creation Date]
 FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS'";
             s = string.Format(s, setting.Settings_NavCompanyName);
             return fillDataTable(s, ref errorMessage, ref result);
@@ -519,6 +526,7 @@ FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS'";
 ,[Promoted Item]
 ,[Type]
 ,[Sorting Number]
+,[Item Creation Date]
 FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS' or [Gen_ Prod_ Posting Group] = 'AUTOSERV'";
             s = string.Format(s, setting.Settings_NavCompanyName);
             return fillDataTable(s, ref errorMessage, ref result);
@@ -552,6 +560,7 @@ FROM [dbo].[{0}$Item] WHERE [Gen_ Prod_ Posting Group] = 'AUTO PARTS' or [Gen_ P
 ,[Promoted Item]
 ,[Type]
 ,[Sorting Number]
+,[Item Creation Date]
 FROM [dbo].[{0}$Item]
 where [No_] in ( {1}   )
 ";
@@ -560,13 +569,13 @@ where [No_] in ( {1}   )
         }
 
 
-        public bool getAllItems(ref string errorMessage, ref DataTable result)
-        {
-            string s = @"SELECT [No_]
-FROM [dbo].[{0}$Item]";
-            s = string.Format(s, setting.Settings_NavCompanyName);
-            return fillDataTable(s, ref errorMessage, ref result);
-        }
+//        public bool getAllItems(ref string errorMessage, ref DataTable result)
+//        {
+//            string s = @"SELECT [No_]
+//FROM [dbo].[{0}$Item]";
+//            s = string.Format(s, setting.Settings_NavCompanyName);
+//            return fillDataTable(s, ref errorMessage, ref result);
+//        }
 
         public bool getItemCrossReferences(ref string errorMessage, string item_no, ref DataTable result)
         {
@@ -884,16 +893,16 @@ FROM [dbo].[{0}$Item Item]";
             return fillDataTable(s, ref errorMessage, ref result);
         }
 
-        public bool getProjectedItemTransits(ref string errorMessage, string item_no, ref DataTable result)
-        {
-            string s = @"SELECT  SUM([Remaining Quantity]) AS ItemQuantity
-		,[Item No_],[Posting Date]
-  FROM [dbo].[{0}$Item Ledger Entry]
-  WHERE [Entry Type] = 0 AND [Location Code] = '{2}' AND [Open] = 1 AND [Item No_] = '{1}'
-  GROUP BY [Item No_], [Posting Date]";
-            s = string.Format(s, setting.Settings_NavCompanyName, item_no, setting.Settings_TransitLocation);
-            return fillDataTable(s, ref errorMessage, ref result);
-        }
+        //      public bool getProjectedItemTransits(ref string errorMessage, string item_no, ref DataTable result)
+        //      {
+        //          string s = @"SELECT  SUM([Remaining Quantity]) AS ItemQuantity
+        //,[Item No_],[Posting Date]
+        //FROM [dbo].[{0}$Item Ledger Entry]
+        //WHERE [Entry Type] = 0 AND [Location Code] = '{2}' AND [Open] = 1 AND [Item No_] = '{1}'
+        //GROUP BY [Item No_], [Posting Date]";
+        //          s = string.Format(s, setting.Settings_NavCompanyName, item_no, setting.Settings_TransitLocation);
+        //          return fillDataTable(s, ref errorMessage, ref result);
+        //      }
 
         public bool getProjectedItemTransitsA(ref string errorMessage, ref DataTable result)
         {
@@ -926,6 +935,9 @@ FROM [dbo].[{0}$Item Item]";
 ,[Payment Method Code]
 ,[Prices Including VAT]
 ,[VAT Registration No_]
+,
+(select top 1 [Shipping Week Days] FROM [dbo].[{0}$Salesperson Ship-to Address] s where [Customer No_] =  [No_] AND s.[Shipping Agent Code] = '{1}' ) [Visit Week Days]
+
 FROM [dbo].[{0}$Customer]
 WHERE [Salesperson Code] = '{1}'";
             s = string.Format(s, setting.Settings_NavCompanyName, setting.Settings_SalesPersonCode);
@@ -1407,6 +1419,42 @@ GROUP BY [Global Dimension 2 Code]";
         *
   FROM [dbo].[{0}$Dimension Value] where [Dimension Value Type] = 0 and ISNUMERIC(Code) > 0 AND [Dimension Code] = 'AREA'";
             s = string.Format(s, setting.Settings_NavCompanyName);
+            return fillDataTable(s, ref errorMessage, ref result);
+        }
+
+
+        public bool getCompanyInformation(ref string errorMessage, ref DataTable result)
+        {
+            string s = String.Format(@"SELECT 
+      [Primary Key]
+      ,[Name]
+      ,[Address]
+      ,[Picture]
+      ,[E-Mail]
+  FROM [dbo].[{0}$Company Information]", setting.Settings_NavCompanyName);
+            return fillDataTable(s, ref errorMessage, ref result);
+        }
+
+        public bool GetSavedItemsForLaterSales(ref string errorMessage, ref DataTable result)
+        {
+            string s = String.Format(@"SELECT distinct 
+       [Item No]
+      ,[Customer No]
+      ,[Creation Date]
+  FROM [dbo].[{0}$Saved Items for Later Sales]", setting.Settings_NavCompanyName);
+            return fillDataTable(s, ref errorMessage, ref result);
+        }
+
+        public bool getItemLedgerEntriesFull(ref string errorMessage, ref DataTable result)
+        {
+            var s = string.Format(@"select t.[Document Type] , t.[Entry Type], t.[Item No_], 
+	   case when t.[Base Invoice No_] like 'C%' then 1 else 0 end as bi, 
+	   t.[Location Code],
+SUM(t.Quantity) as qntity, max(t.[Posting Date]) as pdate
+from dbo.[{0}$Item Ledger Entry] t 
+where t.[Location Code] = '{1}' 
+group by t.[Document Type] , t.[Entry Type], t.[Item No_], case when t.[Base Invoice No_] like 'C%' then 1 else 0 end, t.[Location Code]", 
+setting.Settings_NavCompanyName, setting.Settings_Location);
             return fillDataTable(s, ref errorMessage, ref result);
         }
 

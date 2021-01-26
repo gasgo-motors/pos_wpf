@@ -12,11 +12,15 @@ namespace DataLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Manufacturer
+    public partial class ItemLedgerEntryFull
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> Type { get; set; }
-        public byte[] Picture { get; set; }
+        public int Id { get; set; }
+        public int DocumentType { get; set; }
+        public int EntryType { get; set; }
+        public string ItemNo { get; set; }
+        public bool BaseInvoiceNoIsC { get; set; }
+        public string LocationCode { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
+        public Nullable<System.DateTime> PostingDate { get; set; }
     }
 }

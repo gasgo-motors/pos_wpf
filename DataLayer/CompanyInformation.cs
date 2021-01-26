@@ -12,11 +12,12 @@ namespace DataLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class Manufacturer
+    public partial class CompanyInformation
     {
-        public string Code { get; set; }
+        public string Primary_Key { get; set; }
         public string Name { get; set; }
-        public Nullable<int> Type { get; set; }
+        public string Address { get; set; }
         public byte[] Picture { get; set; }
+        public string EMail { get; set; }
     }
 }

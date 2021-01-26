@@ -55,5 +55,8 @@ namespace DataLayer
         public string ModifiedUser { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string PostingDescription { get; set; }
+        public Nullable<System.DateTime> OrderStartDate { get; set; }
+        public Nullable<System.DateTime> OrderClosedDate { get; set; }
+        public string OrderDuraction { get; set; }
     }
 }

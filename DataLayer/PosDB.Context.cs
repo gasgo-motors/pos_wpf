@@ -89,6 +89,9 @@ namespace DataLayer
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<ItemsView> ItemsViews { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
+        public virtual DbSet<CompanyInformation> CompanyInformations { get; set; }
+        public virtual DbSet<SavedItemsForLaterSale> SavedItemsForLaterSales { get; set; }
+        public virtual DbSet<ItemLedgerEntryFull> ItemLedgerEntryFulls { get; set; }
     
         public virtual ObjectResult<ItemsViewProcedure_Result> ItemsViewProcedure(string customerCode, string customerGroup, string locationCode)
         {

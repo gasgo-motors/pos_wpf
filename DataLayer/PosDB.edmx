@@ -93,6 +93,16 @@
           <Property Name="IsNew" Type="bit" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="CompanyInformation">
+          <Key>
+            <PropertyRef Name="Primary Key" />
+          </Key>
+          <Property Name="Primary Key" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Picture" Type="varbinary(max)" />
+          <Property Name="EMail" Type="nvarchar" MaxLength="80" Nullable="false" />
+        </EntityType>
         <EntityType Name="Country">
           <Key>
             <PropertyRef Name="Code" />
@@ -343,6 +353,7 @@
           <Property Name="Manufacturing Policy" Type="int" />
           <Property Name="ItemType" Type="int" />
           <Property Name="Sorting Number" Type="nvarchar" MaxLength="30" />
+          <Property Name="ItemCreationDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ItemCatalogue">
           <Key>
@@ -383,7 +394,7 @@
             <PropertyRef Name="Code" />
           </Key>
           <Property Name="Code" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="ItemCrossReference">
           <Key>
@@ -455,6 +466,19 @@
           <Property Name="LotNo_" Type="varchar" MaxLength="20" />
           <Property Name="ModifiedUserID" Type="uniqueidentifier" />
           <Property Name="ModifiedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ItemLedgerEntryFull">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DocumentType" Type="int" Nullable="false" />
+          <Property Name="EntryType" Type="int" Nullable="false" />
+          <Property Name="ItemNo" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="BaseInvoiceNoIsC" Type="bit" Nullable="false" />
+          <Property Name="LocationCode" Type="varchar" MaxLength="20" />
+          <Property Name="Quantity" Type="decimal" Precision="38" Scale="20" />
+          <Property Name="PostingDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ItemPicture">
           <Key>
@@ -563,6 +587,8 @@
           </Key>
           <Property Name="Code" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Picture" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="PaymentMethod">
           <Key>
@@ -584,6 +610,8 @@
           <Property Name="Date" Type="date" />
           <Property Name="Amount" Type="decimal" Precision="38" Scale="20" />
           <Property Name="RemeiningAmount" Type="decimal" Precision="38" Scale="20" />
+          <Property Name="ModifiedUserID" Type="uniqueidentifier" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="POSMessageEntry">
           <Key>
@@ -700,6 +728,9 @@
           <Property Name="ModifiedUser" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="PostingDescription" Type="nvarchar" MaxLength="200" />
+          <Property Name="OrderStartDate" Type="datetime" />
+          <Property Name="OrderClosedDate" Type="datetime" />
+          <Property Name="OrderDuraction" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="PostedSalesLine">
           <Key>
@@ -1080,6 +1111,15 @@
           <Property Name="ModifiedUserID" Type="uniqueidentifier" />
           <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="SavedItemsForLaterSales">
+          <Key>
+            <PropertyRef Name="ItemNo" />
+            <PropertyRef Name="CustomerNo" />
+          </Key>
+          <Property Name="ItemNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CustomerNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Settings">
           <Key>
             <PropertyRef Name="Settings_No" />
@@ -1138,6 +1178,8 @@
           <Property Name="Settings_RsServiceUsername" Type="nvarchar" MaxLength="50" />
           <Property Name="Settings_RsServicePassword" Type="nvarchar" MaxLength="50" />
           <Property Name="Settings_Printers" Type="nvarchar" MaxLength="50" />
+          <Property Name="Settings_CentralLocation" Type="nvarchar" MaxLength="50" />
+          <Property Name="Settings_ItemCountMax" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ShippingAgent">
           <Key>
@@ -1347,6 +1389,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="BankAccount" EntityType="Self.BankAccount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CampaignBasket" EntityType="Self.CampaignBasket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comment_Line" EntityType="Self.Comment_Line" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyInformation" EntityType="Self.CompanyInformation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeletedSalesHeader" EntityType="Self.DeletedSalesHeader" Schema="dbo" store:Type="Tables" />
@@ -1361,6 +1404,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="ItemCustomer" EntityType="Self.ItemCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemItem" EntityType="Self.ItemItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemLedgerEntry" EntityType="Self.ItemLedgerEntry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ItemLedgerEntryFull" EntityType="Self.ItemLedgerEntryFull" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemPicture" EntityType="Self.ItemPicture" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemSuggestions" EntityType="Self.ItemSuggestions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemUnitOfMeasure" EntityType="Self.ItemUnitOfMeasure" Schema="dbo" store:Type="Tables" />
@@ -1392,6 +1436,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="SalesLine" EntityType="Self.SalesLine" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salesperson/Purchaser" EntityType="Self.Salesperson/Purchaser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SalesPrice" EntityType="Self.SalesPrice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SavedItemsForLaterSales" EntityType="Self.SavedItemsForLaterSales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Settings" EntityType="Self.Settings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShippingAgent" EntityType="Self.ShippingAgent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ship-to-Address" EntityType="Self.Ship-to-Address" Schema="dbo" store:Type="Tables" />
@@ -1729,6 +1774,8 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           </Key>
           <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="PaymentMethod">
           <Key>
@@ -2008,6 +2055,9 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySet Name="Items" EntityType="POSModel.Item" />
           <EntitySet Name="ItemsViews" EntityType="POSModel.ItemsView" />
           <EntitySet Name="Settings" EntityType="POSModel.Setting" />
+          <EntitySet Name="CompanyInformations" EntityType="POSModel.CompanyInformation" />
+          <EntitySet Name="SavedItemsForLaterSales" EntityType="POSModel.SavedItemsForLaterSale" />
+          <EntitySet Name="ItemLedgerEntryFulls" EntityType="POSModel.ItemLedgerEntryFull" />
         </EntityContainer>
         <EntityType Name="ItemCrossReference">
           <Key>
@@ -2091,7 +2141,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
             <PropertyRef Name="Code" />
           </Key>
           <Property Name="Code" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProductGroup">
           <Key>
@@ -2133,6 +2183,8 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="Amount" Type="Decimal" Precision="38" Scale="20" />
           <Property Name="RemeiningAmount" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="ModifiedUserID" Type="Guid" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="SalesHeader">
           <Key>
@@ -2273,6 +2325,9 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="ModifiedUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="PostingDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OrderStartDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderClosedDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderDuraction" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ReleasedSalesHeader">
           <Key>
@@ -2785,6 +2840,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="Manufacturing_Policy" Type="Int32" />
           <Property Name="ItemType" Type="Int32" />
           <Property Name="Sorting_Number" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="ItemCreationDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="ItemsView">
           <Key>
@@ -2887,6 +2943,40 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <Property Name="Settings_RsServiceUsername" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Settings_RsServicePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Settings_Printers" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_CentralLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Settings_ItemCountMax" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="CompanyInformation">
+          <Key>
+            <PropertyRef Name="Primary_Key" />
+          </Key>
+          <Property Name="Primary_Key" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="EMail" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SavedItemsForLaterSale">
+          <Key>
+            <PropertyRef Name="ItemNo" />
+            <PropertyRef Name="CustomerNo" />
+          </Key>
+          <Property Name="ItemNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ItemLedgerEntryFull">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DocumentType" Type="Int32" Nullable="false" />
+          <Property Name="EntryType" Type="Int32" Nullable="false" />
+          <Property Name="ItemNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="BaseInvoiceNoIsC" Type="Boolean" Nullable="false" />
+          <Property Name="LocationCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="38" Scale="20" />
+          <Property Name="PostingDate" Type="DateTime" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -3175,6 +3265,8 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySetMapping Name="Manufacturers">
             <EntityTypeMapping TypeName="POSModel.Manufacturer">
               <MappingFragment StoreEntitySet="Manufacturer">
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
@@ -3503,6 +3595,8 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySetMapping Name="PaymentSchedules">
             <EntityTypeMapping TypeName="POSModel.PaymentSchedule">
               <MappingFragment StoreEntitySet="PaymentSchedule">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ModifiedUserID" ColumnName="ModifiedUserID" />
                 <ScalarProperty Name="RemeiningAmount" ColumnName="RemeiningAmount" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
@@ -3611,6 +3705,9 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySetMapping Name="PostedSalesHeaders">
             <EntityTypeMapping TypeName="POSModel.PostedSalesHeader">
               <MappingFragment StoreEntitySet="PostedSalesHeader">
+                <ScalarProperty Name="OrderDuraction" ColumnName="OrderDuraction" />
+                <ScalarProperty Name="OrderClosedDate" ColumnName="OrderClosedDate" />
+                <ScalarProperty Name="OrderStartDate" ColumnName="OrderStartDate" />
                 <ScalarProperty Name="PostingDescription" ColumnName="PostingDescription" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="ModifiedUser" ColumnName="ModifiedUser" />
@@ -4117,6 +4214,7 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySetMapping Name="Items">
             <EntityTypeMapping TypeName="POSModel.Item">
               <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="ItemCreationDate" ColumnName="ItemCreationDate" />
                 <ScalarProperty Name="Sorting_Number" ColumnName="Sorting Number" />
                 <ScalarProperty Name="ItemType" ColumnName="ItemType" />
                 <ScalarProperty Name="Manufacturing_Policy" ColumnName="Manufacturing Policy" />
@@ -4202,6 +4300,8 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
           <EntitySetMapping Name="Settings">
             <EntityTypeMapping TypeName="POSModel.Setting">
               <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="Settings_ItemCountMax" ColumnName="Settings_ItemCountMax" />
+                <ScalarProperty Name="Settings_CentralLocation" ColumnName="Settings_CentralLocation" />
                 <ScalarProperty Name="Settings_Printers" ColumnName="Settings_Printers" />
                 <ScalarProperty Name="Settings_RsServicePassword" ColumnName="Settings_RsServicePassword" />
                 <ScalarProperty Name="Settings_RsServiceUsername" ColumnName="Settings_RsServiceUsername" />
@@ -4256,6 +4356,40 @@ warning 6002: The table/view 'POSWR1.dbo.ItemsView' does not have a primary key 
                 <ScalarProperty Name="Settings_SalesPersonName" ColumnName="Settings_SalesPersonName" />
                 <ScalarProperty Name="Settings_SalesPersonCode" ColumnName="Settings_SalesPersonCode" />
                 <ScalarProperty Name="Settings_No" ColumnName="Settings_No" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyInformations">
+            <EntityTypeMapping TypeName="POSModel.CompanyInformation">
+              <MappingFragment StoreEntitySet="CompanyInformation">
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Primary_Key" ColumnName="Primary Key" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SavedItemsForLaterSales">
+            <EntityTypeMapping TypeName="POSModel.SavedItemsForLaterSale">
+              <MappingFragment StoreEntitySet="SavedItemsForLaterSales">
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="CustomerNo" ColumnName="CustomerNo" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ItemLedgerEntryFulls">
+            <EntityTypeMapping TypeName="POSModel.ItemLedgerEntryFull">
+              <MappingFragment StoreEntitySet="ItemLedgerEntryFull">
+                <ScalarProperty Name="PostingDate" ColumnName="PostingDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="BaseInvoiceNoIsC" ColumnName="BaseInvoiceNoIsC" />
+                <ScalarProperty Name="ItemNo" ColumnName="ItemNo" />
+                <ScalarProperty Name="EntryType" ColumnName="EntryType" />
+                <ScalarProperty Name="DocumentType" ColumnName="DocumentType" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

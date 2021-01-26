@@ -77,6 +77,9 @@
     <Compile Include="Comment_Line.cs">
       <DependentUpon>PosDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="CompanyInformation.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Country.cs">
       <DependentUpon>PosDB.tt</DependentUpon>
     </Compile>
@@ -128,6 +131,9 @@
       <DependentUpon>PosDB.tt</DependentUpon>
     </Compile>
     <Compile Include="ItemLedgerEntry.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ItemLedgerEntryFull.cs">
       <DependentUpon>PosDB.tt</DependentUpon>
     </Compile>
     <Compile Include="ItemPicture.cs">
@@ -250,6 +256,9 @@
       <DependentUpon>PosDB.tt</DependentUpon>
     </Compile>
     <Compile Include="SalesPrice.cs">
+      <DependentUpon>PosDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SavedItemsForLaterSale.cs">
       <DependentUpon>PosDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Setting.cs">

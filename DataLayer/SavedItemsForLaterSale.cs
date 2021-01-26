@@ -12,16 +12,10 @@ namespace DataLayer
     using System;
     using System.Collections.Generic;
     
-    public partial class PaymentSchedule
+    public partial class SavedItemsForLaterSale
     {
-        public int EntryNo { get; set; }
-        public Nullable<int> EntryType { get; set; }
+        public string ItemNo { get; set; }
         public string CustomerNo { get; set; }
-        public string DocumentNo { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<decimal> Amount { get; set; }
-        public Nullable<decimal> RemeiningAmount { get; set; }
-        public Nullable<System.Guid> ModifiedUserID { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public System.DateTime CreationDate { get; set; }
     }
 }

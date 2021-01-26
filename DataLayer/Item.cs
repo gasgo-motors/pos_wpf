@@ -49,5 +49,6 @@ namespace DataLayer
         public Nullable<int> Manufacturing_Policy { get; set; }
         public Nullable<int> ItemType { get; set; }
         public string Sorting_Number { get; set; }
+        public Nullable<System.DateTime> ItemCreationDate { get; set; }
     }
 }

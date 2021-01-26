@@ -13,6 +13,7 @@ namespace BusinessLayer
     {
         public void Synchronize(HashSet<SynchTypes> synchTypes, bool withPictures, Action<string, string, double> progressAction, PosUserTypes userType)
         {
+
             if (synchTypes.Count == 0) return;
 
             if (synchTypes.Contains(SynchTypes.General))
@@ -102,6 +103,27 @@ namespace BusinessLayer
             if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             DaoController.Current.SyncUserSetup(dt);
 
+
+            progressAction("მიმდინარეობს ზოგადი ცხრილების სინქრონიზაცია..", "Synchronizing Bank Accounts", 11);
+            NavDbController.Current.getBankAccounts(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncBankAccounts(dt);
+
+            progressAction(null, "Synchronizing Countries/Cities", 22);
+            NavDbController.Current.getCountries(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncCountries(dt);
+
+            NavDbController.Current.getPostCodesCities(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncPostCodesCities(dt);
+
+
+            NavDbController.Current.getCompanyInformation(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncCompanyInformation(dt);
+
+
             //progressAction(null, "Payment Schedule", 99);gio  clientebshi
             //NavDbController.Current.getCustomerPaymentSchedule(ref res,  ref dt);
             //if (!string.IsNullOrEmpty(res)) throw new PosException(res);
@@ -124,33 +146,6 @@ namespace BusinessLayer
             if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             DaoController.Current.SyncProjectedItemReceipts(itemProjectedItemReceiptsDT, itemProjectedItemTransitsDT);
 
-
-            progressAction(null, "Synchronizing Vendors", 99);
-            NavDbController.Current.getVendors(ref res, ref dt);
-            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
-            DaoController.Current.SyncVendors(dt);
-
-
-            progressAction(null, "Synchronizing Vehicles", 99);
-            NavDbController.Current.getVehicles(ref res, ref dt);
-            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
-            DaoController.Current.SyncVehicles(dt);
-
-
-            progressAction(null, "Synchronizing Dimension Value", 99);
-
-            NavDbController.Current.getDimensionValue(ref res, ref dt);
-            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
-            DaoController.Current.SyncDimensionValue(dt);
-
-
-            progressAction(null, "Synchronizing stock keeping units", 99);
-            DataTable stockkeepingUnitsDt = null;
-            NavDbController.Current.getStockkeepingUnit(ref res, ref stockkeepingUnitsDt);
-            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
-            DaoController.Current.SyncStockkeepingUnit(stockkeepingUnitsDt);
-
-
             progressAction(null, "messages", 99);
             SendServiceManager.Current.SendNewMessages();
             foreach (var i in DaoController.Current.GetStatusChangeMessages())
@@ -159,32 +154,42 @@ namespace BusinessLayer
                 if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             }
 
-
-
             var userId = DaoController.Current.GetUserBySalesPersonCode(PosSetting.Settings_SalesPersonCode);
             NavDbController.Current.geNavMessage(userId, ref res, ref dt);
             if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             DaoController.Current.SyncMessages(dt);
 
+            progressAction(null, "Synchronizing Dimension Value", 99);
 
+            NavDbController.Current.getDimensionValue(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncDimensionValue(dt);
 
             //switch (userType)
             //{
             //    case PosUserTypes.Distributor:
             //    case PosUserTypes.PreSaler:
+
+
+            //        break;
             //    case PosUserTypes.Manager:
             //    case PosUserTypes.Shop:
+            //        if (PosSetting.Settings_Show_Shelf == 1)
+            //        {
+            //            progressAction(null, "Synchronizing Stockkeeping Unit", 99);
 
-            //        progressAction(null, "Synchronizing Stockkeeping Unit", 99);
+            //            NavDbController.Current.getStockKeepingUnit(ref res, ref dt);
+            //            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            //            DaoController.Current.SyncStockKeepingUnit(dt);
+            //        }
 
-            //        NavDbController.Current.getStockkeepingUnit(ref res, ref dt);
-            //        if (!string.IsNullOrEmpty(res)) throw new PosException(res);
-            //        DaoController.Current.SyncStockkeepingUnit(dt);
             //        break;
             //}
 
 
         }
+
+
 
         public void SynchronizeMessages()
         {
@@ -249,10 +254,53 @@ namespace BusinessLayer
 
         }
 
+        public void TestSyncManufacturer()
+        {
+            string res = "";
+            DataTable dt = null;
+
+            NavDbController.Current.GetSavedItemsForLaterSales(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncSavedItemsForLaterSales(dt);
+        }
+
+        public void TestSyncs()
+        {
+            string res = "";
+            DataTable dt = null;
+
+            NavDbController.Current.getItemCategory(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncItemCategory(dt);
+        }
+
+
+        public void TestSyncItemLedgerEntryFull()
+        {
+            string res = "";
+            DataTable dt = null;
+
+            NavDbController.Current.getItemLedgerEntriesFull(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncItemLedgerEntriesFull(dt);
+        }
+
+        public void TestSyncCompanyInformation()
+        {
+            string res = "";
+            DataTable dt = null;
+
+            NavDbController.Current.getCompanyInformation(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncCompanyInformation(dt);
+        }
+
+
         public void SynchronizeAllProducts(Action<string, string, double> progressAction, bool withPictures, PosUserTypes userType)
         {
             string res = "";
             DataTable dt = null;
+            DataTable itemsDt = null;
 
 
             progressAction("მიმდინარეობს მარაგების სინქრონიზაცია..", "Getting  Item Ledger Entries", 0);
@@ -289,6 +337,15 @@ namespace BusinessLayer
             if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             DaoController.Current.SyncPaymentSchedule(dt);
 
+            NavDbController.Current.GetSavedItemsForLaterSales(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncSavedItemsForLaterSales(dt);
+
+            NavDbController.Current.getItemLedgerEntriesFull(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncItemLedgerEntriesFull(dt);
+
+
             //SynchronizeSalesPrices(progressAction);// gio ფასების სინქრონიზაცია
 
             SynchronizeProducts(progressAction, withPictures);
@@ -297,7 +354,7 @@ namespace BusinessLayer
 
 
             progressAction(null, "Synchronizing Items", 10);
-            DataTable itemsDt = null;
+
 
             switch (userType)
             {
@@ -308,7 +365,7 @@ namespace BusinessLayer
                     break;
                 case PosUserTypes.Manager:
                     DaoController.Current.DeleteItems();
-                    NavDbController.Current.getItemsAll(new int[] { 0,1}, ref res, ref itemsDt);
+                    NavDbController.Current.getItemsAll(new int[] { 0, 1 }, ref res, ref itemsDt);
                     break;
                 case PosUserTypes.Shop:
                     DaoController.Current.DeleteItems();
@@ -339,13 +396,17 @@ namespace BusinessLayer
                 DataTable itemPicturesDt = null;
                 NavDbController.Current.getItemPicturesA(ref res, ref itemPicturesDt);
                 if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+                var imgdict = DaoController.Current.GetItemPicturesIds();
                 foreach (DataRow r in itemPicturesDt.Rows)
                 {
                     var itemNo = r["Item No_"].ToString();
                     var picture_no = (int)r["Picture No_"];
                     DataTable dtcontent = null;
-                    NavDbController.Current.getItemPictureContent(itemNo, picture_no, ref res, ref dtcontent);
-                    DaoController.Current.SyncItemPictures(dtcontent);
+                    if (!imgdict.ContainsKey(Tuple.Create(itemNo, picture_no)))
+                    {
+                        NavDbController.Current.getItemPictureContent(itemNo, picture_no, ref res, ref dtcontent);
+                        DaoController.Current.SyncItemPictures(dtcontent);
+                    }
                 }
             }
 
@@ -363,7 +424,13 @@ namespace BusinessLayer
             if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             DaoController.Current.SyncItemSalesPrices(itemSalesPricesDt);
 
-            
+
+            NavDbController.Current.getItemCategory(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncItemCategory(dt);
+
+
+
 
             //progressAction(null, "Synchronizing Items VehicleModles", 40); gio es manqanis modelebshi
             //DataTable itemVehicleModlesDt = null;
@@ -512,7 +579,15 @@ namespace BusinessLayer
             //NavDbController.Current.getItemsAll(new int[] { 1 }, ref res, ref itemsDt);
             //if (!string.IsNullOrEmpty(res)) throw new PosException(res);
             //DaoController.Current.SyncItems(itemsDt);
+            DataTable dt = null;
+            NavDbController.Current.getItemLedgerEntriesFull(ref res, ref dt);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncItemLedgerEntriesFull(dt);
 
+            DataTable dtc = null;
+            NavDbController.Current.getItemCategory(ref res, ref dtc);
+            if (!string.IsNullOrEmpty(res)) throw new PosException(res);
+            DaoController.Current.SyncItemCategory(dtc);
         }
 
 
